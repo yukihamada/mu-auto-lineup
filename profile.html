@@ -41,7 +41,7 @@
   <h1>濱田優貴 — つくっているもの</h1>
   <p>MUで企画・製作している「もの」たち。気になったら<b>予約</b>・<b>詳細を見る</b>・<b>手伝う</b>から。一緒に世界に届けましょう。</p>
   <div class="nav">
-    <a href="https://wearmu.com/shop?brand=mu-auto" target="_blank">🛒 MU ストア</a>
+    <a href="https://wearmu.com/mu-auto" target="_blank">🛒 MU ストア</a>
     <a href="index.html">🚐 MU auto LP</a>
     <a href="manage.html">📋 管理ボード</a>
   </div>
@@ -97,7 +97,7 @@ const ph=(img,emoji)=>img?`<div class="ph"><img src="${img}" loading="lazy" oner
 document.getElementById("g-auto").innerHTML=AUTO.map(a=>`<div class="card">${ph(a[2])}<div class="bd"><span class="badge b-yoyaku" style="position:static;align-self:flex-start;margin-bottom:8px">予約受付中</span><div class="nm">${a[0]}</div><div class="ln">${a[1]}</div><div class="cta"><a class="c-res" href="${PDP+a[3]}" target="_blank">予約</a><a class="c-see" href="${a[4]}" target="_blank">紙芝居を見る</a><a class="c-help" href="${help(a[0])}">手伝う</a></div></div></div>`).join("");
 document.getElementById("g-house").innerHTML=HOUSE.map(h=>`<div class="card">${ph(h[1])}<div class="bd"><span class="badge b-yoyaku" style="position:static;align-self:flex-start;margin-bottom:8px">受注設計</span><div class="nm">${h[0]}</div><div class="ln">北海道・熊牛のリトリート住宅。</div><div class="cta"><a class="c-res" href="${PDP+h[2]}" target="_blank">相談・予約</a><a class="c-see" href="${PDP+h[2]}" target="_blank">見る</a><a class="c-help" href="${help(h[0])}">手伝う</a></div></div></div>`).join("");
 document.getElementById("g-gi").innerHTML=GI.map(g=>`<div class="card">${ph("",g[2])}<div class="bd"><span class="badge b-plan" style="position:static;align-self:flex-start;margin-bottom:8px">企画中・先行</span><div class="nm">${g[0]}</div><div class="ln">${g[1]}</div><div class="cta"><a class="c-res" href="${PDP+g[3]}" target="_blank">先行予約</a><a class="c-see" href="${PDP+g[3]}" target="_blank">見る</a><a class="c-help" href="${help(g[0])}">手伝う</a></div></div></div>`).join("");
-document.getElementById("g-etc").innerHTML=ETC.map(e=>`<div class="card">${ph(e[1],"✦")}<div class="bd"><span class="badge b-sell" style="position:static;align-self:flex-start;margin-bottom:8px">販売中</span><div class="nm">${e[0]}</div><div class="ln">ストアで販売中。</div><div class="cta"><a class="c-res" href="https://wearmu.com/shop?brand=${e[2]}" target="_blank">買う</a><a class="c-see" href="https://wearmu.com/shop?brand=${e[2]}" target="_blank">見る</a><a class="c-help" href="${help(e[0])}">手伝う</a></div></div></div>`).join("");
+document.getElementById("g-etc").innerHTML=ETC.map(e=>`<div class="card">${ph(e[1],"✦")}<div class="bd"><span class="badge b-sell" style="position:static;align-self:flex-start;margin-bottom:8px">販売中</span><div class="nm">${e[0]}</div><div class="ln">ストアで販売中。</div><div class="cta"><a class="c-res" href="https://wearmu.com/${e[2]}" target="_blank">買う</a><a class="c-see" href="https://wearmu.com/${e[2]}" target="_blank">見る</a><a class="c-help" href="${help(e[0])}">手伝う</a></div></div></div>`).join("");
 </script>
 </body>
 </html>
