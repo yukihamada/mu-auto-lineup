@@ -1,0 +1,470 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<title>MU auto MO-1 ― Manufacturing Specification</title>
+<style>
+  @page { size: A4; margin: 15mm 13mm 16mm; }
+  @page :first { margin: 0; }
+  * { box-sizing: border-box; }
+  html{ -webkit-print-color-adjust:exact; print-color-adjust:exact; }
+  body{
+    font-family:"Hiragino Kaku Gothic ProN","Hiragino Sans","Yu Gothic",sans-serif;
+    color:#15202b; line-height:1.55; font-size:9.5pt; margin:0;
+  }
+  h1,h2,h3,h4{ line-height:1.25; }
+
+  /* ---- Cover ---- */
+  .cover{
+    height:297mm; display:flex; flex-direction:column; justify-content:center;
+    background:linear-gradient(140deg,#0a1f3c 0%,#123a6b 55%,#0e7c66 100%);
+    color:#fff; padding:0 22mm; page-break-after:always;
+  }
+  .cover .brand{ letter-spacing:.5em; font-size:13pt; font-weight:800; opacity:.95; }
+  .cover .kicker{ letter-spacing:.4em; font-size:10.5pt; opacity:.78; margin-top:.4em; }
+  .cover h1{ font-size:58pt; margin:.12em 0 .05em; font-weight:800; letter-spacing:.03em; }
+  .cover .sub{ font-size:15pt; opacity:.96; margin-bottom:2em; line-height:1.55; }
+  .cover .badge{ display:inline-block; background:#10b981; color:#022; font-weight:800;
+    padding:.35em 1.1em; border-radius:999px; font-size:11pt; margin-bottom:2em; align-self:flex-start; }
+  .cover .meta{ font-size:10pt; opacity:.92; border-top:1px solid rgba(255,255,255,.3); padding-top:1.3em; line-height:1.9; }
+  .cover .meta b{ font-size:11.5pt; }
+  .ph{ background:rgba(255,255,255,.16); border:1px dashed rgba(255,255,255,.5); border-radius:4px; padding:0 .4em; }
+
+  /* ---- Sections ---- */
+  section{ page-break-inside:avoid; }
+  h2{ font-size:15pt; color:#0a1f3c; border-left:6px solid #10b981; padding-left:.5em; margin:1.3em 0 .5em; }
+  h3{ font-size:11.5pt; color:#123a6b; margin:1em 0 .25em; }
+  h4{ margin:0 0 .25em; color:#0a1f3c; font-size:10pt; }
+  .lead{ font-size:10pt; color:#334; margin:.3em 0 .5em; }
+  p{ margin:.4em 0; }
+
+  /* ---- Tables ---- */
+  table{ width:100%; border-collapse:collapse; margin:.5em 0; font-size:8.7pt; }
+  th,td{ border:1px solid #d3dce6; padding:4px 6px; text-align:left; vertical-align:top; }
+  th{ background:#0a1f3c; color:#fff; font-weight:700; }
+  tr:nth-child(even) td{ background:#f4f8fb; }
+  td.num{ text-align:right; font-variant-numeric:tabular-nums; white-space:nowrap; }
+  td.c{ text-align:center; }
+  .vs th{ background:#123a6b; }
+  .vs .win{ background:#e6f6f0; font-weight:700; }
+  tfoot td{ background:#eef3f8; font-weight:700; }
+
+  /* ---- Status pills ---- */
+  .st{ display:inline-block; font-size:7.8pt; font-weight:800; padding:.05em .5em; border-radius:4px; white-space:nowrap; }
+  .st-ok{ background:#e6f6f0; color:#0e7c66; }       /* 適合方針 */
+  .st-chk{ background:#fff3d6; color:#9a6a00; }      /* 要確認 */
+  .st-sup{ background:#eef0ff; color:#3a3f9a; }      /* 要サプライヤ確定 */
+
+  /* ---- Cards & misc ---- */
+  .grid2{ display:grid; grid-template-columns:1fr 1fr; gap:8px; }
+  .grid3{ display:grid; grid-template-columns:1fr 1fr 1fr; gap:8px; }
+  .card{ border:1px solid #d3dce6; border-radius:8px; padding:8px 10px; background:#fbfdff; }
+  .quote{ background:#0a1f3c; color:#fff; padding:11px 15px; border-radius:8px; font-size:10pt; }
+  .small{ font-size:8pt; color:#667; }
+  .note{ font-size:8.2pt; color:#665; background:#fffbe9; border:1px solid #ecdfa6; border-radius:6px; padding:6px 9px; margin:.5em 0; }
+  ul,ol{ margin:.25em 0 .25em 1.1em; padding:0; }
+  li{ margin:.12em 0; }
+  .pagebreak{ page-break-before:always; }
+  .toc td{ border:none; padding:2px 6px; font-size:9pt; }
+  .toc td.n{ color:#0e7c66; font-weight:800; width:6%; }
+  .foot{ text-align:right; font-size:8pt; color:#889; margin-top:2em; border-top:1px solid #e3e9ef; padding-top:.5em; }
+  .rev th{ background:#123a6b; }
+  caption{ caption-side:top; text-align:left; font-size:8pt; color:#778; padding:0 0 2px; }
+</style>
+</head>
+<body>
+
+<!-- ================= COVER ================= -->
+<div class="cover">
+  <div class="brand">MU&nbsp;auto</div>
+  <div class="kicker">MANUFACTURING SPECIFICATION ／ 製造発注仕様書</div>
+  <h1>MO-1</h1>
+  <div class="sub">EV Mobile Office ―― 走る本社 / Mobile HQ<br>停車中の生産性を提供する特種用途 EV（事務室車）</div>
+  <div class="badge">FOR RFQ / TIER-1 &amp; UPFITTER TENDER</div>
+  <div class="meta">
+    Document No.：<span class="ph">MUA-MO1-MFG-000【要確認】</span>　Revision：<span class="ph">v0.1【要確認】</span><br>
+    Issue Date：<span class="ph">YYYY-MM-DD【要確認】</span>　Classification：機密 / Confidential<br>
+    発行：株式会社イネブラ（Enabler Inc.）　Product Line：MU auto　Model：MO-1<br>
+    Contact：mail@yukihamada.jp<br>
+    <span class="small">本書の数値は別途明記なき限り「設計目標値／要件」です。確定値ではありません。</span>
+  </div>
+</div>
+
+<!-- ================= 前付：改訂・凡例・目次 ================= -->
+<section>
+<h2>改訂履歴 / Revision History</h2>
+<table class="rev">
+  <thead><tr><th style="width:10%">Rev</th><th style="width:18%">日付</th><th>変更内容</th><th style="width:18%">承認</th></tr></thead>
+  <tbody>
+    <tr><td>v0.1</td><td><span class="ph">YYYY-MM-DD【要確認】</span></td><td>初版（RFQ向けドラフト）</td><td><span class="ph">【要確認】</span></td></tr>
+  </tbody>
+</table>
+
+<h3>凡例（数値・ステータスの読み方）</h3>
+<ul>
+  <li><b>設計目標値</b>：要件として提示する目標。等価以上の代替提案可（要承認）。</li>
+  <li>公差表記：寸法は<b>±</b>で許容差を示す。明示なき寸法は一般公差 <b>JIS B 0405 中級(m)相当【要確認】</b>を適用。</li>
+  <li>ステータス：<span class="st st-ok">適合方針</span> 設計で満たす方針／<span class="st st-chk">要確認</span> 規格番号・適用範囲を要確認／<span class="st st-sup">要サプライヤ確定</span> 部材・数値をサプライヤと確定。</li>
+</ul>
+
+<h2>目次 / Contents</h2>
+<table class="toc">
+  <tr><td class="n">1</td><td>製品概要・用途・ターゲット要件</td><td class="n">8</td><td>セキュリティ（物理／情報）</td></tr>
+  <tr><td class="n">2</td><td>全体諸元（寸法・車重・乗車/積載）</td><td class="n">9</td><td>認証・法規適合チェックリスト</td></tr>
+  <tr><td class="n">3</td><td>パワートレイン／駆動バッテリー</td><td class="n">10</td><td>主要部品表（BOM）</td></tr>
+  <tr><td class="n">4</td><td>執務用電源系（サブ電池・ソーラー）</td><td class="n">11</td><td>製造・架装プロセス／QA基準</td></tr>
+  <tr><td class="n">5</td><td>通信・電装アーキテクチャ</td><td class="n">12</td><td>敵対的評価（競合A vs MO-1）</td></tr>
+  <tr><td class="n">6</td><td>車内オフィス架装</td><td class="n">13</td><td>数量・コスト枠／梱包・輸送</td></tr>
+  <tr><td class="n">7</td><td>空調・断熱</td><td class="n">14</td><td>発注時 確定必要項目（オープンissue）</td></tr>
+</table>
+<div class="note">本書は MU auto のプロダクト「MO-1」を、受託製造（OEM/ODM）・特種架装業者・各サプライヤに発注するための設計仕様です。地域依存（通信周波数・法規・系統電圧）は各章で分離し、日本仕様（JP）を基準に記載します。海外仕様は別添で差し替え可能な構成とします。</div>
+</section>
+
+<!-- ================= 1. 製品概要 ================= -->
+<section class="pagebreak">
+<h2>1. 製品概要・用途・ターゲット要件</h2>
+<p class="lead">MO-1 は EV をベースにした「走る本社（Mobile Office）」。停車時にオフィス品質で執務できることを最優先の設計目標とする。差別化軸は価格・航続ではなく<b>「停車中の生産性」</b>。</p>
+
+<h3>1.1 用途・登録区分</h3>
+<table>
+  <tbody>
+    <tr><th style="width:24%">主用途</th><td>停車時の常設執務（1〜2名）。移動は二次目的。</td></tr>
+    <tr><th>想定登録区分</th><td>特種用途自動車「事務室車（8ナンバー）」での型式・登録を志向 <span class="st st-chk">要確認</span>（架装比率・物品積載要件は運輸支局確認）</td></tr>
+    <tr><th>ベース車両</th><td>商用 EV バン／1BOX プラットフォーム（自社架装、または外部 EV プラットフォーム調達＋架装） <span class="st st-sup">要サプライヤ確定</span></td></tr>
+    <tr><th>運用環境</th><td>気温 −10〜+40℃、停車執務を主体／日本国内（一次市場）。粉塵・降雨下の常用を想定。</td></tr>
+  </tbody>
+</table>
+
+<h3>1.2 ターゲット要件（製品が満たすべき確約値）</h3>
+<table>
+  <thead><tr><th style="width:30%">要件</th><th style="width:28%">設計目標値</th><th>判定根拠／備考</th></tr></thead>
+  <tbody>
+    <tr><td>無補給執務時間</td><td>≧ 72 時間（3日）</td><td>通信＋PC＋空調＋照明の標準負荷で（§4 試算）。日射条件は別添。</td></tr>
+    <tr><td>常時接続性</td><td>三重冗長（衛星＋5G/4G＋Wi-Fi）、自動フェイルオーバ &lt; 5 s <span class="st st-sup">要サプライヤ確定</span></td><td>会議継続を担保（§5）</td></tr>
+    <tr><td>執務時 室内騒音</td><td>≦ 45 dB(A)（停車・空調運転時、運転席背後の執務点）<span class="st st-chk">要確認</span></td><td>遮音目標。外部遮音は会議品質60dB級設計（§6）</td></tr>
+    <tr><td>執務机面 照度</td><td>500〜750 lx 可変</td><td>事務所衛生基準規則 一般事務基準を満たす（§6/§9）</td></tr>
+    <tr><td>実用航続</td><td>約 450 km（WLTC相当）<span class="st st-sup">要サプライヤ確定</span></td><td>プラットフォーム選定で確定（§3）</td></tr>
+    <tr><td>立位執務</td><td>室内有効高 ≧ 1,500 mm（執務エリア）</td><td>架装で確保（§2/§6）</td></tr>
+  </tbody>
+</table>
+</section>
+
+<!-- ================= 2. 全体諸元 ================= -->
+<section class="pagebreak">
+<h2>2. 全体諸元（寸法・車重・乗車/積載）</h2>
+<p class="lead">数値は設計目標値。最終値はベースプラットフォーム確定後に再固定。<span class="st st-sup">要サプライヤ確定</span></p>
+<table>
+  <caption>表2-1 外形・室内寸法（mm）／公差つき</caption>
+  <thead><tr><th style="width:34%">項目</th><th style="width:33%">設計目標値</th><th>公差・備考</th></tr></thead>
+  <tbody>
+    <tr><td>全長</td><td>5,000 mm</td><td>±50（8ナンバー普通車枠内、車検証寸法に合致させる）</td></tr>
+    <tr><td>全幅</td><td>1,900 mm</td><td>±30（ミラー除く）</td></tr>
+    <tr><td>全高</td><td>2,300 mm</td><td>±40（ルーフソーラー・アンテナ込み高は別記）</td></tr>
+    <tr><td>ホイールベース</td><td>3,200 mm</td><td>±20（プラットフォーム依存）</td></tr>
+    <tr><td>最低地上高</td><td>≧ 150 mm</td><td>保安基準適合の下限を満たす</td></tr>
+    <tr><td>室内長（架装後・執務区画）</td><td>2,200 mm</td><td>±30</td></tr>
+    <tr><td>室内幅（有効）</td><td>1,650 mm</td><td>±30</td></tr>
+    <tr><td>室内高（執務エリア有効）</td><td>1,500 mm</td><td>+50/−0（立位執務の確保）</td></tr>
+  </tbody>
+</table>
+<table>
+  <caption>表2-2 重量・乗車・積載・走行性能</caption>
+  <thead><tr><th style="width:34%">項目</th><th style="width:33%">設計目標値</th><th>備考</th></tr></thead>
+  <tbody>
+    <tr><td>車両重量（架装込み）</td><td>2,600 kg <span class="st st-sup">要サプライヤ確定</span></td><td>±5%。駆動電池・架装込み。軸重配分は要確認</td></tr>
+    <tr><td>車両総重量(GVW)</td><td>3,100 kg 以下</td><td>普通免許/中型区分の境界に留意 <span class="st st-chk">要確認</span></td></tr>
+    <tr><td>乗車定員</td><td>2〜3 名</td><td>事務室車要件と座席数の整合を確認 <span class="st st-chk">要確認</span></td></tr>
+    <tr><td>最大積載量</td><td><span class="ph">【要確認】</span></td><td>事務室車は物品積載要件あり。架装重量との配分を要確認</td></tr>
+    <tr><td>最小回転半径</td><td>≦ 6.0 m</td><td>市街地取り回し。プラットフォーム依存</td></tr>
+    <tr><td>最高速度（リミット）</td><td>120 km/h 級</td><td>用途上、走行性能は上限要件に留める</td></tr>
+  </tbody>
+</table>
+</section>
+
+<!-- ================= 3. パワートレイン ================= -->
+<section class="pagebreak">
+<h2>3. パワートレイン／駆動バッテリー</h2>
+<p class="lead">移動性能は要件下限を満たせばよい設計思想。重視は静粛性と停車時の電力供給能力。</p>
+<table>
+  <thead><tr><th style="width:30%">項目</th><th style="width:34%">設計目標値／仕様</th><th>備考・規格</th></tr></thead>
+  <tbody>
+    <tr><td>駆動方式</td><td>前置 or 後置1モータ FWD/RWD <span class="st st-sup">要サプライヤ確定</span></td><td>プラットフォーム依存。4WDは選択肢</td></tr>
+    <tr><td>モータ最高出力</td><td>150 kW</td><td>±10%。GVW登坂性能から逆算</td></tr>
+    <tr><td>モータ最大トルク</td><td>310 N·m</td><td>±10%</td></tr>
+    <tr><td>駆動電池 化学</td><td>LFP（リン酸鉄リチウム）</td><td>安全・長寿命・熱安定。UN38.3 輸送試験適合 <span class="st st-chk">要確認</span></td></tr>
+    <tr><td>駆動電池 容量</td><td>80 kWh</td><td>±5%。実用航続450km級の前提</td></tr>
+    <tr><td>システム電圧</td><td>400 V 級</td><td>±。800V系は要検討 <span class="st st-chk">要確認</span></td></tr>
+    <tr><td>実用航続</td><td>約 450 km（WLTC相当）</td><td>架装重量込みで再評価</td></tr>
+    <tr><td>普通充電(AC)</td><td>6 kW（単相200V）</td><td>SAE J1772 / 国内普通充電コネクタ <span class="st st-chk">要確認</span></td></tr>
+    <tr><td>急速充電(DC)</td><td>CHAdeMO 90 kW級</td><td>JEVS G105 系 <span class="st st-chk">要確認</span>。NACS/CCS対応は地域オプション</td></tr>
+    <tr><td>V2L / 外部給電</td><td>駆動電池からの給電に対応（§4参照）</td><td>停車執務の電力源として活用</td></tr>
+    <tr><td>電池熱管理</td><td>液冷（駆動）＋BMSによるセル監視</td><td>停車執務中の温度安定を要件化 <span class="st st-sup">要サプライヤ確定</span></td></tr>
+  </tbody>
+</table>
+<div class="note">駆動電池は走行優先で温存し、執務は原則 §4 のサブ電池系から供給する二系統設計とする。サブ電池枯渇時のみ駆動電池からのバックフィードを許可（残量下限ガードあり）。</div>
+</section>
+
+<!-- ================= 4. 執務用電源系 ================= -->
+<section class="pagebreak">
+<h2>4. 執務用電源系（サブ電池・ソーラー・給電）</h2>
+<p class="lead">駆動系から独立した執務用 DC バスを設け、ソーラー＋サブ電池＋（必要時）駆動電池の三段で「3日無補給」を成立させる。</p>
+<table>
+  <thead><tr><th style="width:28%">項目</th><th style="width:36%">設計目標値／仕様</th><th>備考・規格</th></tr></thead>
+  <tbody>
+    <tr><td>執務サブ電池 化学/容量</td><td>LFP / 10 kWh（公称）</td><td>±。深放電サイクル耐性。UN38.3 <span class="st st-chk">要確認</span></td></tr>
+    <tr><td>サブバス電圧</td><td>48 V DC 主、12 V 補機</td><td>高効率配電のため48V主バス</td></tr>
+    <tr><td>ソーラー</td><td>ルーフ設置 600 Wp（公称）<span class="st st-sup">要サプライヤ確定</span></td><td>高効率単結晶。MPPTチャージャ経由</td></tr>
+    <tr><td>MPPTチャージャ</td><td>48V系・600W以上、過電圧/逆流保護</td><td>—</td></tr>
+    <tr><td>DC/DCコンバータ</td><td>駆動400V→48V（双方向、2kW級）＋48V→12V</td><td>双方向でバックフィード可</td></tr>
+    <tr><td>インバータ(AC出力)</td><td>正弦波 1,500 W 連続（瞬間3,000W）／AC100V</td><td><b>PSE適合（特定電気用品 ◇PSEマーク）</b> <span class="st st-chk">要確認</span></td></tr>
+    <tr><td>AC出力口</td><td>PSE適合コンセント ×2（接地付）</td><td>漏電遮断・過電流保護内蔵</td></tr>
+    <tr><td>保護回路</td><td>過充放電・過電流・短絡・逆接・温度保護、主回路ヒューズ/ブレーカ</td><td>BMS連動。絶縁監視 <span class="st st-sup">要サプライヤ確定</span></td></tr>
+  </tbody>
+</table>
+
+<h3>4.1 消費試算と3日（72h）成立検証（設計目標・JP標準負荷）</h3>
+<table>
+  <thead><tr><th>負荷</th><th class="num">消費(W)</th><th class="num">稼働(h/日)</th><th class="num">日消費(Wh)</th><th>備考</th></tr></thead>
+  <tbody>
+    <tr><td>ノートPC×2＋27"モニタ</td><td class="num">180</td><td class="num">10</td><td class="num">1,800</td><td>執務本体</td></tr>
+    <tr><td>通信機器（衛星/5G/Wi-Fi/GW）</td><td class="num">80</td><td class="num">12</td><td class="num">960</td><td>常時待受込み</td></tr>
+    <tr><td>停車HVAC（超低消費・平均）</td><td class="num">300</td><td class="num">8</td><td class="num">2,400</td><td>外気緩条件の平均（§7）</td></tr>
+    <tr><td>照明・換気・制御</td><td class="num">60</td><td class="num">10</td><td class="num">600</td><td>LED＋強制換気</td></tr>
+    <tr><td>昇降デスク・その他間欠</td><td class="num">—</td><td class="num">—</td><td class="num">240</td><td>間欠負荷の概算</td></tr>
+    <tr><td><b>1日合計</b></td><td class="num">—</td><td class="num">—</td><td class="num"><b>6,000</b></td><td>＝約6.0 kWh/日</td></tr>
+  </tbody>
+  <tfoot>
+    <tr><td colspan="3">3日(72h)消費</td><td class="num">18,000</td><td>＝18.0 kWh</td></tr>
+    <tr><td colspan="3">供給：サブ10kWh(使用域8.5)＋ソーラー1.8kWh/日×3＋駆動電池からの補充</td><td class="num">≧18.0</td><td>日射条件・季節で変動。HVAC負荷が成立可否を支配 <span class="st st-chk">要確認</span></td></tr>
+  </tfoot>
+</table>
+<div class="note">72h成立はHVAC平均消費・日射量に強く依存。冷暖房ピーク時は駆動電池(80kWh)からの補充で担保する設計。実条件での実測検証を Phase 0 で実施し本数値を確定（現時点 未確認）。</div>
+</section>
+
+<!-- ================= 5. 通信・電装 ================= -->
+<section class="pagebreak">
+<h2>5. 通信・電装アーキテクチャ</h2>
+<p class="lead">「会議が落ちない」を最優先。三重冗長と自動フェイルオーバを電装ゲートウェイで統合する。</p>
+<table>
+  <thead><tr><th style="width:24%">系統</th><th style="width:38%">仕様</th><th>備考・法規</th></tr></thead>
+  <tbody>
+    <tr><td>衛星通信</td><td>国内提供の移動体向け衛星ブロードバンド端末（LEO） <span class="st st-sup">要サプライヤ確定</span></td><td>移動体運用は<b>技適取得済</b>機器・国内認可サービスに限定 <span class="st st-chk">要確認</span>（電波法）</td></tr>
+    <tr><td>セルラー</td><td>5G/4G マルチキャリア・デュアルSIM/eSIMルータ</td><td><b>技適マーク必須</b>（電波法/技適）<span class="st st-ok">適合方針</span></td></tr>
+    <tr><td>Wi-Fi</td><td>Wi-Fi 6E 社内AP＋外部Wi-Fiアップリンク</td><td>技適済機器。屋内利用周波数の制限留意 <span class="st st-chk">要確認</span></td></tr>
+    <tr><td>フェイルオーバ</td><td>SD-WAN/マルチWANルータで自動切替 &lt; 5 s、優先度：5G→衛星→外部Wi-Fi（設定可）</td><td><span class="st st-sup">要サプライヤ確定</span></td></tr>
+    <tr><td>アンテナ</td><td>ルーフ統合：衛星フェーズドアレイ＋セルラーMIMO＋GNSS＋Wi-Fi</td><td>全高・防水(IP)・耐風要件 <span class="st st-chk">要確認</span></td></tr>
+    <tr><td>ECU/ゲートウェイ</td><td>架装系ゲートウェイ（電源管理・通信・空調・施錠を統合監視）</td><td>車両CANとは絶縁・読取主体。車両制御へは介入しない方針</td></tr>
+    <tr><td>電圧系統</td><td>駆動400V／執務48V／補機12V の三系統、各系絶縁・ヒューズ管理</td><td>配線色・系統識別を図面で規定</td></tr>
+    <tr><td>配線方針</td><td>系統別ハーネス分離、難燃被覆、可動部はフレキシブル管、端子防水</td><td>ISO 6722 系電線 <span class="st st-chk">要確認</span>／EMC配慮</td></tr>
+  </tbody>
+</table>
+<div class="note">衛星・セルラーは地域依存が大きいため、アンテナ機械I/Fと電源/データI/Fを規格化し、地域別に端末を差し替え可能なモジュール構成とする（早すぎる国際化はせず、JP仕様を先に確定）。</div>
+</section>
+
+<!-- ================= 6. 車内オフィス架装 ================= -->
+<section class="pagebreak">
+<h2>6. 車内オフィス架装</h2>
+<p class="lead">「停めた瞬間に本社の自席品質」を物理で実現。固定・衝突安全と執務快適性を両立する。</p>
+<table>
+  <thead><tr><th style="width:24%">項目</th><th style="width:40%">仕様／設計目標値</th><th>備考</th></tr></thead>
+  <tbody>
+    <tr><td>昇降デスク</td><td>電動昇降 650〜1,250 mm、天板600×800 mm、耐荷重40 kg、走行時ロック機構</td><td>48V駆動。走行中は最下段ロック必須</td></tr>
+    <tr><td>執務シート</td><td>人間工学チェア（ランバーサポート・可動アーム）、走行時用3点式は別途</td><td>執務用と乗車用を区別。固定方式要確認 <span class="st st-chk">要確認</span></td></tr>
+    <tr><td>モニタ架</td><td>27" モニタVESA(100×100)マウント、ガスダンパーアーム、走行ロック</td><td>27"／2,560×1,440以上推奨</td></tr>
+    <tr><td>遮音</td><td>外部に対し会議品質60dB級、執務点室内騒音 ≦45 dB(A)目標。吸音内装（グラスウール/メラミンフォーム＋制振材）</td><td>遮音等級は実測で確定 <span class="st st-chk">要確認</span></td></tr>
+    <tr><td>照度</td><td>机面500〜750 lx 可変、調色LED、照度センサ自動調光</td><td>事務所衛生基準規則 適合 <span class="st st-ok">適合方針</span></td></tr>
+    <tr><td>換気</td><td>強制給排気、停車執務時 CO₂ ≦1,000 ppm維持を目標</td><td>事務所衛生基準（CO₂基準）参照 <span class="st st-chk">要確認</span></td></tr>
+    <tr><td>内装材</td><td>難燃内装材（保安基準の内装材燃焼性に適合）、低VOC</td><td>UN R118系/保安基準 内装材燃焼 <span class="st st-chk">要確認</span></td></tr>
+    <tr><td>固定・衝突安全</td><td>架装物は走行時の荷重（前後/上下 想定G）に耐える固定。可動物は走行ロック。突起物規制適合</td><td>架装物の慣性力規定 <span class="st st-sup">要サプライヤ確定</span></td></tr>
+  </tbody>
+</table>
+</section>
+
+<!-- ================= 7. 空調・断熱 ================= -->
+<section class="pagebreak">
+<h2>7. 空調・断熱</h2>
+<p class="lead">停車執務での超低消費がHVAC最大の要件。断熱で負荷を下げ、§4の72h成立を支える。</p>
+<table>
+  <thead><tr><th style="width:28%">項目</th><th style="width:36%">設計目標値／仕様</th><th>備考</th></tr></thead>
+  <tbody>
+    <tr><td>停車時HVAC方式</td><td>高効率ヒートポンプ（執務区画専用、48V/DC駆動）</td><td>駆動空調とは別系統で低消費化</td></tr>
+    <tr><td>平均消費（執務時）</td><td>≦ 300 W（外気緩条件）／ピーク ≦1,200 W</td><td>§4試算の前提。実測で確定 <span class="st st-chk">要確認</span></td></tr>
+    <tr><td>目標室温</td><td>20〜26℃ 維持（外気 −10〜+40℃）</td><td>事務所衛生基準の温度範囲を満たす方針 <span class="st st-ok">適合方針</span></td></tr>
+    <tr><td>断熱（壁/天井/床）</td><td>断熱材＋気密施工、目標 熱貫流率の低減（数値 <span class="st st-sup">要サプライヤ確定</span>）</td><td>結露対策・防音と兼用</td></tr>
+    <tr><td>遮熱</td><td>合わせ/Low-Eガラス、遮熱フィルム、窓断熱シェード</td><td>覗き見防止（§8）と兼用</td></tr>
+  </tbody>
+</table>
+</section>
+
+<!-- ================= 8. セキュリティ ================= -->
+<section class="pagebreak">
+<h2>8. セキュリティ（物理／情報）</h2>
+<p class="lead">顧客データを扱う前提で、物理施錠と情報セキュリティの両面を標準装備。</p>
+<table>
+  <thead><tr><th style="width:24%">領域</th><th style="width:40%">仕様</th><th>備考</th></tr></thead>
+  <tbody>
+    <tr><td>施錠（物理）</td><td>スマートロック＋メカ二重施錠、防犯ガラス/フィルム、内部から区画施錠</td><td>解錠ログ取得</td></tr>
+    <tr><td>覗き見防止</td><td>調光（電子）ガラス or 遮光シェード、モニタ視野角制御、外部からの画面不可視レイアウト</td><td>§7の遮熱と兼用</td></tr>
+    <tr><td>侵入検知</td><td>ドア/振動センサ、車載カメラ、警報、GNSS追跡</td><td>架装ゲートウェイで通知</td></tr>
+    <tr><td>データ暗号化</td><td>ストレージ暗号化、VPN/ゼロトラスト通信、保存データ全暗号化</td><td>総務省テレワークセキュリティGL準拠方針 <span class="st st-ok">適合方針</span></td></tr>
+    <tr><td>MDM</td><td>端末管理・遠隔ロック/ワイプ、ポリシー配布</td><td>運用ソフト連携</td></tr>
+    <tr><td>電源/通信のセキュア化</td><td>架装ゲートウェイのアクセス制御、ファーム署名更新</td><td>車両制御系とは論理分離</td></tr>
+  </tbody>
+</table>
+</section>
+
+<!-- ================= 9. 認証・法規 ================= -->
+<section class="pagebreak">
+<h2>9. 認証・法規適合チェックリスト</h2>
+<p class="lead">日本基準を中心に整理。各行に適合状態を付す。規格番号が未確定の項目は <span class="st st-chk">要確認</span> とする。</p>
+<table>
+  <thead><tr><th style="width:26%">法規／規格</th><th style="width:42%">論点・対応</th><th style="width:14%">状態</th></tr></thead>
+  <tbody>
+    <tr><td>道路運送車両法 保安基準</td><td>架装後の車検適合（灯火・制動・突起物・内装燃焼性・最低地上高等）</td><td><span class="st st-ok">適合方針</span></td></tr>
+    <tr><td>事務室車（8ナンバー）要件</td><td>架装比率・物品積載・座席要件・用途設備の整合</td><td><span class="st st-chk">要確認</span></td></tr>
+    <tr><td>電気用品安全法（PSE）</td><td>車内AC給電のインバータ/コンセントを ◇/◯ PSE適合品とする</td><td><span class="st st-chk">要確認</span></td></tr>
+    <tr><td>電波法／技適</td><td>5G/4G/Wi-Fi/衛星端末は技適取得済・国内認可サービスに限定</td><td><span class="st st-ok">適合方針</span></td></tr>
+    <tr><td>UN R100（駆動電池安全）</td><td>EV高電圧系・電池の安全要件</td><td><span class="st st-chk">要確認</span></td></tr>
+    <tr><td>UN R10（EMC）</td><td>電装・架装系の電磁両立性</td><td><span class="st st-chk">要確認</span></td></tr>
+    <tr><td>UN R118（内装材燃焼性）</td><td>内装材の難燃性適合</td><td><span class="st st-chk">要確認</span></td></tr>
+    <tr><td>UN38.3（電池輸送）</td><td>駆動/サブ電池の輸送試験</td><td><span class="st st-chk">要確認</span></td></tr>
+    <tr><td>事務所衛生基準規則・安衛法</td><td>照度・換気(CO₂)・温度の執務環境基準</td><td><span class="st st-ok">適合方針</span></td></tr>
+    <tr><td>テレワークセキュリティGL（総務省）</td><td>暗号化・覗き見防止・MDM・物理施錠</td><td><span class="st st-ok">適合方針</span></td></tr>
+    <tr><td>道路交通法（駐停車）</td><td>合法な執務スポットの運用設計で対応（製品外）</td><td><span class="st st-chk">要確認</span></td></tr>
+  </tbody>
+</table>
+<div class="note">具体の型式区分・規格番号・適用範囲は、運輸支局／登録機関・認証機関・専門家との確認を経て確定する。本表は適合方針であり、適合保証ではない（未確認項目あり）。</div>
+</section>
+
+<!-- ================= 10. BOM ================= -->
+<section class="pagebreak">
+<h2>10. 主要部品表（BOM・抜粋）</h2>
+<p class="lead">発注単位・サプライヤ種別を意識した主要構成。詳細BOM・部品番号は確定後に別紙化。</p>
+<table>
+  <thead><tr><th style="width:5%">#</th><th style="width:21%">項目</th><th style="width:34%">仕様</th><th style="width:18%">サプライヤ種別</th><th class="c" style="width:8%">数量</th><th>備考</th></tr></thead>
+  <tbody>
+    <tr><td>1</td><td>ベースEVプラットフォーム</td><td>商用EVバン/1BOX、80kWh級、CHAdeMO</td><td>EVメーカー/OEM</td><td class="c">1</td><td>自社架装 or 調達</td></tr>
+    <tr><td>2</td><td>駆動電池パック</td><td>LFP 80kWh／400V／液冷／BMS</td><td>電池Tier-1</td><td class="c">1</td><td>UN38.3 <span class="st st-chk">要確認</span></td></tr>
+    <tr><td>3</td><td>執務サブ電池</td><td>LFP 10kWh／48V／BMS</td><td>蓄電池サプライヤ</td><td class="c">1</td><td>—</td></tr>
+    <tr><td>4</td><td>ソーラーパネル一式</td><td>単結晶 600Wp＋ルーフ架台</td><td>ソーラーサプライヤ</td><td class="c">1set</td><td>防水施工</td></tr>
+    <tr><td>5</td><td>MPPT/DCDC/インバータ</td><td>48V系・双方向DCDC2kW・正弦波1.5kW(PSE)</td><td>パワエレTier</td><td class="c">1set</td><td>PSE <span class="st st-chk">要確認</span></td></tr>
+    <tr><td>6</td><td>衛星通信端末</td><td>移動体LEOブロードバンド・技適済</td><td>衛星通信事業者</td><td class="c">1</td><td>地域依存 <span class="st st-sup">要サプライヤ確定</span></td></tr>
+    <tr><td>7</td><td>5G/4Gルータ</td><td>マルチキャリア・SD-WAN・技適済</td><td>通信機器Tier</td><td class="c">1</td><td>—</td></tr>
+    <tr><td>8</td><td>架装ゲートウェイECU</td><td>電源/通信/空調/施錠 統合監視</td><td>電装/組込</td><td class="c">1</td><td>車両制御非介入</td></tr>
+    <tr><td>9</td><td>電動昇降デスク</td><td>650-1250mm・耐40kg・走行ロック</td><td>什器/特装</td><td class="c">1</td><td>—</td></tr>
+    <tr><td>10</td><td>人間工学チェア</td><td>ランバー・可動アーム・固定金具</td><td>什器</td><td class="c">1-2</td><td>固定方式 <span class="st st-chk">要確認</span></td></tr>
+    <tr><td>11</td><td>27"モニタ＋アーム</td><td>2,560×1,440・VESA・走行ロック</td><td>電子部品</td><td class="c">1</td><td>—</td></tr>
+    <tr><td>12</td><td>停車用HVAC</td><td>48Vヒートポンプ・低消費</td><td>空調Tier</td><td class="c">1</td><td>—</td></tr>
+    <tr><td>13</td><td>断熱・吸音材</td><td>難燃断熱＋吸音＋制振</td><td>内装/素材</td><td class="c">1set</td><td>UN R118 <span class="st st-chk">要確認</span></td></tr>
+    <tr><td>14</td><td>調光ガラス/シェード</td><td>電子調光 or 遮光・遮熱</td><td>ガラス/フィルム</td><td class="c">1set</td><td>覗き見防止兼用</td></tr>
+    <tr><td>15</td><td>スマートロック/セキュリティ</td><td>二重施錠・侵入検知・カメラ・GNSS</td><td>セキュリティTier</td><td class="c">1set</td><td>—</td></tr>
+    <tr><td>16</td><td>ハーネス/配電盤</td><td>三系統分離・難燃・保護器</td><td>ハーネスTier</td><td class="c">1set</td><td>ISO6722系 <span class="st st-chk">要確認</span></td></tr>
+    <tr><td>17</td><td>アンテナ統合ユニット</td><td>衛星/セルラー/GNSS/Wi-Fi 一体</td><td>アンテナサプライヤ</td><td class="c">1</td><td>IP・耐風 <span class="st st-chk">要確認</span></td></tr>
+  </tbody>
+</table>
+</section>
+
+<!-- ================= 11. 製造・QA ================= -->
+<section class="pagebreak">
+<h2>11. 製造・架装プロセス／組立要件／公差・QA基準</h2>
+<h3>11.1 製造・架装フロー</h3>
+<table>
+  <thead><tr><th style="width:6%">工程</th><th style="width:24%">内容</th><th>要件・合否基準</th></tr></thead>
+  <tbody>
+    <tr><td>P1</td><td>ベース車受入検査</td><td>外観・高電圧系絶縁・走行機能の受入チェック、記録</td></tr>
+    <tr><td>P2</td><td>断熱・内装下地</td><td>断熱/防音/制振施工、気密確認、内装材難燃証明の保管</td></tr>
+    <tr><td>P3</td><td>電源系艤装</td><td>サブ電池/DCDC/インバータ/配電盤、絶縁・極性・保護器動作確認</td></tr>
+    <tr><td>P4</td><td>通信・電装艤装</td><td>アンテナ/ルータ/GW、技適マーク確認、フェイルオーバ試験</td></tr>
+    <tr><td>P5</td><td>什器架装</td><td>昇降デスク/シート/モニタ架の固定強度、走行ロック動作</td></tr>
+    <tr><td>P6</td><td>HVAC/換気</td><td>空調動作・消費電力・CO₂濃度・室温到達の確認</td></tr>
+    <tr><td>P7</td><td>完成検査</td><td>保安基準項目・防水・通電・機能総合・登録準備書類</td></tr>
+  </tbody>
+</table>
+<h3>11.2 公差・QA基準</h3>
+<table>
+  <thead><tr><th style="width:30%">項目</th><th style="width:30%">基準</th><th>検査方法</th></tr></thead>
+  <tbody>
+    <tr><td>一般寸法公差</td><td>JIS B 0405 中級(m)相当 <span class="st st-chk">要確認</span></td><td>図面照合・採寸</td></tr>
+    <tr><td>高電圧系絶縁抵抗</td><td>規定値以上 <span class="st st-sup">要サプライヤ確定</span></td><td>絶縁抵抗計</td></tr>
+    <tr><td>AC出力</td><td>PSE適合・漏電遮断動作</td><td>通電/漏電試験</td></tr>
+    <tr><td>架装固定強度</td><td>想定慣性力に耐える <span class="st st-sup">要サプライヤ確定</span></td><td>締結トルク管理・荷重計算書</td></tr>
+    <tr><td>防水(電装)</td><td>IP等級（部位別） <span class="st st-chk">要確認</span></td><td>散水試験</td></tr>
+    <tr><td>室内騒音/照度/CO₂</td><td>§6/§7 目標値</td><td>騒音計・照度計・CO₂計</td></tr>
+    <tr><td>通信フェイルオーバ</td><td>切替 &lt; 5 s</td><td>遮断試験・ログ確認</td></tr>
+  </tbody>
+</table>
+<p class="small">全数検査項目（電源・AC・施錠・通信）と抜取検査項目（騒音・照度・断熱）を分け、検査成績書を車両単位で添付する。</p>
+</section>
+
+<!-- ================= 12. 敵対的評価 ================= -->
+<section class="pagebreak">
+<h2>12. 敵対的評価（レッドチーム）</h2>
+<p class="lead">フルリモートを掲げる企業が自ら参入してきた場合に作りそうな競合製品を「<b>競合A（リモートワーク企業発の想定参入者）</b>」と匿名で想定し、その想定スペックに対してMO-1が上回るための差別化・対抗設計を示す。</p>
+<table class="vs">
+  <thead><tr><th style="width:18%">観点</th><th style="width:30%">競合A 想定スペック</th><th style="width:32%" class="win">MO-1 の対抗設計</th><th style="width:20%">対策ポイント</th></tr></thead>
+  <tbody>
+    <tr><td>通信</td><td>5G＋市販Wi-Fiの二重。衛星は後付け・手動</td><td class="win">衛星＋5G/4G＋Wi-Fi 三重、&lt;5s自動フェイルオーバを電装統合</td><td>SD-WAN標準化で「会議が落ちない」を確約値に</td></tr>
+    <tr><td>電源</td><td>ポータブル電源を車載。実質半日〜1日</td><td class="win">専用48V執務バス＋ソーラー＋駆動電池補充で72h設計</td><td>二系統設計と実測検証で「3日」を再現性ある仕様に</td></tr>
+    <tr><td>執務環境</td><td>後席にデスク後付け、ノートPC中心、遮音弱</td><td class="win">昇降デスク・人間工学チェア・27"・吸音内装・照度/換気を基準準拠</td><td>事務所衛生基準準拠を架装要件に組込み</td></tr>
+    <tr><td>法規・登録</td><td>乗用登録のまま運用（事務室車登録なし）</td><td class="win">8ナンバー事務室車登録を志向、保安基準/PSE/技適を設計段階で潰す</td><td>「合法に事務所として使える」を参入障壁化</td></tr>
+    <tr><td>セキュリティ</td><td>ソフトMDMのみ、物理対策は限定的</td><td class="win">物理(二重施錠/覗き見防止)＋情報(暗号化/ゼロトラスト/MDM)の両面</td><td>物理×情報の統合で顧客データ責任に応える</td></tr>
+    <tr><td>静粛・空調</td><td>標準車載エアコン流用、停車時は電力大</td><td class="win">48V専用ヒートポンプで停車超低消費、≦45dB執務点目標</td><td>断熱＋低消費HVACで72h成立を支える</td></tr>
+    <tr><td>事業構造</td><td>自社向け内製・小規模、外販ノウハウ弱</td><td class="win">RFQ可能な製造仕様＋量産はプラットフォーム調達＋架装</td><td>量産・外販を見据えた仕様化で拡張性に勝つ</td></tr>
+  </tbody>
+</table>
+<p class="quote">対抗の核：競合Aが「既存車＋後付け」で出すのに対し、MO-1は<b>電源二系統・通信三重冗長・事務室車登録・物理/情報セキュリティ</b>を設計段階で統合する。単体スペックでなく「統合と合法性」で上回る。</p>
+</section>
+
+<!-- ================= 13. 数量・コスト枠 ================= -->
+<section class="pagebreak">
+<h2>13. 数量・コスト枠／梱包・輸送</h2>
+<h3>13.1 段階別 数量・コスト枠（仮置き）</h3>
+<div class="note">以下の金額・台数は<b>すべて仮置きの概算</b>であり、確定見積ではない。Phase 0/1 の実コストで置き換える（未確認）。</div>
+<table>
+  <thead><tr><th style="width:18%">段階</th><th class="c" style="width:14%">数量(仮)</th><th style="width:24%">1台あたり概算(仮)</th><th>狙い</th></tr></thead>
+  <tbody>
+    <tr><td>試作(Phase0)</td><td class="c">1</td><td>数百万円規模 <span class="st st-sup">要サプライヤ確定</span></td><td>既存EVバン改造で要件・原価の一次データ取得</td></tr>
+    <tr><td>小ロット(Phase1)</td><td class="c">数台</td><td>逓減を狙う（仮）</td><td>8ナンバー登録モデル、ユニットエコノミクス検証</td></tr>
+    <tr><td>量産(Phase2)</td><td class="c">数十台〜</td><td>大幅逓減（仮）</td><td>プラットフォーム調達＋架装で原価逓減</td></tr>
+  </tbody>
+</table>
+<h3>13.2 梱包・輸送</h3>
+<table>
+  <thead><tr><th style="width:26%">項目</th><th>要件</th></tr></thead>
+  <tbody>
+    <tr><td>車両輸送</td><td>自走 or キャリアカー。アンテナ/ソーラーの高さ・突起の保護養生</td></tr>
+    <tr><td>電池輸送</td><td>UN38.3適合、SOC管理、危険物輸送規則に準拠 <span class="st st-chk">要確認</span></td></tr>
+    <tr><td>什器/電装部品</td><td>個別緩衝梱包、防水、識別ラベル、検査成績書同梱</td></tr>
+    <tr><td>納品書類</td><td>検査成績書・適合証明・技適/PSE証憑・登録準備書類</td></tr>
+  </tbody>
+</table>
+</section>
+
+<!-- ================= 14. オープンissue ================= -->
+<section class="pagebreak">
+<h2>14. 発注時に確定が必要な項目（オープン issue 一覧）</h2>
+<table>
+  <thead><tr><th style="width:5%">#</th><th style="width:28%">項目</th><th>確定すべき内容／確認先</th><th style="width:14%">状態</th></tr></thead>
+  <tbody>
+    <tr><td>1</td><td>ベースプラットフォーム</td><td>自社架装か外部EV調達か。寸法/電圧/航続/充電規格の確定</td><td><span class="st st-sup">要サプライヤ確定</span></td></tr>
+    <tr><td>2</td><td>8ナンバー事務室車要件</td><td>架装比率・物品積載・座席・用途設備（運輸支局）</td><td><span class="st st-chk">要確認</span></td></tr>
+    <tr><td>3</td><td>各規格番号</td><td>UN R100/R10/R118・PSE区分・技適・JIS一般公差の確定</td><td><span class="st st-chk">要確認</span></td></tr>
+    <tr><td>4</td><td>72h電力成立</td><td>HVAC平均消費・日射条件の実測、サブ/ソーラー容量の最終決定</td><td><span class="st st-chk">要確認</span></td></tr>
+    <tr><td>5</td><td>衛星サービス/端末</td><td>国内移動体運用の認可・技適・契約・地域差し替え</td><td><span class="st st-sup">要サプライヤ確定</span></td></tr>
+    <tr><td>6</td><td>車重・軸重・定員</td><td>架装込み重量配分、GVW/免許区分、最大積載量</td><td><span class="st st-chk">要確認</span></td></tr>
+    <tr><td>7</td><td>架装固定強度</td><td>慣性力規定・荷重計算・締結基準</td><td><span class="st st-sup">要サプライヤ確定</span></td></tr>
+    <tr><td>8</td><td>遮音/騒音/断熱の数値</td><td>遮音等級・室内騒音・熱貫流率の目標確定と検証法</td><td><span class="st st-chk">要確認</span></td></tr>
+    <tr><td>9</td><td>コスト・数量</td><td>試作/小ロット/量産の確定見積と発注単位</td><td><span class="st st-sup">要サプライヤ確定</span></td></tr>
+    <tr><td>10</td><td>文書メタ情報</td><td>Document No./Rev/発行日/承認者の確定</td><td><span class="st st-chk">要確認</span></td></tr>
+  </tbody>
+</table>
+
+<p class="foot">
+MU auto ／ MO-1 ― Manufacturing Specification（RFQ Draft）<br>
+発行：株式会社イネブラ（Enabler Inc.）／ Contact: mail@yukihamada.jp<br>
+※本書の数値は別途明記なき限り設計目標値／要件であり、確定値ではありません。
+</p>
+</section>
+
+</body>
+</html>

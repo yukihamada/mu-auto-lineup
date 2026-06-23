@@ -1,0 +1,385 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<title>MO-1 事業計画書 / Business Plan</title>
+<style>
+  @page { size: A4; margin: 16mm 14mm; }
+  @page :first { margin: 0; }
+  * { box-sizing: border-box; }
+  body{
+    font-family:"Hiragino Kaku Gothic ProN","Hiragino Sans","Yu Gothic",sans-serif;
+    color:#15202b; line-height:1.7; font-size:10.5pt; margin:0;
+    -webkit-print-color-adjust:exact; print-color-adjust:exact;
+  }
+  h1,h2,h3,h4{ line-height:1.3; }
+
+  /* ---- Cover ---- */
+  .cover{
+    height:297mm; display:flex; flex-direction:column; justify-content:center;
+    background:linear-gradient(140deg,#0a1f3c 0%,#123a6b 55%,#0e7c66 100%);
+    color:#fff; padding:0 22mm; page-break-after:always;
+  }
+  .cover .kicker{ letter-spacing:.42em; font-size:11pt; opacity:.8; }
+  .cover h1{ font-size:52pt; margin:.15em 0 .1em; font-weight:800; letter-spacing:.02em; }
+  .cover .sub{ font-size:16pt; opacity:.96; margin-bottom:1.6em; line-height:1.6; }
+  .cover .badge{ display:inline-block; background:#10b981; color:#022; font-weight:800;
+    padding:.35em 1.1em; border-radius:999px; font-size:12pt; margin-bottom:2.2em; align-self:flex-start; }
+  .cover .for{ font-size:12pt; opacity:.95; border-top:1px solid rgba(255,255,255,.32); padding-top:1.3em; }
+  .cover .for b{ font-size:16pt; }
+  .cover .meta{ font-size:9.5pt; opacity:.85; margin-top:1.4em; line-height:1.8; }
+
+  /* ---- Sections ---- */
+  section{ page-break-inside:avoid; }
+  h2{ font-size:17pt; color:#0a1f3c; border-left:6px solid #10b981; padding-left:.5em; margin:1.6em 0 .55em; }
+  h3{ font-size:12.5pt; color:#123a6b; margin:1.15em 0 .3em; }
+  h4{ margin:0 0 .3em; color:#0a1f3c; font-size:11pt; }
+  .lead{ font-size:11pt; color:#334; }
+  p{ margin:.5em 0; }
+
+  /* ---- Tables ---- */
+  table{ width:100%; border-collapse:collapse; margin:.6em 0; font-size:9.5pt; }
+  th,td{ border:1px solid #d3dce6; padding:6px 8px; text-align:left; vertical-align:top; }
+  th{ background:#0a1f3c; color:#fff; font-weight:700; }
+  tr:nth-child(even) td{ background:#f4f8fb; }
+  td.num{ text-align:right; font-variant-numeric:tabular-nums; }
+  .score td.pts{ text-align:center; font-weight:800; color:#0e7c66; width:13%; }
+  .score tfoot td{ background:#10b981; color:#022; font-weight:800; font-size:11pt; }
+  .vs th{ background:#123a6b; }
+  .vs .win{ background:#e6f6f0; font-weight:700; }
+  tfoot td{ background:#eef3f8; font-weight:700; }
+
+  /* ---- Cards & components ---- */
+  .grid2{ display:grid; grid-template-columns:1fr 1fr; gap:10px; }
+  .grid3{ display:grid; grid-template-columns:1fr 1fr 1fr; gap:10px; }
+  .card{ border:1px solid #d3dce6; border-radius:8px; padding:10px 12px; background:#fbfdff; }
+  .tag{ display:inline-block; background:#e6f6f0; color:#0e7c66; font-weight:700;
+    font-size:8.5pt; padding:.1em .6em; border-radius:4px; margin:0 .3em .3em 0; }
+  .quote{ background:#0a1f3c; color:#fff; padding:14px 18px; border-radius:8px; font-size:11.5pt; }
+  .small{ font-size:8.5pt; color:#667; }
+  .note{ font-size:8.5pt; color:#667; background:#fffbe9; border:1px solid #ecdfa6; border-radius:6px; padding:6px 10px; margin:.6em 0; }
+  ul,ol{ margin:.3em 0 .3em 1.1em; padding:0; }
+  li{ margin:.15em 0; }
+  .kpi{ display:flex; gap:10px; margin:.7em 0; }
+  .kpi div{ flex:1; text-align:center; border:1px solid #d3dce6; border-radius:8px; padding:8px 6px; background:#fbfdff; }
+  .kpi b{ display:block; font-size:18pt; color:#0e7c66; line-height:1.2; }
+  .kpi span{ font-size:8.5pt; color:#445; }
+  .pagebreak{ page-break-before:always; }
+  .timeline{ list-style:none; margin:.6em 0; padding:0; }
+  .timeline li{ border-left:3px solid #10b981; padding:.2em 0 .8em 1em; margin:0; position:relative; }
+  .toc{ font-size:10pt; }
+  .toc td{ border:none; padding:3px 6px; }
+  .toc td.n{ color:#0e7c66; font-weight:800; width:8%; }
+  .foot{ text-align:right; font-size:8.5pt; color:#889; margin-top:2.4em; border-top:1px solid #e3e9ef; padding-top:.6em; }
+</style>
+</head>
+<body>
+
+<!-- ============ COVER ============ -->
+<div class="cover">
+  <div class="kicker">BUSINESS PLAN ／ 事業計画書</div>
+  <h1>MO-1</h1>
+  <div class="sub">走る本社 ―― Mobile Office One<br>フルリモート時代の「動くオフィス」事業</div>
+  <div class="badge">ペルソナ適合スコア 100 / 100</div>
+  <div class="for">
+    FOR：<b>株式会社キャスター 中川祥太 代表取締役</b><br>
+    <span class="small">― フルリモート経営の第一人者を象徴顧客に ―</span>
+  </div>
+  <div class="meta">
+    提案・運営：株式会社イネブラ（Enabler Inc.）　代表取締役　濱田優貴<br>
+    〒102-0074 東京都千代田区九段南1-5-6 りそな九段ビル5階 KSフロア　／　mail@yukihamada.jp<br>
+    Business Plan v1.0 ／ 投資家・協業先 向け
+  </div>
+</div>
+
+<!-- ============ 目次 ============ -->
+<section>
+<h2>目次</h2>
+<table class="toc">
+  <tr><td class="n">1</td><td>エグゼクティブサマリー</td><td class="n">7</td><td>ビジネスモデルと収益試算</td></tr>
+  <tr><td class="n">2</td><td>市場と課題 ― リモートワーク市場と「最後の一瞬」問題</td><td class="n">8</td><td>GTM（市場参入戦略）</td></tr>
+  <tr><td class="n">3</td><td>ペルソナ（詳細・利用シナリオ）</td><td class="n">9</td><td>ロードマップ（Phase 0–2）</td></tr>
+  <tr><td class="n">4</td><td>プロダクト MO-1</td><td class="n">10</td><td>体制と協業のお願い</td></tr>
+  <tr><td class="n">5</td><td>差別化（対 BYD 比較）</td><td class="n">11</td><td>リスクと対応</td></tr>
+  <tr><td class="n">6</td><td>規制戦略（法規一覧）</td><td></td><td></td></tr>
+</table>
+<div class="note">本書の数値（市場規模・台数・単価・収益）は<b>すべて概算・仮置き</b>であり、外部一次情報での裏取りは未了です。製品スペックは<b>設計目標値</b>であり確定値ではありません。最終仕様・登録要件・各種数値は、実走検証および専門機関・運輸支局との確認を経て確定します。</div>
+</section>
+
+<!-- ============ 1. エグゼクティブサマリー ============ -->
+<section class="pagebreak">
+<h2>1. エグゼクティブサマリー</h2>
+<p class="lead">MO-1 は「移動手段」ではなく「<b>移動する本社（Mobile HQ）</b>」です。フルリモート経営を体現する中川祥太社長と、日本中・世界中に散らばるキャスターのメンバーが、自宅でも地方でも自然の中でも<b>“本社品質”の生産性</b>を維持するための EV モバイルオフィスです。</p>
+<div class="kpi">
+  <div><b>0秒</b><span>通勤（オフィスが来る）</span></div>
+  <div><b>3日</b><span>無補給で執務（電力自立／設計目標）</span></div>
+  <div><b>三重</b><span>通信冗長（衛星＋5G/4G＋Wi-Fi）</span></div>
+  <div><b>100点</b><span>ペルソナ適合スコア</span></div>
+</div>
+<h3>勝ち筋（一段落で）</h3>
+<p>価格と航続で BYD と殴り合うのではなく、戦場を<b>「停車中の生産性＝オフィスとしての完成度」</b>にずらします。<b>ハードウェア × ソフトウェア × 日本の法規適合 × 運用</b>を一体で束ね、車両サブスクと SaaS の継続課金で収益化。量産フェーズでは外部 EV プラットフォームの調達も選択肢とし、自前ハード戦争を回避します。</p>
+<h3>本書で投資家・協業先にお願いしたいこと</h3>
+<ul>
+  <li>キャスター社：象徴顧客 兼 PoC パートナーとしての協業（中核メンバーでの実走検証）</li>
+  <li>投資家：Phase 0–1（コンセプト1台 → 8ナンバー登録モデル数台）の資金</li>
+  <li>協業先：EV プラットフォーム供給・架装・衛星通信・保安/登録の専門パートナー</li>
+</ul>
+</section>
+
+<!-- ============ 2. 市場と課題 ============ -->
+<section class="pagebreak">
+<h2>2. 市場と課題 ― リモートワーク市場と「最後の一瞬」問題</h2>
+<p class="lead">フルリモートは定着したが、「<b>働く場所</b>」の品質は移動の瞬間に崩れる。MO-1 はこの“最後の一瞬”を埋める。</p>
+
+<h3>2.1 市場背景</h3>
+<ul>
+  <li>コロナ以降、リモート／ハイブリッド勤務が制度として定着。働く場所の選択肢が広がった。</li>
+  <li>一方で「自宅は集中できない／カフェはセキュリティと通信が不安／コワーキングは移動が要る」という<b>場所のジレンマ</b>が残る。</li>
+  <li>キャスター社のようにフルリモートを経営哲学とする企業が増え、「どこでも本社品質」への需要が顕在化。</li>
+</ul>
+<div class="note">市場規模（リモートワーク人口・モバイルワーク支出・EV特装車市場など）は本書では数値を置いていません。Phase 0 と並行して一次情報で TAM/SAM/SOM を確定します（未確認）。</div>
+
+<h3>2.2 「最後の一瞬」問題</h3>
+<p>リモートワークの生産性は「<b>停めた瞬間に本社品質になるか</b>」で決まります。移動先・出張先・地方・自然の中で、通信が落ちる・電源が切れる・静かに集中できない・覗き見される・合法的に長く居られない――この“最後の一瞬”の体験崩壊が、リモート経営の隠れたコストです。</p>
+<div class="grid3">
+  <div class="card"><h4>通信の崩壊</h4>会議が落ちる＝仕事が止まる。電波の谷で意思決定が遅延。</div>
+  <div class="card"><h4>環境の崩壊</h4>騒音・姿勢・照度・覗き見。集中とセキュリティが両立しない。</div>
+  <div class="card"><h4>合法性の崩壊</h4>「車中で働く」がグレー。長時間の駐車執務が制度上あいまい。</div>
+</div>
+<p class="quote">課題仮説：リモートワークの最後の障壁は「移動先での執務品質」。これを<b>合法・安定・本社品質</b>で解いた製品は存在しない。</p>
+</section>
+
+<!-- ============ 3. ペルソナ ============ -->
+<section class="pagebreak">
+<h2>3. ペルソナ（詳細・利用シナリオ）</h2>
+<p class="lead">本事業は「誰の何を100点にするか」を最初に固定する。最適化対象＝<b>フルリモート経営者／リモート中核メンバー</b>。</p>
+<div class="grid2">
+  <div class="card">
+    <h4>P1：中川型 リモート経営者</h4>
+    <span class="tag">意思決定者</span><span class="tag">移動が多い</span>
+    <ul>
+      <li>1日6時間以上のオンライン会議と即断</li>
+      <li>地方・出張先でも本社機能を落とせない</li>
+      <li>家族・地域・自然との時間も最大化したい</li>
+      <li>「働く場所の自由」を会社の哲学として体現</li>
+    </ul>
+  </div>
+  <div class="card">
+    <h4>P2：リモート中核メンバー</h4>
+    <span class="tag">実務</span><span class="tag">通信が命</span>
+    <ul>
+      <li>顧客対応・資料作成を中断なく回す</li>
+      <li>静かで集中できる執務環境が必要</li>
+      <li>セキュアに業務データを扱う責任</li>
+      <li>育児・介護と両立、拠点に縛られたくない</li>
+    </ul>
+  </div>
+</div>
+<p class="quote">勝利条件：<b>「車を停めた瞬間、そこが本社の自席と同じかそれ以上になる」</b>。MO-1 はこの一点に全リソースを集中する。</p>
+
+<h3>3.1 利用シナリオ</h3>
+<table>
+  <thead><tr><th>シーン</th><th>従来（場所のジレンマ）</th><th>MO-1 での体験</th></tr></thead>
+  <tbody>
+    <tr><td>地方視察の合間の経営会議</td><td>電波の谷で会議が切れる／カフェを探す</td><td>停車5秒で会議モード。衛星＋5G冗長で落ちない</td></tr>
+    <tr><td>顧客先への移動中の準備</td><td>移動＝デッドタイム、資料が作れない</td><td>L2+運転支援で疲労軽減、到着後すぐ昇降デスクで執務</td></tr>
+    <tr><td>育児と両立する集中作業</td><td>自宅は中断が多い／預け先が必要</td><td>近所に停めて60dB遮音の個室で集中、すぐ戻れる</td></tr>
+    <tr><td>多拠点の共同利用</td><td>各拠点でオフィスを借りる固定費</td><td>1台を社内シェア、稼働ログで予約・経費を管理</td></tr>
+  </tbody>
+</table>
+</section>
+
+<!-- ============ 4. プロダクト ============ -->
+<section class="pagebreak">
+<h2>4. プロダクト MO-1</h2>
+<p class="lead">車を“端末”、運用ソフトと業務オペレーションを“中身”として一体提供する。ハード単体メーカーに対する最大の堀。</p>
+
+<h3>4.1 コンセプトの4本柱</h3>
+<div class="grid2">
+  <div class="card"><h4>① 走る本社</h4>通勤をゼロにする発想の逆転。オフィスが人のところへ移動する。停車5秒で執務開始。</div>
+  <div class="card"><h4>② 三重冗長コックピット</h4>通信・電源・空調を“絶対に切らさない”設計。会議が落ちない安心が生産性の土台。</div>
+  <div class="card"><h4>③ 事務所としての合法性</h4>「車中で働く」をグレーにしない。法的に“事務室”として登録・運用できる EV。</div>
+  <div class="card"><h4>④ サービス一体</h4>車＝端末、運用 SaaS／業務オペ＝中身。ハードとオペレーションをひとつの体験に。</div>
+</div>
+
+<h3>4.2 主要諸元・装備（設計目標値）</h3>
+<table>
+  <thead><tr><th>項目</th><th>設計目標</th><th>項目</th><th>設計目標</th></tr></thead>
+  <tbody>
+    <tr><td>ボディ</td><td>1BOX/バンタイプ（室内で立てる高さ）</td><td>実用航続</td><td>約450km（WLTC相当）</td></tr>
+    <tr><td>駆動電池</td><td>大容量LFP（安全・長寿命）</td><td>執務用サブ電池</td><td>独立系統＋ソーラー充電</td></tr>
+    <tr><td>給電</td><td>V2L、PSE適合AC出力</td><td>無補給執務</td><td>3日（通信・PC・空調込み）</td></tr>
+    <tr><td>通信</td><td>衛星＋5G/4Gマルチキャリア＋Wi-Fi（三重冗長・自動フェイルオーバー）</td><td>遮音</td><td>会議品質60dB級＋吸音内装</td></tr>
+    <tr><td>執務</td><td>昇降デスク・人間工学チェア・27"外部モニタ</td><td>運転支援</td><td>L2+（高速ハンズオフを目標）</td></tr>
+    <tr><td>空調</td><td>停車時 超低消費ヒートポンプ</td><td>セキュリティ</td><td>施錠・覗き見防止・暗号化・MDM</td></tr>
+  </tbody>
+</table>
+<p class="small">※スペックは設計目標値。最終仕様は実走検証・部材調達・登録要件を経て確定（未確定）。</p>
+
+<h3>4.3 ペルソナ適合スコア = 100点（8軸）</h3>
+<table class="score">
+  <thead><tr><th>#</th><th>評価軸</th><th>MO-1 の到達設計</th><th class="pts">配点</th></tr></thead>
+  <tbody>
+    <tr><td>1</td><td>接続性（通信）</td><td>低軌道衛星＋5G/4Gマルチキャリア＋Wi-Fi の三重冗長、自動フェイルオーバー</td><td class="pts">15</td></tr>
+    <tr><td>2</td><td>執務環境</td><td>昇降デスク・人間工学チェア・27"外部モニタ・60dB遮音・事務所衛生基準準拠の照度/換気</td><td class="pts">16</td></tr>
+    <tr><td>3</td><td>エネルギー自立</td><td>駆動用＋執務用サブ電池、ソーラー、V2L。無補給3日執務</td><td class="pts">13</td></tr>
+    <tr><td>4</td><td>静粛・快適</td><td>EV静粛＋吸音内装＋会議用音響。停車空調の超低消費</td><td class="pts">12</td></tr>
+    <tr><td>5</td><td>法規制適合</td><td>特種用途（8ナンバー）事務室車登録／保安基準・PSE・電波法・労務まで一括対応</td><td class="pts">12</td></tr>
+    <tr><td>6</td><td>セキュリティ</td><td>テレワークセキュリティGL準拠：暗号化・覗き見防止・物理施錠・MDM</td><td class="pts">12</td></tr>
+    <tr><td>7</td><td>移動性能</td><td>実用航続450km級、L2+で移動疲労最小化、急速充電対応</td><td class="pts">10</td></tr>
+    <tr><td>8</td><td>事業性（TCO）</td><td>車両サブスク＋連携SaaSで月額化、経費計上・社用シェアの運用設計</td><td class="pts">10</td></tr>
+  </tbody>
+  <tfoot><tr><td colspan="3">合計（ペルソナ適合スコア）</td><td class="pts">100</td></tr></tfoot>
+</table>
+<p class="small">※スコアは「停めた瞬間に本社品質」を基準に、各軸の必須要件を満たした場合に満点。未達は即減点する辛口運用を前提とする評価設計。</p>
+</section>
+
+<!-- ============ 5. 差別化 ============ -->
+<section class="pagebreak">
+<h2>5. 差別化（対 BYD 比較）</h2>
+<p class="lead">BYD の強み（価格・航続・量産・電池）に<b>正面から殴り合わない</b>。戦場を「移動」から「停車中の生産性」へずらす。</p>
+<table class="vs">
+  <thead><tr><th>観点</th><th>BYD（量産EVの土俵）</th><th class="win">MO-1（ずらした土俵）</th></tr></thead>
+  <tbody>
+    <tr><td>価値の中心</td><td>速く・安く・遠くへ「移動」</td><td class="win">停めて「働く」生産性そのもの</td></tr>
+    <tr><td>競争軸</td><td>kWh単価・航続・販売台数</td><td class="win">執務品質・接続安定性・合法性</td></tr>
+    <tr><td>模倣難易度</td><td>ハードは資本で追随可能</td><td class="win">ハード×ソフト×日本法規×運用＝模倣困難</td></tr>
+    <tr><td>収益</td><td>車両売り切り中心</td><td class="win">車両サブスク＋SaaSの継続課金</td></tr>
+    <tr><td>顧客</td><td>不特定多数の個人</td><td class="win">リモート企業・経営者という明確セグメント</td></tr>
+  </tbody>
+</table>
+<p>つまり MO-1 は「EVメーカー」ではなく<b>「働き方を売る会社」</b>。BYD が電池で原価を下げるほど、MO-1 は BYD 等のプラットフォームを“調達”して上に乗る選択肢すら持てる（<b>脱・自前ハード戦争</b>）。模倣困難性の核は、単体スペックではなく「<b>4要素の統合</b>」にあります。</p>
+</section>
+
+<!-- ============ 6. 規制戦略 ============ -->
+<section class="pagebreak">
+<h2>6. 規制戦略（Compliance by Design）</h2>
+<p class="lead">「車内で働く」を曖昧にしないため、関連法規を設計段階で潰し込む。<b>グレーを白にすること</b>が最大の参入障壁になる。</p>
+<table>
+  <thead><tr><th>領域 / 法規</th><th>論点</th><th>MO-1 の突破設計</th></tr></thead>
+  <tbody>
+    <tr><td>道路運送車両法・保安基準</td><td>架装すると型式・車検が問題</td><td>特種用途自動車「事務室車（8ナンバー）」での型式取得を前提に架装設計。保安基準適合で車検通過</td></tr>
+    <tr><td>道路交通法</td><td>駐停車禁止・長時間駐車での執務</td><td>提携パーキング／拠点（道の駅・遊休地）ネットワーク＋アプリで合法な“執務スポット”を提示</td></tr>
+    <tr><td>電波法（技適）</td><td>移動体での衛星通信運用</td><td>国内認可済の移動体向け衛星サービス＋技適取得済機器のみ搭載、技適マーク管理</td></tr>
+    <tr><td>電気用品安全法（PSE）</td><td>車内100V/200V給電の安全</td><td>PSE適合インバータ・コンセント、漏電/過電流保護を標準装備</td></tr>
+    <tr><td>事務所衛生基準規則・安衛法</td><td>“事務所”の照度・換気・温度</td><td>基準を満たす照度照明・強制換気・空調を装備し、労務上も「執務可能環境」を担保</td></tr>
+    <tr><td>テレワークセキュリティ（総務省GL）</td><td>社外での業務データ取扱い</td><td>VPN/ゼロトラスト、覗き見防止、ストレージ暗号化、MDM、物理施錠で準拠</td></tr>
+    <tr><td>労働基準・労務管理</td><td>車内勤務の労働時間・安全配慮</td><td>運転＝労働ではない運用設計、執務ログ連携、安全配慮義務を満たす運用ガイド付帯</td></tr>
+    <tr><td>アイドリング規制・環境条例</td><td>停車中の空調/電源</td><td>EVゆえエンジン無し。バッテリー＋ソーラーで条例抵触ゼロ</td></tr>
+  </tbody>
+</table>
+<p class="note">※具体の型式区分・登録要件・各GLの適用範囲は、最終仕様時に運輸支局／登録機関および専門家と確認の上で確定します（本書は設計方針であり、適合を保証するものではありません）。</p>
+</section>
+
+<!-- ============ 7. ビジネスモデルと収益試算 ============ -->
+<section class="pagebreak">
+<h2>7. ビジネスモデルと収益試算</h2>
+<p class="lead">売り切りではなく<b>車両サブスク＋SaaS継続課金</b>でLTVを最大化する。</p>
+
+<h3>7.1 収益構造</h3>
+<div class="grid2">
+  <div class="card"><h4>① 車両サブスク（月額）</h4>車両・架装・保守・保険・通信回線を含むハードのリース型課金。導入時の初期負担を下げ、社用利用・経費計上を運用設計。</div>
+  <div class="card"><h4>② 連携 SaaS（月額／席）</h4>通信フェイルオーバー、電源×執務時間の可視化、合法執務スポット案内、会議モード、稼働ログ・社内シェア管理。</div>
+</div>
+
+<h3>7.2 概算ユニットエコノミクス（仮置き）</h3>
+<div class="note"><b>以下はすべて仮置きの概算</b>です。原価・サブスク単価・解約率は未検証であり、Phase 0–1 の実コストで置き換えます。投資判断の根拠数値としては扱わないでください。</div>
+<table>
+  <thead><tr><th>項目</th><th class="num">仮置き値</th><th>備考</th></tr></thead>
+  <tbody>
+    <tr><td>車両サブスク 月額（1台）</td><td class="num">約30万円</td><td>車両・架装・保守・保険・通信込みの想定</td></tr>
+    <tr><td>連携SaaS 月額（1席）</td><td class="num">約2万円</td><td>運用ソフト＋業務オペ連携</td></tr>
+    <tr><td>1台あたり月次売上（目安）</td><td class="num">約32万円</td><td>サブスク1＋SaaS1席の最小構成</td></tr>
+    <tr><td>1台あたり初期製作原価（Phase0/1）</td><td class="num">数百万円規模</td><td>既存EVバン改造ベース。量産で逓減を狙う</td></tr>
+    <tr><td>想定 契約継続（粗目安）</td><td class="num">36ヶ月超</td><td>法人契約・社用前提で長期化を想定</td></tr>
+  </tbody>
+</table>
+<p class="small">単価・原価・継続月数はいずれも仮説。LTV/CAC・粗利率は実データ取得後に算定する（現時点 未確認）。</p>
+
+<h3>7.3 段階的な台数イメージ（仮置き）</h3>
+<table>
+  <thead><tr><th>フェーズ</th><th class="num">稼働台数（仮）</th><th>収益の置きどころ</th></tr></thead>
+  <tbody>
+    <tr><td>Phase 0 検証</td><td class="num">1台</td><td>収益化せず学習を最大化（PoC）</td></tr>
+    <tr><td>Phase 1 PoC事業</td><td class="num">数台</td><td>サブスク試験販売でユニットエコノミクス検証</td></tr>
+    <tr><td>Phase 2 量産提携</td><td class="num">数十台〜</td><td>外部プラットフォーム調達で原価逓減、SaaS比率を引き上げ</td></tr>
+  </tbody>
+</table>
+</section>
+
+<!-- ============ 8. GTM ============ -->
+<section class="pagebreak">
+<h2>8. GTM（市場参入戦略）</h2>
+<p class="lead">象徴顧客（中川社長／キャスター）を起点に、ナラティブ → 需要喚起 → 実証の順で積み上げる。</p>
+<ol class="timeline">
+  <li><b>① サイト</b>：コンセプトサイトで「走る本社」のナラティブと設計思想・ペルソナ100点を発信。問い合わせ・ウェイトリストを獲得。</li>
+  <li><b>② PR</b>：象徴顧客（フルリモート経営の第一人者）との取り組みを軸にメディア露出。「働き方を売る会社」として認知を作る。</li>
+  <li><b>③ クラウドファンディング</b>：需要の定量検証と初期資金・初期コミュニティの同時獲得。ペルソナの反応を生データで取得。</li>
+  <li><b>④ PoC</b>：キャスター中核メンバーでの実走検証。ペルソナ100点を実体験で実証し、ユニットエコノミクスを取りにいく。</li>
+</ol>
+<p class="quote">GTMの肝：製品が出来てから売るのではなく、<b>ナラティブと象徴顧客で需要を先に可視化</b>し、その需要で量産投資の意思決定を行う。</p>
+</section>
+
+<!-- ============ 9. ロードマップ ============ -->
+<section class="pagebreak">
+<h2>9. ロードマップ（Phase 0–2）</h2>
+<table>
+  <thead><tr><th>フェーズ</th><th>期間（目安）</th><th>内容</th><th>主要マイルストーン</th></tr></thead>
+  <tbody>
+    <tr><td>Phase 0 検証</td><td>0–3ヶ月</td><td>既存EVバン改造のコンセプト1台。中川社長＋数名で実走検証</td><td>ペルソナ100点の実証、要件・原価の一次データ取得</td></tr>
+    <tr><td>Phase 1 PoC事業</td><td>3–9ヶ月</td><td>8ナンバー登録モデル数台、リモート企業向けサブスク試験販売</td><td>登録要件の確定、ユニットエコノミクス検証、初期受注</td></tr>
+    <tr><td>Phase 2 量産提携</td><td>9–24ヶ月</td><td>外部EVプラットフォーム調達（BYD等含む）＋MO-1架装・OS・運用で上乗せ</td><td>原価逓減、SaaS収益比率の拡大、多社展開</td></tr>
+  </tbody>
+</table>
+<p class="small">※期間は目安。登録・調達・需要の確度に応じて柔軟に見直す。</p>
+</section>
+
+<!-- ============ 10. 体制と協業 ============ -->
+<section class="pagebreak">
+<h2>10. 体制と協業のお願い</h2>
+<h3>10.1 推進体制</h3>
+<table>
+  <thead><tr><th>役割</th><th>担い手</th><th>主担当</th></tr></thead>
+  <tbody>
+    <tr><td>提案・事業運営</td><td>株式会社イネブラ（代表 濱田優貴）</td><td>事業設計、ソフト/OS、規制・運用設計、資金調達</td></tr>
+    <tr><td>象徴顧客／PoCパートナー（仮説）</td><td>株式会社キャスター（中川祥太 代表）</td><td>実走検証、ペルソナ100点の実証、ナラティブの共同発信</td></tr>
+    <tr><td>EVプラットフォーム供給（協業先募集）</td><td>外部EVメーカー</td><td>量産フェーズの車両プラットフォーム調達</td></tr>
+    <tr><td>架装・保安/登録（協業先募集）</td><td>特装架装・登録の専門事業者</td><td>8ナンバー事務室車の架装・保安基準・型式取得</td></tr>
+    <tr><td>通信（協業先募集）</td><td>衛星／モバイル通信事業者</td><td>移動体向け衛星＋5G冗長の提供</td></tr>
+  </tbody>
+</table>
+<div class="note">キャスター社との連携は本書時点で<b>協業仮説</b>であり、合意済の事実ではありません（未確認）。本提案をもって協業のご相談を差し上げる段階です。</div>
+
+<h3>10.2 キャスターさまへのお願い（協業仮説）</h3>
+<ul>
+  <li>Phase 0：中川社長と中核メンバーによる実走検証へのご参加</li>
+  <li>象徴顧客としての共同ナラティブ発信（「働く場所の自由」を物理空間へ拡張）</li>
+  <li>Phase 1：リモート企業向けサブスクの初期顧客・フィードバック提供</li>
+</ul>
+</section>
+
+<!-- ============ 11. リスクと対応 ============ -->
+<section class="pagebreak">
+<h2>11. リスクと対応</h2>
+<table>
+  <thead><tr><th>リスク</th><th>対応</th></tr></thead>
+  <tbody>
+    <tr><td>型式・登録のハードル</td><td>Phase0は既存車改造で回避、専門家・運輸支局と早期に登録要件を確定</td></tr>
+    <tr><td>衛星通信の国内運用</td><td>認可済サービス・技適機器に限定、提供状況に応じ5G主＋衛星補完へ可変</td></tr>
+    <tr><td>自前ハードのコスト</td><td>量産は外部EVプラットフォーム調達、付加価値はソフト/サービスに集中</td></tr>
+    <tr><td>需要の不確実性</td><td>象徴顧客の基盤とCFで初期需要を可視化、サブスクで初期負担を低減</td></tr>
+    <tr><td>収益数値の前提崩れ</td><td>本書の数値は仮置き。Phase0/1の実データで都度更新し投資判断に反映</td></tr>
+    <tr><td>協業の不成立</td><td>象徴顧客はキャスターを第一候補としつつ、他リモート先進企業も並行で打診</td></tr>
+  </tbody>
+</table>
+<p class="quote">結論：MO-1 は「車を作る」プロジェクトではなく、<b>「働く場所の自由」を物理空間に拡張する</b>事業。BYDの土俵を避け、日本の規制を味方に変え、ペルソナを100点にする。</p>
+
+<p class="foot">
+MO-1 Business Plan v1.0　／　提案・運営：株式会社イネブラ（Enabler Inc.）代表取締役 濱田優貴<br>
+〒102-0074 東京都千代田区九段南1-5-6 りそな九段ビル5階 KSフロア　／　mail@yukihamada.jp<br>
+※本書の市場・台数・単価・収益は概算・仮置き、スペックは設計目標値です。確定値ではありません。
+</p>
+</section>
+
+</body>
+</html>

@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>MU auto — プロジェクト管理ボード</title>
+<style>
+  :root{--navy:#0a1f3c;--teal:#0e7c66;--green:#10b981;--ink:#15202b;--amber:#e0a400;--grey:#8aa}
+  *{margin:0;padding:0;box-sizing:border-box}
+  body{font-family:"Hiragino Kaku Gothic ProN","Hiragino Sans",sans-serif;color:var(--ink);background:#eef3f8;line-height:1.6}
+  a{color:var(--teal);text-decoration:none;font-weight:600}a:hover{text-decoration:underline}
+  header{background:linear-gradient(135deg,#0a1f3c,#0e7c66);color:#fff;padding:38px 24px 30px}
+  .wrap{max-width:1180px;margin:0 auto;padding:0 20px}
+  header .k{letter-spacing:.35em;font-size:12px;opacity:.85;font-weight:700}
+  header h1{font-size:30px;margin:4px 0 4px}
+  header p{opacity:.9;font-size:14px}
+  .chips{display:flex;gap:12px;flex-wrap:wrap;margin-top:18px}
+  .chip{background:rgba(255,255,255,.12);border-radius:10px;padding:10px 16px;font-size:14px}
+  .chip b{font-size:22px;display:block}
+  .chip.done b{color:#7ef0c2}.chip.prog b{color:#ffd86b}.chip.plan b{color:#bcd2ec}
+  main{max-width:1180px;margin:0 auto;padding:28px 20px 70px}
+  h2{font-size:18px;color:var(--navy);margin:28px 0 12px;border-left:5px solid var(--green);padding-left:10px}
+  table{width:100%;border-collapse:collapse;background:#fff;border-radius:12px;overflow:hidden;box-shadow:0 6px 20px rgba(10,31,60,.06);font-size:13.5px}
+  th,td{padding:11px 12px;text-align:left;border-bottom:1px solid #e7eef5;vertical-align:middle}
+  th{background:var(--navy);color:#fff;font-weight:700;font-size:12.5px}
+  tr:last-child td{border-bottom:none}
+  td.mdl{font-weight:800;color:var(--navy);white-space:nowrap}
+  td.persona{color:#5a6b80;font-size:12.5px}
+  .st{display:inline-block;padding:3px 10px;border-radius:999px;font-weight:800;font-size:11.5px;white-space:nowrap}
+  .st-done{background:#e6f6f0;color:#0e7c66}.st-prog{background:#fff4d6;color:#9a7400}.st-plan{background:#eef2f6;color:#6b7c8f}
+  .links a{margin-right:10px;white-space:nowrap;font-size:12.5px}
+  .muted{color:#9aa7b5}
+  .cards{display:grid;grid-template-columns:repeat(auto-fill,minmax(260px,1fr));gap:14px}
+  .card{background:#fff;border:1px solid #e1e8f0;border-radius:12px;padding:14px 16px;box-shadow:0 4px 14px rgba(10,31,60,.05)}
+  .card h3{font-size:15px;color:var(--navy);margin-bottom:3px}
+  .card p{font-size:12.5px;color:#5a6b80}
+  .task{background:#fff;border:1px solid #e1e8f0;border-left:5px solid var(--amber);border-radius:10px;padding:12px 16px;margin-bottom:10px;display:flex;justify-content:space-between;gap:12px;flex-wrap:wrap}
+  .task b{color:var(--navy)}
+  .bar{background:#fff;border-radius:12px;padding:16px 18px;box-shadow:0 6px 20px rgba(10,31,60,.06);display:flex;justify-content:space-between;align-items:center;gap:14px;flex-wrap:wrap;margin-bottom:8px}
+  .btn{background:var(--navy);color:#fff;padding:9px 16px;border-radius:9px;font-weight:700;font-size:13px}
+  .note{color:#67788c;font-size:12px;margin-top:18px}
+  footer{background:var(--navy);color:#aebfd4;text-align:center;padding:24px;font-size:12.5px;margin-top:30px}
+</style>
+</head>
+<body>
+<header><div class="wrap">
+  <div class="k">MU auto · PROJECT BOARD</div>
+  <h1>プロジェクト管理ボード</h1>
+  <p>「作りたいもの・作っているもの・できたもの」を一覧で状況管理。各モデルの仕様書・紙芝居・発注資料・MU販売ページへ。</p>
+  <div class="chips">
+    <div class="chip done"><b id="c-done">–</b>完成</div>
+    <div class="chip prog"><b id="c-prog">–</b>作成中</div>
+    <div class="chip plan"><b id="c-plan">–</b>計画中</div>
+  </div>
+</div></header>
+
+<main>
+  <div class="bar">
+    <div><b>MU 販売ストア（wearmu）</b><br><span class="muted" style="font-size:12.5px">公開中の6モデル（device・先行予約）</span></div>
+    <a class="btn" href="https://wearmu.com/shop?brand=mu-auto" target="_blank">MU auto ストアを開く</a>
+  </div>
+  <div class="bar">
+    <div><b>ラインナップLP</b><br><span class="muted" style="font-size:12.5px">対外向けの一覧サイト</span></div>
+    <a class="btn" href="index.html" target="_blank">ラインナップを開く</a>
+  </div>
+
+  <h2>車種ステータス</h2>
+  <table><thead><tr><th>モデル</th><th>状態</th><th>ペルソナ</th><th>仕様書</th><th>紙芝居</th><th>MU販売</th><th>その他資料</th></tr></thead>
+  <tbody id="rows"></tbody></table>
+
+  <h2>🔧 作成中タスク</h2>
+  <div id="tasks"></div>
+
+  <h2>📋 計画中（バックログ・アイデア）</h2>
+  <div class="cards" id="backlog"></div>
+
+  <p class="note" id="updnote"></p>
+  <p class="note">※ 記載スペックはすべて「設計目標値・構想段階」。MO-MEDの医療提供は医療機関・有資格者が主体で、当社は車両・設備提供（医療法・薬機法等の適合確認と専門家確認が前提／未確認）。価格・仕様・実現性は変更されます。お問い合わせ: mail@yukihamada.jp</p>
+</main>
+<footer>MU auto — 運営: 株式会社イネブラ（Enabler Inc.）／ mail@yukihamada.jp</footer>
+
+<script>
+const PDP="https://wearmu.com/shop/";
+const MODELS=[
+ {id:"mo1",name:"MO-1 走る本社",persona:"リモートワーカー・経営者",status:"done",
+  spec:"specs/mo1.html",video:"video/mo1.mp4",mu:PDP+"MUAUTO-AGENT-DEVICE-e6bc5d7f",
+  extra:[["設計書","docs/MO-1_design.pdf"],["企画書","docs/MO-1_kikakusho.pdf"],["発注仕様(spec_mfg)","docs/MO-1_spec_mfg.pdf"],["中国向けRFQ(中文/EN)","china/index.html"]]},
+ {id:"exe",name:"MO-EXE 移動役員室",persona:"エグゼクティブ・VIP",status:"done",
+  spec:"specs/exe.html",video:"video/exe.mp4",mu:PDP+"MUAUTO-AGENT-DEVICE-cff3c7ee",extra:[]},
+ {id:"kara",name:"MO-KARA 走る歌室",persona:"パーティ・カラオケ",status:"done",
+  spec:"specs/kara.html",video:"video/kara.mp4",mu:PDP+"MUAUTO-AGENT-DEVICE-4b738388",extra:[]},
+ {id:"dojo",name:"MO-DOJO 走る道場",persona:"柔術・格闘技・地方",status:"done",
+  spec:"specs/dojo.html",video:"video/dojo.mp4",mu:PDP+"MUAUTO-AGENT-DEVICE-57e73cfc",extra:[]},
+ {id:"med",name:"MO-MED 移動診療支援EV",persona:"医療機関・自治体・僻地/災害",status:"prog",statusLabel:"改訂中(医療法規)",
+  spec:"specs/med.html",video:"video/med.mp4",mu:PDP+"MUAUTO-AGENT-DEVICE-8d6080c5",
+  extra:[["医療法規 敵対的評価反映中","#"]]},
+ {id:"camp",name:"MO-CAMP 焚き火基地",persona:"経営者リトリート・合宿",status:"done",
+  spec:"specs/camp.html",video:"video/camp.mp4",mu:PDP+"MUAUTO-AGENT-DEVICE-2eed4a7c",extra:[]},
+];
+const TASKS=[
+ {t:"MO-1 メーカー着手ブリーフ動画（日本語／中国語・本人声）",s:"M5で本人声合成→動画化(中文クロスリンガル)。完成後ボード/サイトへ"},
+ {t:"MO-MED 医療法規コンプライアンス改訂",s:"提供主体の分離・名称・誇大表現除去・安全/データ/倫理章の追加（敵対的評価2観点を反映）"},
+ {t:"中国メーカーへのRFQ送信準備",s:"宛先・締切・数量を確定（送信は人間ゲート）。候補: 宇通(中)・トノックス(日)"},
+];
+const BACKLOG=[
+ {n:"MO-LIB 走る図書館",d:"子ども・地方教育。本＋学習空間＋通信"},
+ {n:"MO-CAFE 走るカフェ",d:"イベント・地域。キッチン＋電源＋客席"},
+ {n:"MO-STUDIO 走る撮影スタジオ",d:"クリエイター。防音＋照明＋配信"},
+ {n:"MO-VET 移動動物病院",d:"ペット・畜産。診察＋検査（規制要確認）"},
+ {n:"MO-SHOP 移動物販",d:"地方・催事。陳列＋決済＋保冷"},
+ {n:"MO-BOSAI 防災司令車",d:"自治体。EMIS連携＋電源＋通信拠点"},
+];
+function row(m){
+ const lbl=m.statusLabel||({done:"完成",prog:"作成中",plan:"計画中"}[m.status]);
+ const cls={done:"st-done",prog:"st-prog",plan:"st-plan"}[m.status];
+ const extra=m.extra.length?m.extra.map(e=>e[1]==="#"?`<span class="muted">${e[0]}</span>`:`<a href="${e[1]}" target="_blank">${e[0]}</a>`).join("　"):'<span class="muted">—</span>';
+ return `<tr><td class="mdl">${m.name}</td><td><span class="st ${cls}">${lbl}</span></td>
+ <td class="persona">${m.persona}</td>
+ <td class="links"><a href="${m.spec}" target="_blank">仕様書</a></td>
+ <td class="links">${m.video?`<a href="${m.video}" target="_blank">紙芝居</a>`:'<span class="muted">—</span>'}</td>
+ <td class="links"><a href="${m.mu}" target="_blank">販売</a></td>
+ <td class="links">${extra}</td></tr>`;
+}
+document.getElementById("rows").innerHTML=MODELS.map(row).join("");
+document.getElementById("tasks").innerHTML=TASKS.map(t=>`<div class="task"><div><b>${t.t}</b><br><span class="muted" style="font-size:12.5px">${t.s}</span></div><span class="st st-prog">作成中</span></div>`).join("");
+document.getElementById("backlog").innerHTML=BACKLOG.map(b=>`<div class="card"><h3>${b.n}</h3><p>${b.d}</p><span class="st st-plan" style="margin-top:8px;display:inline-block">計画中</span></div>`).join("");
+document.getElementById("c-done").textContent=MODELS.filter(m=>m.status==="done").length;
+document.getElementById("c-prog").textContent=MODELS.filter(m=>m.status==="prog").length+TASKS.length;
+document.getElementById("c-plan").textContent=BACKLOG.length;
+</script>
+</body>
+</html>
