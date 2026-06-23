@@ -47,6 +47,22 @@
   </div>
 </header>
 <main>
+  <section style="background:#fff;border:1px solid #e1e8f0;border-radius:16px;padding:18px;margin-bottom:24px;box-shadow:0 6px 22px rgba(10,31,60,.06)">
+    <video controls preload="metadata" style="width:100%;border-radius:12px;background:#0a1f3c;display:block" src="video/reel.mp4"></video>
+    <p style="text-align:center;color:#5a6b80;font-size:13px;margin-top:8px">▶ 1分で分かる「つくっているもの」（本人声）</p>
+  </section>
+
+  <section style="background:linear-gradient(135deg,#0a1f3c,#0e7c66);color:#fff;border-radius:16px;padding:22px 24px;margin-bottom:26px">
+    <h2 style="color:#fff;border:none;padding:0;margin:0 0 6px">このページの使い方 ／ 手伝い方</h2>
+    <p style="opacity:.93;font-size:14px;margin-bottom:14px">濱田優貴がMUで企画・製作している「もの」の公開プロフィールです。各カードの3つのボタンで関われます。</p>
+    <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:12px">
+      <div style="background:rgba(255,255,255,.1);border-radius:10px;padding:12px 14px"><b style="color:#7ef0c2">① 予約</b><br><span style="font-size:13px;opacity:.92">先行予約・購入（MUの商品ページへ）。いちばんの応援になります。</span></div>
+      <div style="background:rgba(255,255,255,.1);border-radius:10px;padding:12px 14px"><b style="color:#bfe9da">② 見る</b><br><span style="font-size:13px;opacity:.92">紙芝居（本人声の説明動画）や詳細ページを見る。</span></div>
+      <div style="background:rgba(255,255,255,.1);border-radius:10px;padding:12px 14px"><b style="color:#ffd86b">③ 手伝う</b><br><span style="font-size:13px;opacity:.92">メールが開きます（件名に「〇〇を手伝いたい」が自動で入ります）。</span></div>
+    </div>
+    <p style="font-size:13px;opacity:.92;margin-top:14px"><b>手伝えること（例）：</b>設計・エンジニアリング／製造・サプライヤの紹介／広報・SNS拡散／出資・協賛／ユーザーテスト・モニター／翻訳・海外展開。少しの紹介でも大歓迎です。連絡先 mail@yukihamada.jp</p>
+  </section>
+
   <h2>🚐 MU auto — クルマ</h2>
   <p class="sub">ペルソナごとに磨いた受注生産EV。先行予約受付中。</p>
   <div class="grid" id="g-auto"></div>
@@ -62,6 +78,10 @@
   <h2>🔥 その他のMUプロジェクト</h2>
   <p class="sub">販売中のストア。覗いて・買って・応援してください。</p>
   <div class="grid" id="g-etc"></div>
+
+  <h2>🔗 実際のページ一覧</h2>
+  <p class="sub">このプロジェクト群を構成している、本物のページです。</p>
+  <div class="grid" id="g-pages"></div>
 
   <p class="note">※ 記載は設計目標・構想を含み、価格・仕様・時期は変更されます。MO-MEDの医療提供は医療機関・有資格者が主体（適合確認は専門家確認が前提）。お問い合わせ・協力: mail@yukihamada.jp</p>
 </main>
@@ -98,6 +118,19 @@ document.getElementById("g-auto").innerHTML=AUTO.map(a=>`<div class="card">${ph(
 document.getElementById("g-house").innerHTML=HOUSE.map(h=>`<div class="card">${ph(h[1])}<div class="bd"><span class="badge b-yoyaku" style="position:static;align-self:flex-start;margin-bottom:8px">受注設計</span><div class="nm">${h[0]}</div><div class="ln">北海道・熊牛のリトリート住宅。</div><div class="cta"><a class="c-res" href="${PDP+h[2]}" target="_blank">相談・予約</a><a class="c-see" href="${PDP+h[2]}" target="_blank">見る</a><a class="c-help" href="${help(h[0])}">手伝う</a></div></div></div>`).join("");
 document.getElementById("g-gi").innerHTML=GI.map(g=>`<div class="card">${ph("",g[2])}<div class="bd"><span class="badge b-plan" style="position:static;align-self:flex-start;margin-bottom:8px">企画中・先行</span><div class="nm">${g[0]}</div><div class="ln">${g[1]}</div><div class="cta"><a class="c-res" href="${PDP+g[3]}" target="_blank">先行予約</a><a class="c-see" href="${PDP+g[3]}" target="_blank">見る</a><a class="c-help" href="${help(g[0])}">手伝う</a></div></div></div>`).join("");
 document.getElementById("g-etc").innerHTML=ETC.map(e=>`<div class="card">${ph(e[1],"✦")}<div class="bd"><span class="badge b-sell" style="position:static;align-self:flex-start;margin-bottom:8px">販売中</span><div class="nm">${e[0]}</div><div class="ln">ストアで販売中。</div><div class="cta"><a class="c-res" href="https://wearmu.com/${e[2]}" target="_blank">買う</a><a class="c-see" href="https://wearmu.com/${e[2]}" target="_blank">見る</a><a class="c-help" href="${help(e[0])}">手伝う</a></div></div></div>`).join("");
+const PAGES=[
+ ["👤 公開プロフィール（このページ）","profile.html","予約・見る・手伝うの入口"],
+ ["▶ 1分紹介動画（本人声）","video/reel.mp4","つくっているもの全体の紙芝居"],
+ ["🚐 MU auto ラインナップLP","index.html","6車種の対外向け紹介サイト"],
+ ["📋 プロジェクト管理ボード","manage.html","計画中/作成中/完成の状況管理"],
+ ["🛒 MU auto ストア（買える）","https://wearmu.com/mu-auto","6車種を予約・購入"],
+ ["🌏 MU プロフィール拠点 /yuki","https://wearmu.com/yuki","MU内のプロジェクト案内"],
+ ["🥋 柔術・道着ストア","https://wearmu.com/mu-ippon","犬の道着・スポンサー道着"],
+ ["🏠 bim.house ストア","https://wearmu.com/bim-house","SOLUNA 熊牛 L/M/S"],
+ ["🇨🇳 中国メーカー向けRFQ（中文/EN）","china/index.html","MO-1を発注するための仕様・見積依頼"],
+ ["📑 MO-1 設計書 / 企画書 / 発注仕様","docs/MO-1_spec_mfg.pdf","製造発注レベルの資料"],
+];
+document.getElementById("g-pages").innerHTML=PAGES.map(p=>`<div class="card"><div class="bd"><div class="nm" style="font-size:15px">${p[0]}</div><div class="ln">${p[2]}</div><div class="cta"><a class="c-res" href="${p[1]}" target="_blank">開く</a></div></div></div>`).join("");
 </script>
 </body>
 </html>
