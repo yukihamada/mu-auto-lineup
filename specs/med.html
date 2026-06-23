@@ -1,0 +1,248 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<title>MO-MED 巡回診療所 設計書</title>
+<style>
+  @page { size: A4; margin: 16mm 14mm; }
+  * { box-sizing: border-box; }
+  body{
+    font-family:"Hiragino Kaku Gothic ProN","Hiragino Sans","Yu Gothic",sans-serif;
+    color:#15202b; line-height:1.7; font-size:10.5pt; margin:0;
+    -webkit-print-color-adjust:exact; print-color-adjust:exact;
+  }
+  h1,h2,h3{ line-height:1.3; }
+  .cover{
+    height:265mm; display:flex; flex-direction:column; justify-content:center;
+    background:linear-gradient(140deg,#0a1f3c 0%,#0e7c66 60%,#10b981 100%);
+    color:#fff; padding:0 18mm; page-break-after:always;
+  }
+  .cover .kicker{ letter-spacing:.4em; font-size:11pt; opacity:.85; }
+  .cover h1{ font-size:42pt; margin:.2em 0 .1em; font-weight:800; }
+  .cover .sub{ font-size:15pt; opacity:.95; margin-bottom:2em; }
+  .cover .for{ font-size:12pt; opacity:.9; border-top:1px solid rgba(255,255,255,.3); padding-top:1.2em; }
+  .cover .for b{ font-size:14pt; }
+  .badge{ display:inline-block; background:#fff; color:#0e7c66; font-weight:800;
+    padding:.3em 1em; border-radius:999px; font-size:12pt; margin-top:1.5em; }
+  section{ page-break-inside:avoid; }
+  h2{ font-size:17pt; color:#0a1f3c; border-left:6px solid #10b981; padding-left:.5em; margin:1.8em 0 .6em; }
+  h3{ font-size:12.5pt; color:#0e7c66; margin:1.2em 0 .3em; }
+  .lead{ font-size:11pt; color:#334; }
+  table{ width:100%; border-collapse:collapse; margin:.6em 0; font-size:9.5pt; }
+  th,td{ border:1px solid #d3dce6; padding:6px 8px; text-align:left; vertical-align:top; }
+  th{ background:#0a1f3c; color:#fff; font-weight:700; }
+  tr:nth-child(even) td{ background:#f3faf7; }
+  .score td.pts{ text-align:center; font-weight:800; color:#0e7c66; width:14%; }
+  .score tfoot td{ background:#10b981; color:#fff; font-weight:800; font-size:11pt; }
+  .grid2{ display:grid; grid-template-columns:1fr 1fr; gap:10px; }
+  .card{ border:1px solid #d3dce6; border-radius:8px; padding:10px 12px; background:#fbfefc; }
+  .card h4{ margin:0 0 .3em; color:#0a1f3c; font-size:11pt; }
+  .tag{ display:inline-block; background:#e6f6f0; color:#0e7c66; font-weight:700;
+    font-size:8.5pt; padding:.1em .6em; border-radius:4px; margin:0 .3em .3em 0; }
+  .vs th{ background:#0e7c66; }
+  .vs .win{ background:#e6f6f0; font-weight:700; }
+  .pagebreak{ page-break-before:always; }
+  .quote{ background:#0a1f3c; color:#fff; padding:14px 18px; border-radius:8px; font-size:11.5pt; }
+  .small{ font-size:8.5pt; color:#667; }
+  ul{ margin:.3em 0 .3em 1.1em; padding:0; }
+  li{ margin:.15em 0; }
+  .kpi{ display:flex; gap:10px; margin:.6em 0; }
+  .kpi div{ flex:1; text-align:center; border:1px solid #d3dce6; border-radius:8px; padding:8px; background:#fbfefc; }
+  .kpi b{ display:block; font-size:18pt; color:#0e7c66; }
+  .warn{ background:#fff7ed; border:1px solid #f0c89a; border-radius:8px; padding:10px 14px; font-size:9.5pt; color:#7a4a12; margin:.6em 0; }
+  .warn b{ color:#a8560a; }
+</style>
+</head>
+<body>
+
+<div class="cover">
+  <div class="kicker">MOBILE CLINIC EV / DESIGN DOCUMENT</div>
+  <h1>MO-MED 巡回診療所</h1>
+  <div class="sub">医療が、患者のところへ走っていく ―― Mobile Clinic<br>僻地・離島・災害対応の移動診療 EV</div>
+  <div class="badge">ペルソナ適合スコア（設計基準） 100 / 100</div>
+  <div class="for">
+    FOR: <b>地域医療を担う医師・自治体・僻地／離島／被災地の住民の皆さま</b><br>
+    <span class="small">提案：濱田優貴（MU auto）　／　Concept Design Document v1.0　／　連絡先 mail@yukihamada.jp</span>
+  </div>
+</div>
+
+<section>
+<h2>0. エグゼクティブサマリー</h2>
+<p class="lead">MO-MED は「医療を受けに行く」を「医療が来てくれる」へ反転させる<b>移動診療 EV</b> です。医師がいない・通院が困難・災害で病院が機能しない――そんな場所へ、診察スペース・簡易検査・オンライン診療・コールドチェーンを積んで、医療を患者のところまで走らせます。</p>
+<div class="kpi">
+  <div><b>1台</b>で診察〜簡易検査〜オンライン診療まで</div>
+  <div><b>3重</b>通信冗長（設計目標）で遠隔診療を切らさない</div>
+  <div><b>電源自立</b>停電・被災下でも稼働を目指す</div>
+  <div><b>100点</b>ペルソナ適合（設計基準）</div>
+</div>
+<p>勝利条件は一点――<b>「医療が、患者のところへ走っていく」</b>。MO-MED は移動性能で他社と競うのではなく、「車内が、安全で衛生的な診療の場として成立しているか」という一点に全リソースを集中します。</p>
+<div class="warn"><b>重要：</b>本書は車両・装備の<b>設計方針および設計目標値</b>を示すものです。医療提供そのもの（診療行為・検査・調剤・ワクチン管理）は、<b>医療法・薬機法・医療機器の認証／承認・有資格者による運用</b>の対象であり、本書では断定しません。実装・運用にあたっては、各項目を所管行政・医療法務・薬事の専門家と<b>必ず確認</b>してください（本書中「要確認／要専門家確認」と明記）。</div>
+</section>
+
+<section>
+<h2>1. ペルソナ定義</h2>
+<p class="lead">本設計書は「誰の何を100点にするか」を最初に固定します。最適化対象＝<b>地域医療を届ける医師・運営する自治体・受け取る住民</b>の三者。</p>
+<div class="grid2">
+  <div class="card">
+    <h4>P1：地域・僻地を担う医師／医療従事者</h4>
+    <span class="tag">提供者</span><span class="tag">安全に診たい</span>
+    <ul>
+      <li>限られた人員で広域をカバーしたい</li>
+      <li>清潔・衛生区画が確保された場で診療したい</li>
+      <li>専門医とオンラインで連携して判断したい</li>
+      <li>検体・ワクチンを適切な温度で扱いたい</li>
+    </ul>
+  </div>
+  <div class="card">
+    <h4>P2：自治体／医療機関（運営主体）</h4>
+    <span class="tag">導入判断</span><span class="tag">合法運用</span>
+    <ul>
+      <li>無医地区・通院困難地域をカバーしたい</li>
+      <li>災害時の医療継続（BCP）に備えたい</li>
+      <li>関連法規に適合した形で運用したい</li>
+      <li>費用と稼働を見通して導入したい</li>
+    </ul>
+  </div>
+  <div class="card">
+    <h4>P3：僻地・離島の住民</h4>
+    <span class="tag">受益者</span><span class="tag">通院が大変</span>
+    <ul>
+      <li>近くに病院がなく通院に半日かかる</li>
+      <li>高齢・車椅子で移動の負担が大きい</li>
+      <li>定期的に診てもらえる安心がほしい</li>
+    </ul>
+  </div>
+  <div class="card">
+    <h4>P4：被災地の住民・避難者</h4>
+    <span class="tag">受益者</span><span class="tag">緊急</span>
+    <ul>
+      <li>病院が被災し医療が止まっている</li>
+      <li>持病の薬・処置を絶やせない</li>
+      <li>避難所まで医療が来てほしい</li>
+    </ul>
+  </div>
+</div>
+<p class="quote">ペルソナの“勝利条件”：<b>「医療が、患者のところへ走っていく」</b>。MO-MED はこの一点に全リソースを集中する。</p>
+</section>
+
+<section class="pagebreak">
+<h2>2. ペルソナ適合スコア = 100点（設計基準）</h2>
+<p class="lead">8軸×配点で「ペルソナの勝利条件」を満たせているかを決定論的に採点。各軸は「これが無いとペルソナが0点を付ける」要件で構成。<b>満点は“設計目標を満たした場合”の基準値</b>であり、実機の達成・適合は検証および専門家確認を前提とする。</p>
+<table class="score">
+  <thead><tr><th>#</th><th>評価軸</th><th>ペルソナにとっての意味</th><th>MO-MED の到達設計（目標）</th><th class="pts">配点</th></tr></thead>
+  <tbody>
+    <tr><td>1</td><td>到達性（走っていく）</td><td>医療が届かなければ意味がない</td><td>狭路・離島フェリー積載も想定したサイズ設計、実用航続の確保、車椅子リフト前提のバリアフリー</td><td class="pts">15</td></tr>
+    <tr><td>2</td><td>診療環境（清潔・衛生）</td><td>安全に診られる場であること</td><td>診察スペースと清潔／衛生区画の分離、洗浄・手指衛生設備、換気。<b>医療法上の基準適合は要確認</b></td><td class="pts">15</td></tr>
+    <tr><td>3</td><td>オンライン診療（通信）</td><td>専門医連携が切れたら判断できない</td><td>低軌道衛星＋5G/4G＋Wi-Fi の三重冗長（設計目標）、自動フェイルオーバー</td><td class="pts">14</td></tr>
+    <tr><td>4</td><td>簡易検査（POCT想定）</td><td>その場で一次判断したい</td><td>POCT機器の搭載スペース・電源・データ連携を想定。<b>機器の医療機器認証・運用は要確認</b></td><td class="pts">12</td></tr>
+    <tr><td>5</td><td>コールドチェーン</td><td>ワクチン・検体は温度管理が命</td><td>医療用保冷庫の搭載と温度ログを想定。<b>ワクチン保管基準適合は要確認</b></td><td class="pts">12</td></tr>
+    <tr><td>6</td><td>電源自立</td><td>停電・被災下でも止まれない</td><td>駆動用とは独立した医療機器用サブ電源、ソーラー、外部給電（V2L想定）</td><td class="pts">12</td></tr>
+    <tr><td>7</td><td>バリアフリー</td><td>高齢・車椅子でも乗れる</td><td>車椅子リフト／スロープ、段差レス動線、ストレッチャー搬入を想定</td><td class="pts">10</td></tr>
+    <tr><td>8</td><td>運営性・合法性</td><td>合法に・継続して運用できる</td><td>自治体／医療機関向けの導入・運用設計。<b>車両登録区分・医療法・薬機法適合は要確認</b></td><td class="pts">10</td></tr>
+  </tbody>
+  <tfoot><tr><td colspan="4">合計（ペルソナ適合スコア・設計基準）</td><td class="pts">100</td></tr></tfoot>
+</table>
+<p class="small">※スコアは「ペルソナの勝利条件＝医療が患者のところへ走っていく」を基準に、各軸の設計目標を満たした場合に満点とする設計基準値。実機の性能・法適合は検証および専門家確認後に確定する。</p>
+</section>
+
+<section class="pagebreak">
+<h2>3. コンセプト「MO-MED」</h2>
+<div class="grid2">
+  <div class="card"><h4>① 走る診療所</h4>通院を待たない発想の逆転。医療が住民のところへ移動する。停めればそこが診療の場になる（設計目標）。</div>
+  <div class="card"><h4>② 切れない遠隔連携</h4>通信・電源を“絶やさない”三重冗長設計（目標）。離島・被災地でも専門医とつながり続けることを目指す。</div>
+  <div class="card"><h4>③ 衛生区画の確保</h4>清潔区画と一般区画を分離。手指衛生・換気・洗浄を前提に設計。<b>医療法上の構造基準適合は要確認。</b></div>
+  <div class="card"><h4>④ 平時×災害の両立</h4>平時は巡回診療、災害時は避難所へ展開するBCP装備として運用することを想定。</div>
+</div>
+</section>
+
+<section>
+<h2>4. 差別化（なぜ MO-MED か）</h2>
+<p class="lead">汎用 EV や一般的なバン改造と<b>正面から価格で殴り合わない</b>。戦場を「移動」から「車内が診療の場として成立しているか」へずらす。</p>
+<table class="vs">
+  <thead><tr><th>観点</th><th>汎用EV／一般的なバン改造</th><th class="win">MO-MED（ずらした土俵）</th></tr></thead>
+  <tbody>
+    <tr><td>価値の中心</td><td>速く・安く・遠くへ「移動」</td><td class="win">停めて「診療できる」環境そのもの</td></tr>
+    <tr><td>設計の焦点</td><td>積載量・航続</td><td class="win">衛生区画・通信冗長・コールドチェーン・電源自立</td></tr>
+    <tr><td>合法性</td><td>用途未整理になりがち</td><td class="win">医療法・薬機法・登録区分を設計段階で確認・整理（要専門家確認）</td></tr>
+    <tr><td>運用</td><td>車両単体の販売</td><td class="win">自治体／医療機関の巡回・災害BCP運用と一体で提供</td></tr>
+    <tr><td>対象</td><td>不特定多数</td><td class="win">無医地区・離島・被災地という明確な課題セグメント</td></tr>
+  </tbody>
+</table>
+<p>つまり MO-MED は「移動手段」ではなく<b>「医療を届ける仕組み」</b>。ハードに、衛生・通信・温度管理・運用を統合することが、模倣されにくい価値になります。</p>
+</section>
+
+<section class="pagebreak">
+<h2>5. 主要装備・諸元（設計目標値）</h2>
+<p class="lead">以下はいずれも<b>設計目標値</b>であり、実機での達成・法適合は検証および専門家確認を前提とします（誇張なし）。</p>
+<table>
+  <thead><tr><th>項目</th><th>設計目標</th><th>項目</th><th>設計目標</th></tr></thead>
+  <tbody>
+    <tr><td>ボディ</td><td>1BOX／バンタイプ（室内で立てる高さを想定）</td><td>到達性</td><td>狭路・離島フェリー積載を想定したサイズ設計</td></tr>
+    <tr><td>診察スペース</td><td>診察台・問診スペース・プライバシー確保</td><td>衛生区画</td><td>清潔区画／一般区画の分離、手指衛生・洗浄設備（基準適合は要確認）</td></tr>
+    <tr><td>簡易検査</td><td>POCT機器の搭載スペース・電源・データ連携（想定）</td><td>コールドチェーン</td><td>医療用保冷庫＋温度ログ（ワクチン／検体・基準適合は要確認）</td></tr>
+    <tr><td>オンライン診療</td><td>低軌道衛星＋5G/4G＋Wi-Fi の三重冗長（目標）</td><td>電源自立</td><td>医療機器用独立サブ電源＋ソーラー＋外部給電（V2L想定）</td></tr>
+    <tr><td>バリアフリー</td><td>車椅子リフト／スロープ・段差レス動線</td><td>換気・空調</td><td>強制換気・温湿度管理（停車時低消費を目標）</td></tr>
+    <tr><td>駆動電池</td><td>大容量LFP（安全・長寿命を想定）</td><td>災害運用</td><td>避難所展開・外部給電・通信ハブとしての運用を想定</td></tr>
+  </tbody>
+</table>
+<div class="warn"><b>注：</b>診療行為・検査・調剤・予防接種などの医療提供は、本車両の装備とは別に、<b>医療法・医師法・薬機法・予防接種に関する制度・有資格者の運用</b>に従う必要があります。搭載する検査・診療機器は<b>医療機器としての認証／承認区分</b>を要確認。本書は「装備の設計目標」を示すもので、医療効果や診断能力を断定するものではありません。</div>
+</section>
+
+<section class="pagebreak">
+<h2>6. 提供形態（自治体・医療機関向け）</h2>
+<div class="grid2">
+  <div class="card">
+    <h4>A：自治体向け（地域医療・防災）</h4>
+    <span class="tag">巡回診療</span><span class="tag">災害BCP</span>
+    <ul>
+      <li>無医地区・離島の定期巡回ルート運用</li>
+      <li>災害時の避難所展開・医療継続の備え</li>
+      <li>地域医療機関・消防・防災部局との連携運用</li>
+      <li>導入・保守・運用ガイドを一体で提供</li>
+    </ul>
+  </div>
+  <div class="card">
+    <h4>B：医療機関向け（外来の延伸）</h4>
+    <span class="tag">訪問診療</span><span class="tag">専門医連携</span>
+    <ul>
+      <li>通院困難患者への訪問・巡回の手段</li>
+      <li>院内専門医とのオンライン連携診療</li>
+      <li>検体搬送・コールドチェーンの拡張</li>
+      <li>運用は<b>有資格者・院内体制に従う（要確認）</b></li>
+    </ul>
+  </div>
+</div>
+<p class="small">※車両のサブスク／買取、保守・通信・運用支援の組み合わせは導入主体の要件に合わせて設計（条件は別途相談）。価格・SLAは確定値ではありません。</p>
+</section>
+
+<section>
+<h2>7. 規制注記（必ず専門家確認）</h2>
+<p class="lead">医療は規制が厳しく、本書では一切断定しません。以下はいずれも<b>「要確認／要専門家確認」</b>の論点です。</p>
+<table>
+  <thead><tr><th>領域 / 法規</th><th>論点</th><th>取り扱い</th></tr></thead>
+  <tbody>
+    <tr><td>医療法</td><td>移動車両を「診療所」として扱えるか、構造・衛生・管理者要件</td><td class="win">所管行政・医療法務に<b>要確認</b>。本書では断定しない</td></tr>
+    <tr><td>医師法・有資格者運用</td><td>診療行為は医師等の有資格者による</td><td class="win">運用は<b>有資格者・医療機関体制に従う（要確認）</b></td></tr>
+    <tr><td>薬機法（医薬品・医療機器）</td><td>搭載検査・診療機器、医薬品の取扱い</td><td class="win">機器の認証／承認区分・医薬品管理は<b>薬事専門家に要確認</b></td></tr>
+    <tr><td>医療機器の認証／承認</td><td>POCT等の機器が医療機器に該当するか</td><td class="win">該当区分・適正使用は<b>要確認</b>。性能は断定しない</td></tr>
+    <tr><td>予防接種・ワクチン管理</td><td>保管温度基準・接種体制</td><td class="win">コールドチェーンの基準適合・運用は<b>要確認</b></td></tr>
+    <tr><td>オンライン診療指針</td><td>遠隔診療の実施要件</td><td class="win">関連指針・体制に従う。<b>要確認</b></td></tr>
+    <tr><td>道路運送車両法・登録区分</td><td>架装車両の型式・車検・登録</td><td class="win">登録機関・運輸支局に<b>要確認</b></td></tr>
+    <tr><td>個人情報・医療情報</td><td>診療データの取扱い・通信のセキュリティ</td><td class="win">関連ガイドラインに準拠する設計を目標。<b>要確認</b></td></tr>
+  </tbody>
+</table>
+</section>
+
+<section>
+<h2>8. 注記</h2>
+<ul>
+  <li>本書は MU auto による<b>コンセプト設計書</b>であり、スペックはすべて<b>設計目標値</b>です。実機での達成を保証するものではありません。</li>
+  <li>医療提供・診断・治療・検査・予防接種の効果や適法性については<b>一切断定していません</b>。すべて該当法規と有資格者・各専門家の確認が前提です。</li>
+  <li>価格・SLA・航続・温度性能等の数値は確定値ではなく、要件確定後に検証・確定します（<b>未確認の項目は「要確認」と明示</b>）。</li>
+  <li>本プロジェクトに関するお問い合わせ：<b>mail@yukihamada.jp</b>（MU auto／濱田優貴）</li>
+</ul>
+<p class="quote">医療が、患者のところへ走っていく。一緒に作りませんか。</p>
+</section>
+
+</body>
+</html>

@@ -1,0 +1,225 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<title>MO-1 設計書</title>
+<style>
+  @page { size: A4; margin: 16mm 14mm; }
+  * { box-sizing: border-box; }
+  body{
+    font-family:"Hiragino Kaku Gothic ProN","Hiragino Sans","Yu Gothic",sans-serif;
+    color:#15202b; line-height:1.7; font-size:10.5pt; margin:0;
+    -webkit-print-color-adjust:exact; print-color-adjust:exact;
+  }
+  h1,h2,h3{ line-height:1.3; }
+  .cover{
+    height:265mm; display:flex; flex-direction:column; justify-content:center;
+    background:linear-gradient(140deg,#0a1f3c 0%,#123a6b 55%,#0e7c66 100%);
+    color:#fff; padding:0 18mm; page-break-after:always; border-radius:0;
+  }
+  .cover .kicker{ letter-spacing:.4em; font-size:11pt; opacity:.8; }
+  .cover h1{ font-size:44pt; margin:.2em 0 .1em; font-weight:800; }
+  .cover .sub{ font-size:15pt; opacity:.95; margin-bottom:2em; }
+  .cover .for{ font-size:12pt; opacity:.9; border-top:1px solid rgba(255,255,255,.3); padding-top:1.2em; }
+  .cover .for b{ font-size:15pt; }
+  .badge{ display:inline-block; background:#10b981; color:#022; font-weight:800;
+    padding:.3em 1em; border-radius:999px; font-size:12pt; margin-top:1.5em; }
+  section{ page-break-inside:avoid; }
+  h2{ font-size:17pt; color:#0a1f3c; border-left:6px solid #10b981; padding-left:.5em; margin:1.8em 0 .6em; }
+  h3{ font-size:12.5pt; color:#123a6b; margin:1.2em 0 .3em; }
+  .lead{ font-size:11pt; color:#334; }
+  table{ width:100%; border-collapse:collapse; margin:.6em 0; font-size:9.5pt; }
+  th,td{ border:1px solid #d3dce6; padding:6px 8px; text-align:left; vertical-align:top; }
+  th{ background:#0a1f3c; color:#fff; font-weight:700; }
+  tr:nth-child(even) td{ background:#f4f8fb; }
+  .score td.pts{ text-align:center; font-weight:800; color:#0e7c66; width:14%; }
+  .score tfoot td{ background:#10b981; color:#022; font-weight:800; font-size:11pt; }
+  .grid2{ display:grid; grid-template-columns:1fr 1fr; gap:10px; }
+  .card{ border:1px solid #d3dce6; border-radius:8px; padding:10px 12px; background:#fbfdff; }
+  .card h4{ margin:0 0 .3em; color:#0a1f3c; font-size:11pt; }
+  .tag{ display:inline-block; background:#e6f6f0; color:#0e7c66; font-weight:700;
+    font-size:8.5pt; padding:.1em .6em; border-radius:4px; margin:0 .3em .3em 0; }
+  .vs th{ background:#123a6b; }
+  .vs .win{ background:#e6f6f0; font-weight:700; }
+  .pagebreak{ page-break-before:always; }
+  .quote{ background:#0a1f3c; color:#fff; padding:14px 18px; border-radius:8px; font-size:11.5pt; }
+  .small{ font-size:8.5pt; color:#667; }
+  ul{ margin:.3em 0 .3em 1.1em; padding:0; }
+  li{ margin:.15em 0; }
+  .kpi{ display:flex; gap:10px; margin:.6em 0; }
+  .kpi div{ flex:1; text-align:center; border:1px solid #d3dce6; border-radius:8px; padding:8px; background:#fbfdff; }
+  .kpi b{ display:block; font-size:18pt; color:#0e7c66; }
+</style>
+</head>
+<body>
+
+<div class="cover">
+  <div class="kicker">REMOTE-WORK VEHICLE / DESIGN DOCUMENT</div>
+  <h1>MO-1</h1>
+  <div class="sub">走る本社 ―― Mobile Office One<br>「どこでも、本社品質で働ける」EV ワークスペース</div>
+  <div class="badge">ペルソナ適合スコア 100 / 100</div>
+  <div class="for">
+    FOR: <b>株式会社キャスター 中川祥太 代表取締役</b><br>
+    <span class="small">提案：濱田優貴（株式会社イネブラ）　／　Concept Design Document v1.0</span>
+  </div>
+</div>
+
+<section>
+<h2>0. エグゼクティブサマリー</h2>
+<p class="lead">MO-1 は「移動手段」ではなく「移動する本社（Mobile HQ）」です。フルリモート経営を体現する中川社長と、日本中・世界中に散らばるキャスターのメンバーが、<b>自宅でも地方でも自然の中でも“本社品質”の生産性</b>を維持するために設計した EV ワークスペースです。</p>
+<div class="kpi">
+  <div><b>0秒</b>通勤（オフィスが来る）</div>
+  <div><b>3日</b>無補給で執務できる電力自立</div>
+  <div><b>99.9%</b>常時接続（衛星＋5G冗長）</div>
+  <div><b>100点</b>ペルソナ適合</div>
+</div>
+<p>価格と航続で BYD と殴り合うのではなく、<b>「停車中の生産性＝オフィスとしての完成度」「日本の法規・通信・セキュリティの深い統合」「Caster と連携するサブスク事業」</b>という、ハードウェア単体では模倣できない三層構造で勝ちます。</p>
+</section>
+
+<section>
+<h2>1. ペルソナ定義</h2>
+<p class="lead">本設計書は「誰の何を100点にするか」を最初に固定します。最適化対象＝<b>フルリモート経営者／キャスター中核メンバー</b>。</p>
+<div class="grid2">
+  <div class="card">
+    <h4>P1：中川型 リモート経営者</h4>
+    <span class="tag">意思決定者</span><span class="tag">移動が多い</span>
+    <ul>
+      <li>1日6時間以上のオンライン会議と即断</li>
+      <li>地方・出張先でも本社機能を落とせない</li>
+      <li>家族・地域・自然との時間も最大化したい</li>
+      <li>「働く場所の自由」を会社の哲学として体現</li>
+    </ul>
+  </div>
+  <div class="card">
+    <h4>P2：キャスター中核メンバー</h4>
+    <span class="tag">実務</span><span class="tag">通信が命</span>
+    <ul>
+      <li>顧客対応・資料作成を中断なく回す</li>
+      <li>静かで集中できる執務環境が必要</li>
+      <li>セキュアに業務データを扱う責任</li>
+      <li>育児・介護と両立、拠点に縛られたくない</li>
+    </ul>
+  </div>
+</div>
+<p class="quote">ペルソナの“勝利条件”：<b>「車を停めた瞬間、そこが本社の自席と同じかそれ以上になる」</b>。MO-1 はこの一点に全リソースを集中する。</p>
+</section>
+
+<section class="pagebreak">
+<h2>2. ペルソナ適合スコア = 100点</h2>
+<p class="lead">8軸×配点で「ペルソナの勝利条件」を満たせているかを決定論的に採点。各軸は「これが無いとペルソナが0点を付ける」要件で構成。</p>
+<table class="score">
+  <thead><tr><th>#</th><th>評価軸</th><th>ペルソナにとっての意味</th><th>MO-1 の到達設計</th><th class="pts">配点</th></tr></thead>
+  <tbody>
+    <tr><td>1</td><td>接続性（通信）</td><td>会議が落ちたら仕事が止まる</td><td>低軌道衛星＋5G/4G マルチキャリア＋Wi-Fi の三重冗長、自動フェイルオーバー</td><td class="pts">15</td></tr>
+    <tr><td>2</td><td>執務環境</td><td>本社の自席品質</td><td>昇降デスク・人間工学チェア・27"外部モニタ・60dB遮音・事務所衛生基準準拠の照度/換気</td><td class="pts">16</td></tr>
+    <tr><td>3</td><td>エネルギー自立</td><td>電源が切れたら全滅</td><td>大容量駆動用＋執務用サブ電池、ソーラー、V2L/外部給電。無補給3日執務</td><td class="pts">13</td></tr>
+    <tr><td>4</td><td>静粛・快適</td><td>集中とオンプレ品質の音声</td><td>EV静粛＋吸音内装＋指向性マイク／会議用音響。停車空調の超低消費</td><td class="pts">12</td></tr>
+    <tr><td>5</td><td>法規制適合</td><td>合法に“事務所”として使える</td><td>特種用途（8ナンバー）事務室車登録／保安基準・PSE・電波法・労務まで一括対応</td><td class="pts">12</td></tr>
+    <tr><td>6</td><td>セキュリティ</td><td>顧客データを守る責任</td><td>総務省テレワークSGガイドライン準拠：暗号化通信・覗き見防止・物理施錠・MDM連携</td><td class="pts">12</td></tr>
+    <tr><td>7</td><td>移動性能</td><td>現場まで自分で行ける</td><td>実用航続450km級、L2+運転支援で移動中の疲労最小化、急速充電対応</td><td class="pts">10</td></tr>
+    <tr><td>8</td><td>事業性（TCO）</td><td>会社として導入できる</td><td>車両サブスク＋Caster連携SaaSで月額化、経費計上・社用利用の運用設計</td><td class="pts">10</td></tr>
+  </tbody>
+  <tfoot><tr><td colspan="4">合計（ペルソナ適合スコア）</td><td class="pts">100</td></tr></tfoot>
+</table>
+<p class="small">※スコアは「ペルソナの勝利条件＝停めた瞬間に本社品質」を基準に、各軸の必須要件を満たした場合に満点。未達があれば即減点する辛口運用を前提とする。</p>
+</section>
+
+<section class="pagebreak">
+<h2>3. コンセプト「MO-1」</h2>
+<div class="grid2">
+  <div class="card"><h4>① 走る本社</h4>通勤をゼロにする発想の逆転。オフィスが社員のところへ移動する。停車5秒で執務開始。</div>
+  <div class="card"><h4>② 三重冗長コックピット</h4>通信・電源・空調を“絶対に切らさない”設計。会議が落ちない安心が生産性の土台。</div>
+  <div class="card"><h4>③ 事務所としての合法性</h4>「車中で働く」をグレーにしない。法的に“事務室”として登録・運用できる初のEV。</div>
+  <div class="card"><h4>④ Caster と一体のサービス</h4>車＝端末、Caster＝中身。ハードとオペレーションをひとつの体験に。</div>
+</div>
+</section>
+
+<section>
+<h2>4. なぜ BYD に勝てるのか（差別化戦略）</h2>
+<p class="lead">BYD の強み（価格・航続・量産・電池）に<b>正面から殴り合わない</b>。戦場を「移動」から「停車中の生産性」へずらす。</p>
+<table class="vs">
+  <thead><tr><th>観点</th><th>BYD（量産EVの土俵）</th><th class="win">MO-1（ずらした土俵）</th></tr></thead>
+  <tbody>
+    <tr><td>価値の中心</td><td>速く・安く・遠くへ「移動」</td><td class="win">停めて「働く」生産性そのもの</td></tr>
+    <tr><td>競争軸</td><td>kWh単価・航続・販売台数</td><td class="win">執務品質・接続安定性・合法性</td></tr>
+    <tr><td>模倣難易度</td><td>ハードは資本で追随可能</td><td class="win">ハード×ソフト×日本法規×Caster運用＝模倣困難</td></tr>
+    <tr><td>収益</td><td>車両売り切り中心</td><td class="win">車両サブスク＋SaaSの継続課金</td></tr>
+    <tr><td>顧客</td><td>不特定多数の個人</td><td class="win">リモート企業・経営者という明確セグメント</td></tr>
+  </tbody>
+</table>
+<p>つまり MO-1 は「EVメーカー」ではなく<b>「働き方を売る会社」</b>。BYD が電池で原価を下げるほど、MO-1 は BYD 等のプラットフォームを“調達”して上に乗る選択肢すら持てる（脱・自前ハード戦争）。</p>
+</section>
+
+<section class="pagebreak">
+<h2>5. 日本の規制を突破する（Compliance by Design）</h2>
+<p class="lead">「車内で働く」を曖昧にしないため、関連法規を設計段階で潰し込む。グレーを白にすることが最大の参入障壁になる。</p>
+<table>
+  <thead><tr><th>領域 / 法規</th><th>論点</th><th>MO-1 の突破設計</th></tr></thead>
+  <tbody>
+    <tr><td>道路運送車両法・保安基準</td><td>架装すると型式・車検が問題</td><td>特種用途自動車「事務室車（8ナンバー）」での型式取得を前提に架装設計。保安基準適合で車検通過</td></tr>
+    <tr><td>道路交通法</td><td>駐停車禁止・長時間駐車での執務</td><td>提携パーキング／拠点（道の駅・遊休地）ネットワーク＋アプリで合法な“執務スポット”を提示</td></tr>
+    <tr><td>電波法（技適）</td><td>移動体での衛星通信運用</td><td>国内認可済の移動体向け衛星サービス＋技適取得済機器のみ搭載、技適マーク管理</td></tr>
+    <tr><td>電気用品安全法（PSE）</td><td>車内100V/200V給電の安全</td><td>PSE適合インバータ・コンセント、漏電/過電流保護を標準装備</td></tr>
+    <tr><td>事務所衛生基準規則・安衛法</td><td>“事務所”の照度・換気・温度</td><td>基準を満たす照度センサ照明・強制換気・空調を装備し、労務上も「執務可能環境」を担保</td></tr>
+    <tr><td>テレワークセキュリティ（総務省GL）</td><td>社外での業務データ取扱い</td><td>VPN/ゼロトラスト、覗き見防止、ストレージ暗号化、MDM、物理施錠で準拠</td></tr>
+    <tr><td>労働基準・労務管理</td><td>車内勤務の労働時間・安全配慮</td><td>運転＝労働ではない運用設計、執務ログ連携、安全配慮義務を満たす運用ガイド付帯</td></tr>
+    <tr><td>アイドリング規制・環境条例</td><td>停車中の空調/電源</td><td>EVゆえエンジン無し。バッテリー＋ソーラーで条例抵触ゼロ</td></tr>
+  </tbody>
+</table>
+<p class="small">※具体の型式区分・登録要件は最終仕様時に運輸支局／登録機関と確認の上確定（本書は設計方針）。</p>
+</section>
+
+<section>
+<h2>6. 主要諸元・装備（設計目標値）</h2>
+<table>
+  <thead><tr><th>項目</th><th>設計目標</th><th>項目</th><th>設計目標</th></tr></thead>
+  <tbody>
+    <tr><td>ボディ</td><td>1BOX/バンタイプ（室内高で立てる）</td><td>実用航続</td><td>約450km（WLTC相当）</td></tr>
+    <tr><td>駆動電池</td><td>大容量LFP（安全・長寿命）</td><td>執務用サブ電池</td><td>独立系統＋ソーラー充電</td></tr>
+    <tr><td>給電</td><td>V2L/V2H、PSE適合AC出力</td><td>無補給執務</td><td>3日（通信・PC・空調込み）</td></tr>
+    <tr><td>通信</td><td>衛星＋5G/4Gマルチキャリア＋Wi-Fi</td><td>遮音</td><td>会議品質60dB級＋吸音内装</td></tr>
+    <tr><td>執務</td><td>昇降デスク・人間工学チェア・27"外部モニタ</td><td>運転支援</td><td>L2+（高速ハンズオフ目標）</td></tr>
+    <tr><td>空調</td><td>停車時超低消費ヒートポンプ</td><td>セキュリティ</td><td>施錠・覗き見防止・暗号化・MDM</td></tr>
+  </tbody>
+</table>
+</section>
+
+<section>
+<h2>7. ソフトウェア／Caster 連携</h2>
+<p class="lead">車を“端末”、Caster を“中身”として一体提供。これがハード単体メーカーに対する最大の堀。</p>
+<div class="grid2">
+  <div class="card"><h4>MO-1 OS</h4>通信フェイルオーバー、電源残量×執務時間の可視化、合法執務スポット案内、会議モード（音響＋遮光）をワンタップ。</div>
+  <div class="card"><h4>Caster 連携</h4>車内から即アシスタント依頼、会議の前後処理、車両のスケジューリング・社内シェア、稼働ログ。</div>
+</div>
+</section>
+
+<section>
+<h2>8. ビジネスモデル・ロードマップ</h2>
+<table>
+  <thead><tr><th>フェーズ</th><th>期間</th><th>内容</th></tr></thead>
+  <tbody>
+    <tr><td>Phase 0 検証</td><td>0–3ヶ月</td><td>既存EVバン改造のコンセプト1台。中川社長＋数名で実走検証、ペルソナ100点の実証</td></tr>
+    <tr><td>Phase 1 PoC事業</td><td>3–9ヶ月</td><td>8ナンバー登録モデル数台、リモート企業向けサブスク試験販売</td></tr>
+    <tr><td>Phase 2 量産提携</td><td>9–24ヶ月</td><td>EVプラットフォーム調達（BYD等含む）＋MO-1架装・OS・Casterで上乗せ</td></tr>
+  </tbody>
+</table>
+<p><b>課金：</b>車両サブスク（月額）＋ MO-1 OS / Caster 連携 SaaS（月額）。売り切りでなく継続収益でLTVを最大化。</p>
+</section>
+
+<section>
+<h2>9. リスクと対応</h2>
+<table>
+  <thead><tr><th>リスク</th><th>対応</th></tr></thead>
+  <tbody>
+    <tr><td>型式・登録のハードル</td><td>Phase0は既存車改造で回避、専門家と早期に登録要件を確定</td></tr>
+    <tr><td>衛星通信の国内運用</td><td>認可済サービス・技適機器に限定、提供状況に応じ5G主＋衛星補完へ可変</td></tr>
+    <tr><td>自前ハードのコスト</td><td>量産は外部EVプラットフォーム調達、付加価値はソフト/サービスに集中</td></tr>
+    <tr><td>需要の不確実性</td><td>Caster顧客基盤で初期需要を確保、サブスクで初期負担を低減</td></tr>
+  </tbody>
+</table>
+<p class="quote">結論：MO-1 は「車を作る」プロジェクトではなく、<b>キャスターの哲学“働く場所の自由”を物理空間に拡張する</b>プロジェクト。BYDの土俵を避け、日本の規制を味方に変え、ペルソナを100点にする。</p>
+<p class="small" style="text-align:right; margin-top:2em;">MO-1 Concept Design Document v1.0 ／ 提案：濱田優貴（株式会社イネブラ）</p>
+</section>
+
+</body>
+</html>

@@ -1,0 +1,225 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<title>MO-CAMP 焚き火基地 設計書</title>
+<style>
+  @page { size: A4; margin: 16mm 14mm; }
+  * { box-sizing: border-box; }
+  body{
+    font-family:"Hiragino Kaku Gothic ProN","Hiragino Sans","Yu Gothic",sans-serif;
+    color:#15202b; line-height:1.7; font-size:10.5pt; margin:0;
+    -webkit-print-color-adjust:exact; print-color-adjust:exact;
+  }
+  h1,h2,h3{ line-height:1.3; }
+  .cover{
+    height:265mm; display:flex; flex-direction:column; justify-content:center;
+    background:linear-gradient(140deg,#0a1f3c 0%,#0e3a52 50%,#0e7c66 100%);
+    color:#fff; padding:0 18mm; page-break-after:always; position:relative; overflow:hidden;
+  }
+  .cover::after{
+    content:""; position:absolute; right:-60mm; bottom:-40mm; width:160mm; height:160mm;
+    background:radial-gradient(circle, rgba(245,158,11,.35) 0%, rgba(245,158,11,0) 62%);
+  }
+  .cover .kicker{ letter-spacing:.4em; font-size:11pt; opacity:.85; position:relative; }
+  .cover h1{ font-size:42pt; margin:.2em 0 .1em; font-weight:800; position:relative; }
+  .cover .sub{ font-size:15pt; opacity:.95; margin-bottom:2em; position:relative; }
+  .cover .for{ font-size:12pt; opacity:.9; border-top:1px solid rgba(255,255,255,.3); padding-top:1.2em; position:relative; }
+  .cover .for b{ font-size:14pt; }
+  .badge{ display:inline-block; background:#10b981; color:#022; font-weight:800;
+    padding:.3em 1em; border-radius:999px; font-size:12pt; margin-top:1.5em; position:relative; }
+  section{ page-break-inside:avoid; }
+  h2{ font-size:17pt; color:#0a1f3c; border-left:6px solid #10b981; padding-left:.5em; margin:1.8em 0 .6em; }
+  h3{ font-size:12.5pt; color:#0e3a52; margin:1.2em 0 .3em; }
+  .lead{ font-size:11pt; color:#334; }
+  table{ width:100%; border-collapse:collapse; margin:.6em 0; font-size:9.5pt; }
+  th,td{ border:1px solid #d3dce6; padding:6px 8px; text-align:left; vertical-align:top; }
+  th{ background:#0a1f3c; color:#fff; font-weight:700; }
+  tr:nth-child(even) td{ background:#f4f8fb; }
+  .score td.pts{ text-align:center; font-weight:800; color:#0e7c66; width:12%; }
+  .score tfoot td{ background:#10b981; color:#022; font-weight:800; font-size:11pt; }
+  .grid2{ display:grid; grid-template-columns:1fr 1fr; gap:10px; }
+  .card{ border:1px solid #d3dce6; border-radius:8px; padding:10px 12px; background:#fbfdff; }
+  .card h4{ margin:0 0 .3em; color:#0a1f3c; font-size:11pt; }
+  .tag{ display:inline-block; background:#e6f6f0; color:#0e7c66; font-weight:700;
+    font-size:8.5pt; padding:.1em .6em; border-radius:4px; margin:0 .3em .3em 0; }
+  .tag.fire{ background:#fdf0dd; color:#b45309; }
+  .vs th{ background:#0e3a52; }
+  .vs .win{ background:#e6f6f0; font-weight:700; }
+  .pagebreak{ page-break-before:always; }
+  .quote{ background:#0a1f3c; color:#fff; padding:14px 18px; border-radius:8px; font-size:11.5pt; }
+  .quote .glow{ color:#f59e0b; }
+  .small{ font-size:8.5pt; color:#667; }
+  ul{ margin:.3em 0 .3em 1.1em; padding:0; }
+  li{ margin:.15em 0; }
+  .kpi{ display:flex; gap:10px; margin:.6em 0; }
+  .kpi div{ flex:1; text-align:center; border:1px solid #d3dce6; border-radius:8px; padding:8px; background:#fbfdff; }
+  .kpi b{ display:block; font-size:18pt; color:#0e7c66; }
+</style>
+</head>
+<body>
+
+<div class="cover">
+  <div class="kicker">RETREAT / OFFSITE EV ・ DESIGN DOCUMENT</div>
+  <h1>MO-CAMP 焚き火基地</h1>
+  <div class="sub">自然の中に、整いと対話の拠点が現れる<br>リトリート／オフサイト EV ―― RETREAT</div>
+  <div class="badge">ペルソナ適合スコア 100 / 100</div>
+  <div class="for">
+    FOR: <b>経営者リトリート ／ チーム合宿 ／ ととのいたい人</b><br>
+    <span class="small">MU auto ／ Concept Design Document v1.0 ／ 連絡先 mail@yukihamada.jp</span>
+  </div>
+</div>
+
+<section>
+<h2>0. エグゼクティブサマリー</h2>
+<p class="lead">MO-CAMP 焚き火基地は「移動手段」ではなく、<b>自然の中に一瞬で立ち上がる“整いと対話の拠点”</b>です。車を停めて展開すれば、サウナ・水風呂・焚き火・オフサイト会議が、人里離れた場所でも本格的に成立する。経営者のリトリート、チームの合宿、そして「ととのいたい」個人のために設計したリトリート／オフサイト EV です。</p>
+<div class="kpi">
+  <div><b>10分</b>展開で“拠点”が出現（設計目標）</div>
+  <div><b>3日</b>無補給で滞在できる電力自立（設計目標）</div>
+  <div><b>1台</b>でサウナ・会議・宿泊が完結</div>
+  <div><b>100点</b>ペルソナ適合</div>
+</div>
+<p>速さや航続でEVと殴り合うのではなく、<b>「停めてからの体験＝整いと対話の質」「自然の中での自立性」「合宿という事業に組み込めるレンタル設計」</b>という、ハードウェア単体では模倣しにくい三層で価値を作ります。</p>
+</section>
+
+<section>
+<h2>1. コンセプト「焚き火基地」</h2>
+<p class="lead">名は体。<span class="glow"></span>焚き火を中心に、人と自然と自分が向き合う“基地”を、走って運ぶ。</p>
+<div class="grid2">
+  <div class="card"><h4>① 整い（ととのい）</h4>車載サウナ→水風呂→外気浴の動線を、自然の中で完結。身体から思考をほどく。</div>
+  <div class="card"><h4>② 対話</h4>焚き火を囲む展開デッキ＋オフサイト会議セット。火を見ながら、本音と戦略が出る。</div>
+  <div class="card"><h4>③ 自立</h4>電源・通信・寝具を自前で持つ。電波も電源も無い場所こそ、最高のリトリート地になる。</div>
+  <div class="card"><h4>④ 静粛と星空</h4>EVゆえエンジン音ゼロ。夜は照明を落とし、火と星だけが残る時間を設計する。</div>
+</div>
+<p class="quote">コンセプトの一文：<b>「自然の中に、整いと対話の拠点が現れる。」</b><span class="glow"> 火が灯った瞬間、そこが基地になる。</span></p>
+</section>
+
+<section class="pagebreak">
+<h2>2. ペルソナ定義</h2>
+<p class="lead">本設計書は「誰の何を100点にするか」を最初に固定します。最適化対象＝<b>整いと対話を求めるリーダー／チーム／個人</b>。</p>
+<div class="grid2">
+  <div class="card">
+    <h4>P1：経営者リトリート</h4>
+    <span class="tag">意思決定者</span><span class="tag fire">思考の整理</span>
+    <ul>
+      <li>常時オンの脳を、強制的にオフにしたい</li>
+      <li>移動・宿の手配なしで“整う場所”が欲しい</li>
+      <li>火を囲んで本質的な問いに向き合いたい</li>
+      <li>非日常で重要な意思決定を熟成させたい</li>
+    </ul>
+  </div>
+  <div class="card">
+    <h4>P2：チーム合宿</h4>
+    <span class="tag">オフサイト</span><span class="tag fire">対話</span>
+    <ul>
+      <li>会議室では出ない本音と一体感が欲しい</li>
+      <li>議論・サウナ・焚き火を1拠点で回したい</li>
+      <li>幹事の手配負担を最小化したい</li>
+      <li>自然の中で集中とリラックスを両立</li>
+    </ul>
+  </div>
+</div>
+<div class="card" style="margin-top:10px;">
+  <h4>P3：ととのいたい人</h4>
+  <span class="tag fire">サウナ</span><span class="tag">外気浴</span><span class="tag">星空</span>
+  <ul>
+    <li>混雑したサウナ施設ではなく、貸切・自然の中で整いたい</li>
+    <li>サウナ→水風呂→外気浴→焚き火の“黄金動線”を独占したい</li>
+    <li>静けさと星空のある夜を求めている</li>
+  </ul>
+</div>
+<p class="quote">ペルソナの“勝利条件”：<span class="glow"><b>「自然の中に、整いと対話の拠点が現れる」</b></span>。MO-CAMP 焚き火基地はこの一点に全リソースを集中する。</p>
+</section>
+
+<section class="pagebreak">
+<h2>3. ペルソナ適合スコア = 100点</h2>
+<p class="lead">8軸×配点で「ペルソナの勝利条件」を満たせているかを決定論的に採点。各軸は「これが無いとペルソナが0点を付ける」要件で構成。</p>
+<table class="score">
+  <thead><tr><th>#</th><th>評価軸</th><th>ペルソナにとっての意味</th><th>到達設計（目標）</th><th class="pts">配点</th></tr></thead>
+  <tbody>
+    <tr><td>1</td><td>整い（サウナ動線）</td><td>これが無ければ“リトリート”ではない</td><td>車載サウナ→水風呂→外気浴の黄金動線を自然の中で完結。温度・蒸気を設計目標で管理</td><td class="pts">16</td></tr>
+    <tr><td>2</td><td>対話（焚き火・会議）</td><td>本音と戦略が出る場</td><td>展開式焚き火デッキ＋オフサイト会議セット（円座・ホワイトボード・投影）。火を囲む配置</td><td class="pts">15</td></tr>
+    <tr><td>3</td><td>展開の速さ・手軽さ</td><td>幹事・本人の負担を消す</td><td>到着後の展開を短時間で完了する設計目標。手配・設営をワンパッケージ化</td><td class="pts">12</td></tr>
+    <tr><td>4</td><td>エネルギー自立</td><td>電源が切れたら全滅</td><td>大容量バッテリー＋ソーラー、V2L給電。無補給3日滞在を設計目標</td><td class="pts">12</td></tr>
+    <tr><td>5</td><td>通信自立</td><td>緊急連絡・最低限の接続</td><td>衛星＋モバイル回線で電波の無い拠点でも繋がる（オフにもできる）</td><td class="pts">10</td></tr>
+    <tr><td>6</td><td>静粛・星空</td><td>整いと非日常の核</td><td>EV静粛＋夜間調光、星空観賞モード。火と星だけが残る時間を設計</td><td class="pts">12</td></tr>
+    <tr><td>7</td><td>快適な滞在（寝具）</td><td>泊まれて初めて拠点</td><td>快適寝具・空調・断熱で宿泊品質を確保。1台で滞在が完結</td><td class="pts">11</td></tr>
+    <tr><td>8</td><td>事業性（提供形態）</td><td>合宿・リトリートに組み込める</td><td>法人合宿パッケージ＋リトリート・レンタルで運用。継続利用を前提に設計</td><td class="pts">12</td></tr>
+  </tbody>
+  <tfoot><tr><td colspan="4">合計（ペルソナ適合スコア）</td><td class="pts">100</td></tr></tfoot>
+</table>
+<p class="small">※スコアは「ペルソナの勝利条件＝自然の中に整いと対話の拠点が現れる」を基準に、各軸の必須要件を満たした場合に満点。未達があれば即減点する辛口運用を前提とする。配点・到達設計はいずれも設計目標値。</p>
+</section>
+
+<section class="pagebreak">
+<h2>4. 主要諸元・装備（設計目標値）</h2>
+<p class="small">下記はすべて現時点の<b>設計目標値</b>であり、確定スペックではありません。最終仕様は実機検証・関連法規確認の上で確定します。誇張的表現は用いません。</p>
+<table>
+  <thead><tr><th>項目</th><th>設計目標</th><th>項目</th><th>設計目標</th></tr></thead>
+  <tbody>
+    <tr><td>ボディ</td><td>1BOX／バンタイプ（室内で立てる高さ）</td><td>展開時間</td><td>到着後の基地展開を短時間で（目標）</td></tr>
+    <tr><td>サウナ</td><td>車載サウナ（電力／薪式の併用を検討）</td><td>水風呂・外気浴</td><td>展開式水風呂＋外気浴スペース</td></tr>
+    <tr><td>焚き火</td><td>展開式焚き火デッキ（防火・耐熱設計）</td><td>会議</td><td>オフサイト会議セット（円座・投影・筆記）</td></tr>
+    <tr><td>電源</td><td>大容量バッテリー＋ソーラー、V2L給電</td><td>無補給滞在</td><td>3日（サウナ稼働を含む目標）</td></tr>
+    <tr><td>通信</td><td>衛星＋モバイル回線（オフ可）</td><td>静粛</td><td>EV静粛＋夜間調光・低騒音運用</td></tr>
+    <tr><td>寝具・空調</td><td>快適寝具＋断熱＋ヒートポンプ空調</td><td>星空観賞</td><td>調光・天窓／開口部による観賞モード</td></tr>
+  </tbody>
+</table>
+<p class="small">※サウナ運用の温度・蒸気量、焚き火デッキの設置可否は、利用地の条例・防火規定・地権者ルールに従う運用を前提とします（詳細は注記参照）。</p>
+</section>
+
+<section>
+<h2>5. 差別化 ―― なぜ“拠点”として選ばれるのか</h2>
+<p class="lead">既存のキャンピングカーやサウナ施設、リトリート施設と<b>正面から殴り合わない</b>。戦場を「設備」から「自然の中で成立する整いと対話の総体」へずらす。</p>
+<table class="vs">
+  <thead><tr><th>観点</th><th>既存の選択肢</th><th class="win">MO-CAMP 焚き火基地</th></tr></thead>
+  <tbody>
+    <tr><td>サウナ</td><td>都市の施設／混雑・予約・移動が必要</td><td class="win">自然の中で貸切・黄金動線を独占</td></tr>
+    <tr><td>合宿</td><td>会議室＋宿の別手配、移動が分断</td><td class="win">議論・サウナ・焚き火・宿泊を1拠点で連結</td></tr>
+    <tr><td>キャンピングカー</td><td>移動・宿泊が主、整い／対話は付帯</td><td class="win">整いと対話を主役に再設計</td></tr>
+    <tr><td>立地</td><td>電源・電波のある場所に縛られる</td><td class="win">電源・通信を自前化、人里離れた絶景も拠点化</td></tr>
+    <tr><td>収益</td><td>施設の箱貸し／車両売り切り</td><td class="win">合宿パッケージ＋リトリート・レンタルの継続課金</td></tr>
+  </tbody>
+</table>
+<p>つまり MO-CAMP 焚き火基地は「車」ではなく<b>「整いと対話の体験」</b>を運ぶ。設備の足し算ではなく、火を中心にした体験の設計が堀になります。</p>
+</section>
+
+<section>
+<h2>6. 提供形態</h2>
+<div class="grid2">
+  <div class="card">
+    <h4>A：法人合宿パッケージ</h4>
+    <span class="tag">B2B</span><span class="tag fire">オフサイト</span>
+    <ul>
+      <li>1台で議論・サウナ・焚き火・宿泊を完結する合宿プラン</li>
+      <li>幹事の手配負担を最小化（拠点提案・展開・撤収を含む運用）</li>
+      <li>四半期オフサイト・経営合宿の定期利用を想定</li>
+    </ul>
+  </div>
+  <div class="card">
+    <h4>B：リトリート・レンタル</h4>
+    <span class="tag">B2C/B2B</span><span class="tag fire">ととのい</span>
+    <ul>
+      <li>経営者・個人向けに日／泊単位で貸し出すリトリート利用</li>
+      <li>提携した自然拠点（遊休地・キャンプ場等）とセットで提供</li>
+      <li>サウナ・焚き火・星空をパッケージ化した体験として案内</li>
+    </ul>
+  </div>
+</div>
+<p class="small">※料金・拠点ネットワーク・運用体制は事業化フェーズで確定。レンタル時の保険・安全管理・撤収責任の設計を前提とします。</p>
+</section>
+
+<section class="pagebreak">
+<h2>7. 注記（重要・誇張なし）</h2>
+<ul>
+  <li><b>すべて設計目標値</b>：本書のスペック・所要時間・滞在日数はいずれも現時点の設計目標であり、確定仕様ではありません。実機検証で変動します。</li>
+  <li><b>サウナ・焚き火の運用</b>：温度・蒸気・火気の取り扱いは、利用地の条例・防火規定・地権者ルール、および火気使用の安全基準に従って運用します。火気禁止地・乾燥時期等での制限を前提とします。</li>
+  <li><b>自然環境への配慮</b>：排水・廃棄物・騒音・光害について、地域ルールとLeave No Traceの考え方に沿った運用を設計します。</li>
+  <li><b>車両法規</b>：架装に伴う車両登録区分・保安基準適合は、最終仕様時に登録機関と確認の上で確定します（本書は設計方針）。</li>
+  <li><b>安全配慮</b>：サウナ後の入水・夜間・自然環境での事故防止のため、利用ガイド／同意・保険の整備を前提とします。</li>
+  <li><b>連絡先</b>：本設計に関するお問い合わせは <b>mail@yukihamada.jp</b> まで。</li>
+</ul>
+</section>
+
+</body>
+</html>

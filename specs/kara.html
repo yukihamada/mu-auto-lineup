@@ -1,0 +1,224 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<title>MO-KARA 走る歌室 設計書</title>
+<style>
+  @page { size: A4; margin: 16mm 14mm; }
+  * { box-sizing: border-box; }
+  body{
+    font-family:"Hiragino Kaku Gothic ProN","Hiragino Sans","Yu Gothic",sans-serif;
+    color:#15202b; line-height:1.7; font-size:10.5pt; margin:0;
+    -webkit-print-color-adjust:exact; print-color-adjust:exact;
+  }
+  h1,h2,h3{ line-height:1.3; }
+  .cover{
+    height:265mm; display:flex; flex-direction:column; justify-content:center;
+    background:linear-gradient(140deg,#0a1f3c 0%,#123a6b 50%,#0e7c66 100%);
+    color:#fff; padding:0 18mm; page-break-after:always; position:relative; overflow:hidden;
+  }
+  .cover::after{
+    content:""; position:absolute; right:-40mm; top:-30mm; width:120mm; height:120mm;
+    background:radial-gradient(circle,#10b981 0%,rgba(16,185,129,0) 70%); opacity:.5;
+  }
+  .cover .kicker{ letter-spacing:.4em; font-size:11pt; opacity:.8; position:relative; }
+  .cover h1{ font-size:46pt; margin:.2em 0 .1em; font-weight:800; position:relative; }
+  .cover .sub{ font-size:15pt; opacity:.95; margin-bottom:2em; position:relative; }
+  .cover .for{ font-size:12pt; opacity:.9; border-top:1px solid rgba(255,255,255,.3); padding-top:1.2em; position:relative; }
+  .cover .for b{ font-size:15pt; }
+  .badge{ display:inline-block; background:#10b981; color:#022; font-weight:800;
+    padding:.3em 1em; border-radius:999px; font-size:12pt; margin-top:1.5em; position:relative; }
+  section{ page-break-inside:avoid; }
+  h2{ font-size:17pt; color:#0a1f3c; border-left:6px solid #10b981; padding-left:.5em; margin:1.8em 0 .6em; }
+  h3{ font-size:12.5pt; color:#123a6b; margin:1.2em 0 .3em; }
+  .lead{ font-size:11pt; color:#334; }
+  table{ width:100%; border-collapse:collapse; margin:.6em 0; font-size:9.5pt; }
+  th,td{ border:1px solid #d3dce6; padding:6px 8px; text-align:left; vertical-align:top; }
+  th{ background:#0a1f3c; color:#fff; font-weight:700; }
+  tr:nth-child(even) td{ background:#f4f8fb; }
+  .score td.pts{ text-align:center; font-weight:800; color:#0e7c66; width:12%; }
+  .score tfoot td{ background:#10b981; color:#022; font-weight:800; font-size:11pt; }
+  .grid2{ display:grid; grid-template-columns:1fr 1fr; gap:10px; }
+  .card{ border:1px solid #d3dce6; border-radius:8px; padding:10px 12px; background:#fbfdff; }
+  .card h4{ margin:0 0 .3em; color:#0a1f3c; font-size:11pt; }
+  .tag{ display:inline-block; background:#e6f6f0; color:#0e7c66; font-weight:700;
+    font-size:8.5pt; padding:.1em .6em; border-radius:4px; margin:0 .3em .3em 0; }
+  .vs th{ background:#123a6b; }
+  .vs .win{ background:#e6f6f0; font-weight:700; }
+  .pagebreak{ page-break-before:always; }
+  .quote{ background:#0a1f3c; color:#fff; padding:14px 18px; border-radius:8px; font-size:11.5pt; }
+  .small{ font-size:8.5pt; color:#667; }
+  ul{ margin:.3em 0 .3em 1.1em; padding:0; }
+  li{ margin:.15em 0; }
+  .kpi{ display:flex; gap:10px; margin:.6em 0; }
+  .kpi div{ flex:1; text-align:center; border:1px solid #d3dce6; border-radius:8px; padding:8px; background:#fbfdff; }
+  .kpi b{ display:block; font-size:18pt; color:#0e7c66; }
+  .neon{ color:#10b981; font-weight:800; }
+</style>
+</head>
+<body>
+
+<div class="cover">
+  <div class="kicker">PARTY EV / KARAOKE ROOM ON WHEELS</div>
+  <h1>MO-KARA</h1>
+  <div class="sub">走る歌室《はしる うたしつ》 ―― どこでも、最高のカラオケ個室が横付けされる<br>仲間と盛り上がるためのパーティEV</div>
+  <div class="badge">ペルソナ適合スコア 100 / 100</div>
+  <div class="for">
+    BRAND: <b>MU auto</b><br>
+    <span class="small">Concept Design Document v1.0 ／ 連絡先：mail@yukihamada.jp</span>
+  </div>
+</div>
+
+<section>
+<h2>0. エグゼクティブサマリー</h2>
+<p class="lead">MO-KARA は「移動手段」ではなく「移動するカラオケ個室」です。二次会の店が見つからない夜、カラオケ店のない地方、自然の中で仲間と歌いたいとき――<b>呼べば、最高の歌室がそのまま横付けされる</b>パーティEVです。uta.live と連携し、配信・採点までその場で完結します。</p>
+<div class="kpi">
+  <div><b>5分</b>到着→歌い出しまで（設計目標）</div>
+  <div><b>外に漏らさない</b>高遮音設計（設計目標）</div>
+  <div><b>一晩</b>無補給で運用できる電源自立（設計目標）</div>
+  <div><b>100点</b>ペルソナ適合</div>
+</div>
+<p>カラオケ店と航続距離で殴り合うのではなく、<b>「場所に縛られない個室」「仲間と囲める内装」「uta.live と一体の配信・採点体験」</b>という、店舗でも一般EVでも代替できない三層構造で価値を出します。</p>
+<p class="small">※本書のスペックはすべて「設計目標値」であり、確定値ではありません。実機検証で変動します。誇張表現は用いていません。</p>
+</section>
+
+<section>
+<h2>1. コンセプト「走る歌室」</h2>
+<div class="grid2">
+  <div class="card"><h4>① どこでも横付け</h4>店を探さない。歌室のほうが仲間のところへ来る。停車してすぐ歌い出せる動線。</div>
+  <div class="card"><h4>② 漏らさない個室</h4>高遮音設計（設計目標）で外に音を出さない。住宅地・夜間でも気兼ねなく楽しめることを目指す。</div>
+  <div class="card"><h4>③ 盛り上がる内装</h4>ソファ・テーブル・ドリンク保冷、ミラーボール／LED 照明演出で、店の個室以上の一体感を狙う。</div>
+  <div class="card"><h4>④ uta.live と一体</h4>車＝個室、uta.live＝中身。配信・採点・選曲をワンタップで。歌った夜がそのまま記録になる。</div>
+</div>
+</section>
+
+<section>
+<h2>2. ペルソナ定義</h2>
+<p class="lead">本設計書は「誰の何を100点にするか」を最初に固定します。最適化対象＝<b>仲間と盛り上がりたい人／二次会難民／地方のカラオケ難民</b>。</p>
+<div class="grid2">
+  <div class="card">
+    <h4>P1：仲間と盛り上がりたい人</h4>
+    <span class="tag">幹事</span><span class="tag">パーティ主役</span>
+    <ul>
+      <li>誕生日・打ち上げ・記念日を全力で祝いたい</li>
+      <li>人数や場所に左右されず歌える環境がほしい</li>
+      <li>盛り上がりの“画”を残して共有したい</li>
+    </ul>
+  </div>
+  <div class="card">
+    <h4>P2：二次会難民</h4>
+    <span class="tag">深夜</span><span class="tag">満席</span>
+    <ul>
+      <li>一次会後、近くの店が満席・閉店で行き場がない</li>
+      <li>大人数を一度に受けてくれる箱が見つからない</li>
+      <li>移動も含めて勢いを切らしたくない</li>
+    </ul>
+  </div>
+</div>
+<div class="card" style="margin-top:10px;">
+  <h4>P3：地方のカラオケ難民</h4>
+  <span class="tag">店が遠い</span><span class="tag">地域</span>
+  <ul>
+    <li>最寄りのカラオケ店まで車で長距離、現実的に通えない</li>
+    <li>イベント・集まりで歌いたいが箱がそもそも無い</li>
+    <li>地域の催し・キャンプ・宴会場に呼べる歌室がほしい</li>
+  </ul>
+</div>
+<p class="quote">ペルソナの“勝利条件”：<b>「どこでも、最高の歌室が横付けされる」</b>。MO-KARA はこの一点に全リソースを集中する。</p>
+</section>
+
+<section class="pagebreak">
+<h2>3. ペルソナ適合スコア = 100点（8軸）</h2>
+<p class="lead">8軸×配点で「ペルソナの勝利条件」を満たせているかを決定論的に採点。各軸は「これが無いとペルソナが0点を付ける」要件で構成。配点は設計目標の達成を前提とする。</p>
+<table class="score">
+  <thead><tr><th>#</th><th>評価軸</th><th>ペルソナにとっての意味</th><th>MO-KARA の到達設計（目標）</th><th class="pts">配点</th></tr></thead>
+  <tbody>
+    <tr><td>1</td><td>遮音性</td><td>外に漏れたら使えない</td><td>高遮音ボディ＋吸音内装で外部漏れを抑える設計。住宅地・夜間運用を想定（目標値）</td><td class="pts">16</td></tr>
+    <tr><td>2</td><td>音響・マイク</td><td>歌が気持ちよくないと意味がない</td><td>プロ音響スピーカー＋ワイヤレスマイク複数本、エコー/ミキシング調整（目標）</td><td class="pts">15</td></tr>
+    <tr><td>3</td><td>照明演出</td><td>盛り上がりの“画”を作る</td><td>ミラーボール・調光LED・曲連動の演出モード（目標）</td><td class="pts">12</td></tr>
+    <tr><td>4</td><td>uta.live 連携</td><td>配信・採点で体験が完結</td><td>選曲・配信・採点をアプリ連携でワンタップ運用（目標）</td><td class="pts">13</td></tr>
+    <tr><td>5</td><td>居住・くつろぎ</td><td>仲間と囲める個室空間</td><td>対面ソファ・テーブル・ドリンク保冷、立てる室内高（目標）</td><td class="pts">12</td></tr>
+    <tr><td>6</td><td>電源自立</td><td>夜通し電源が切れたら全滅</td><td>駆動用＋運用サブ電池で、停車運用一晩を無補給で賄う設計（目標）</td><td class="pts">12</td></tr>
+    <tr><td>7</td><td>横付け到達性</td><td>仲間のところへ来られる</td><td>呼び出し→到着→歌い出し5分を目標とする運用設計・停車運用（目標）</td><td class="pts">10</td></tr>
+    <tr><td>8</td><td>提供性（運用）</td><td>気軽に借りて呼べる</td><td>レンタル／イベント手配の料金・予約をアプリで明朗化（目標）</td><td class="pts">10</td></tr>
+  </tbody>
+  <tfoot><tr><td colspan="4">合計（ペルソナ適合スコア）</td><td class="pts">100</td></tr></tfoot>
+</table>
+<p class="small">※スコアは「ペルソナの勝利条件＝どこでも最高の歌室が横付けされる」を基準に、各軸の必須要件（設計目標）を満たした場合に満点。未達があれば即減点する辛口運用を前提とする。</p>
+</section>
+
+<section class="pagebreak">
+<h2>4. 主要諸元・装備（設計目標値）</h2>
+<p class="lead">以下はすべて<b>設計目標値</b>であり確定スペックではありません。実機検証で変動し得ます。</p>
+<table>
+  <thead><tr><th>項目</th><th>設計目標</th><th>項目</th><th>設計目標</th></tr></thead>
+  <tbody>
+    <tr><td>ボディ</td><td>1BOX/バンタイプ（室内で立てる高さ）</td><td>定員（歌室）</td><td>4〜6名で囲める個室レイアウト</td></tr>
+    <tr><td>遮音</td><td>高遮音ボディ＋吸音内装（外部漏れ抑制）</td><td>音響</td><td>プロ音響スピーカー＋サブウーファー</td></tr>
+    <tr><td>マイク</td><td>ワイヤレスマイク複数本＋ミキサー</td><td>照明演出</td><td>ミラーボール・調光LED・曲連動モード</td></tr>
+    <tr><td>連携</td><td>uta.live 配信・採点・選曲アプリ連携</td><td>内装</td><td>対面ソファ・テーブル・収納</td></tr>
+    <tr><td>ドリンク</td><td>保冷庫（停車運用対応）</td><td>空調</td><td>停車時低消費の冷暖房</td></tr>
+    <tr><td>電源</td><td>駆動用＋運用サブ電池、AC出力</td><td>無補給運用</td><td>停車運用で一晩を目標</td></tr>
+    <tr><td>運用</td><td>停車運用（呼び出し横付け）</td><td>到達目標</td><td>到着→歌い出し5分</td></tr>
+  </tbody>
+</table>
+<p class="small">※具体の登録区分・保安基準・電源/電波関連の適合は最終仕様時に専門家・関係機関と確認のうえ確定（本書は設計方針）。停車場所は道路交通法その他関係法令・施設ルールを順守した合法スポットでの運用を前提とする。</p>
+</section>
+
+<section>
+<h2>5. 差別化（なぜ店舗・一般EVに勝てるか）</h2>
+<p class="lead">カラオケ店の強み（曲数・価格・設備）や一般EVの強み（航続・価格）と<b>正面から殴り合わない</b>。戦場を「店に行く」から「歌室が来る」へずらす。</p>
+<table class="vs">
+  <thead><tr><th>観点</th><th>カラオケ店 / 一般EV</th><th class="win">MO-KARA（ずらした土俵）</th></tr></thead>
+  <tbody>
+    <tr><td>場所</td><td>客が店まで行く・地方は店が無い</td><td class="win">歌室が仲間のところへ横付けされる</td></tr>
+    <tr><td>体験</td><td>歌う／移動する、が別々</td><td class="win">移動も含めて切れ目なく盛り上がる</td></tr>
+    <tr><td>記録</td><td>その場で消える</td><td class="win">uta.live で配信・採点・共有まで一体</td></tr>
+    <tr><td>受け皿</td><td>満席・閉店・予約の壁</td><td class="win">二次会難民をその夜のうちに受ける</td></tr>
+    <tr><td>収益</td><td>店舗売上 / 車両売り切り</td><td class="win">レンタル＋イベント＋アプリ連携の継続収益</td></tr>
+  </tbody>
+</table>
+<p>つまり MO-KARA は「EVメーカー」でも「カラオケ店」でもなく、<span class="neon">「盛り上がる夜そのものを届ける会社」</span>。店が無い場所・時間帯ほど価値が立ち上がる。</p>
+</section>
+
+<section>
+<h2>6. 価格と提供形態（想定）</h2>
+<p class="lead">売り切りではなく、<b>レンタル＋イベント手配</b>を中心とした提供形態を想定します。以下は提供形態の設計方針であり、確定価格ではありません。</p>
+<div class="grid2">
+  <div class="card">
+    <h4>A. 時間レンタル（呼び出し横付け）</h4>
+    <span class="tag">二次会</span><span class="tag">誕生日</span>
+    <ul>
+      <li>アプリで時間・場所を指定して呼ぶ</li>
+      <li>料金は時間制＋出張距離で明朗化（目標）</li>
+      <li>ドリンク・演出オプションを追加可能</li>
+    </ul>
+  </div>
+  <div class="card">
+    <h4>B. イベント手配（地域・法人）</h4>
+    <span class="tag">お祭り</span><span class="tag">社内行事</span>
+    <ul>
+      <li>地域の催し・キャンプ・宴会・社内行事へ出張</li>
+      <li>半日／終日のパッケージ料金（目標）</li>
+      <li>運用スタッフ・配信オプション付帯を想定</li>
+    </ul>
+  </div>
+</div>
+<p class="small">※価格帯は地域・時間・距離・オプションで変動するため本書では金額を確定しません。レンタル・イベント手配の予約と料金提示はアプリで明朗化することを設計目標とします。停車場所の確保・許諾はお客様と運用側で事前に取り決めます。</p>
+</section>
+
+<section>
+<h2>7. 注記</h2>
+<ul>
+  <li>本書のスペックはすべて<b>設計目標値</b>であり、確定値・実測値ではありません。誇張表現は用いていません。</li>
+  <li>遮音・電源自立・到達時間などの数値目標は、実機検証で変動し得ます。達成を保証するものではありません。</li>
+  <li>停車運用は、道路交通法その他関係法令および施設・地域のルールを順守した合法スポットでのみ行うことを前提とします。</li>
+  <li>登録区分・保安基準・電源（PSE等）・電波（技適等）・騒音に関する適合は、最終仕様時に専門家・関係機関と確認のうえ確定します。</li>
+  <li>uta.live 連携の機能範囲・対応曲・採点/配信の仕様は、提供状況に応じて変わります。</li>
+</ul>
+<p class="quote">結論：MO-KARA は「車を作る」プロジェクトではなく、<b>「どこでも、最高の歌室が横付けされる」を物理空間に実装する</b>プロジェクト。店の有無に縛られず、仲間と盛り上がる夜をその場に届ける。</p>
+<p class="small" style="text-align:right; margin-top:2em;">MO-KARA 走る歌室 Concept Design Document v1.0 ／ BRAND: MU auto ／ 連絡先：mail@yukihamada.jp</p>
+</section>
+
+</body>
+</html>

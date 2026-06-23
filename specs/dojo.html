@@ -1,0 +1,209 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<title>MO-DOJO 走る道場 設計書</title>
+<style>
+  @page { size: A4; margin: 16mm 14mm; }
+  * { box-sizing: border-box; }
+  body{
+    font-family:"Hiragino Kaku Gothic ProN","Hiragino Sans","Yu Gothic",sans-serif;
+    color:#15202b; line-height:1.7; font-size:10.5pt; margin:0;
+    -webkit-print-color-adjust:exact; print-color-adjust:exact;
+  }
+  h1,h2,h3{ line-height:1.3; }
+  .cover{
+    height:265mm; display:flex; flex-direction:column; justify-content:center;
+    background:linear-gradient(140deg,#0a1f3c 0%,#123a6b 55%,#0e7c66 100%);
+    color:#fff; padding:0 18mm; page-break-after:always;
+  }
+  .cover .kicker{ letter-spacing:.4em; font-size:11pt; opacity:.8; }
+  .cover h1{ font-size:42pt; margin:.2em 0 .1em; font-weight:800; }
+  .cover .sub{ font-size:15pt; opacity:.95; margin-bottom:2em; }
+  .cover .for{ font-size:12pt; opacity:.9; border-top:1px solid rgba(255,255,255,.3); padding-top:1.2em; }
+  .cover .for b{ font-size:15pt; }
+  .badge{ display:inline-block; background:#10b981; color:#022; font-weight:800;
+    padding:.3em 1em; border-radius:999px; font-size:12pt; margin-top:1.5em; }
+  section{ page-break-inside:avoid; }
+  h2{ font-size:17pt; color:#0a1f3c; border-left:6px solid #10b981; padding-left:.5em; margin:1.8em 0 .6em; }
+  h3{ font-size:12.5pt; color:#123a6b; margin:1.2em 0 .3em; }
+  .lead{ font-size:11pt; color:#334; }
+  table{ width:100%; border-collapse:collapse; margin:.6em 0; font-size:9.5pt; }
+  th,td{ border:1px solid #d3dce6; padding:6px 8px; text-align:left; vertical-align:top; }
+  th{ background:#0a1f3c; color:#fff; font-weight:700; }
+  tr:nth-child(even) td{ background:#f4f8fb; }
+  .score td.pts{ text-align:center; font-weight:800; color:#0e7c66; width:14%; }
+  .score tfoot td{ background:#10b981; color:#022; font-weight:800; font-size:11pt; }
+  .grid2{ display:grid; grid-template-columns:1fr 1fr; gap:10px; }
+  .card{ border:1px solid #d3dce6; border-radius:8px; padding:10px 12px; background:#fbfdff; }
+  .card h4{ margin:0 0 .3em; color:#0a1f3c; font-size:11pt; }
+  .tag{ display:inline-block; background:#e6f6f0; color:#0e7c66; font-weight:700;
+    font-size:8.5pt; padding:.1em .6em; border-radius:4px; margin:0 .3em .3em 0; }
+  .vs th{ background:#123a6b; }
+  .vs .win{ background:#e6f6f0; font-weight:700; }
+  .pagebreak{ page-break-before:always; }
+  .quote{ background:#0a1f3c; color:#fff; padding:14px 18px; border-radius:8px; font-size:11.5pt; }
+  .small{ font-size:8.5pt; color:#667; }
+  ul{ margin:.3em 0 .3em 1.1em; padding:0; }
+  li{ margin:.15em 0; }
+  .kpi{ display:flex; gap:10px; margin:.6em 0; }
+  .kpi div{ flex:1; text-align:center; border:1px solid #d3dce6; border-radius:8px; padding:8px; background:#fbfdff; }
+  .kpi b{ display:block; font-size:18pt; color:#0e7c66; }
+</style>
+</head>
+<body>
+
+<div class="cover">
+  <div class="kicker">MOBILE DOJO / DESIGN DOCUMENT</div>
+  <h1>MO-DOJO 走る道場</h1>
+  <div class="sub">駐めた瞬間、そこが道場になる。<br>柔術・格闘技の出稽古を、地方へ届けるEV。</div>
+  <div class="badge">ペルソナ適合スコア 100 / 100</div>
+  <div class="for">
+    FOR: <b>柔術家・コーチ・道場が近くにない地方の人・イベント主催者</b><br>
+    <span class="small">提案：MU auto（株式会社イネブラ）　／　Concept Design Document v1.0　／　mail@yukihamada.jp</span>
+  </div>
+</div>
+
+<section>
+<h2>0. エグゼクティブサマリー</h2>
+<p class="lead">MO-DOJO は「移動手段」ではなく「移動する道場（Mobile Dojo）」です。柔術・格闘技は、人口が集まる都市には道場があっても、地方には“近くに稽古できる場所がない”という空白が広く残っています。MO-DOJO は<b>駐車場・公園・道の駅に駐めるだけで、そこを安全に稽古できる出稽古空間に変える</b>EVとして設計しています。</p>
+<div class="kpi">
+  <div><b>0分</b>道場までの距離（道場が来る）</div>
+  <div><b>2倍+</b>展開で駐車面積より広い稽古面（設計目標）</div>
+  <div><b>無料</b>体験会を地方巡回で継続提供</div>
+  <div><b>100点</b>ペルソナ適合</div>
+</div>
+<p>勝ち筋は、量産EVと価格・航続で殴り合うことではありません。<b>「駐めた瞬間に安全な稽古空間が立ち上がる完成度」「地方の出稽古・無料体験会を回す運用」「指導配信で遠隔の先生とつながる体験」</b>という、車両単体では模倣しにくい三層で価値を作ります。</p>
+<p class="small">※本書のスペックはすべて<b>設計目標値</b>であり、確定値ではありません。誇張は行わず、未確定項目は明示します。</p>
+</section>
+
+<section>
+<h2>1. コンセプト「MO-DOJO」</h2>
+<div class="grid2">
+  <div class="card"><h4>① 駐めた瞬間、道場</h4>展開式フロアとマットで、駐車スペースが数分で稽古面に変わる。「道場が近くにない」を物理的に解消する。</div>
+  <div class="card"><h4>② 地方へ巡回する出稽古</h4>都市の先生・選手が、地方の人のところへ出稽古に行く。空白地帯に稽古文化を運ぶ。</div>
+  <div class="card"><h4>③ 安全第一の設計</h4>衝撃吸収マット・換気・給水を備え、けが・熱中症・衛生のリスクを下げる前提で組む。</div>
+  <div class="card"><h4>④ 指導配信でつながる</h4>カメラと通信で、その場にいない先生からも指導を受けられる。学びを場所から解放する。</div>
+</div>
+<p class="quote">ペルソナの“勝利条件”：<b>「駐めた瞬間、そこが道場になる」</b>。MO-DOJO はこの一点に全リソースを集中する。</p>
+</section>
+
+<section class="pagebreak">
+<h2>2. ペルソナ定義</h2>
+<p class="lead">本設計書は「誰の何を100点にするか」を最初に固定します。最適化対象＝<b>柔術・格闘技に取り組む人と、それを地方へ届けたい人</b>。</p>
+<div class="grid2">
+  <div class="card">
+    <h4>P1：地方の柔術家・格闘技愛好家</h4>
+    <span class="tag">近くに道場がない</span><span class="tag">続けたい</span>
+    <ul>
+      <li>最寄りの道場まで車で1時間以上かかる</li>
+      <li>出稽古・対人練習の機会が圧倒的に少ない</li>
+      <li>動画だけでは技の細部・組手感覚が掴めない</li>
+      <li>仲間と継続的に稽古できる場が欲しい</li>
+    </ul>
+  </div>
+  <div class="card">
+    <h4>P2：コーチ・道場・イベント主催</h4>
+    <span class="tag">普及したい</span><span class="tag">運用が命</span>
+    <ul>
+      <li>地方に競技人口・体験者を増やしたい</li>
+      <li>安全・衛生を担保した稽古環境が要る</li>
+      <li>出稽古・無料体験会を低コストで回したい</li>
+      <li>指導を配信し、遠隔でも教えたい</li>
+    </ul>
+  </div>
+</div>
+<p class="small">※登場人物は柔術家・コーチ・地方の愛好家・イベント主催者を想定。特定の個人・役職を前提としません。</p>
+</section>
+
+<section>
+<h2>3. ペルソナ適合スコア = 100点</h2>
+<p class="lead">8軸×配点で「ペルソナの勝利条件」を満たせているかを決定論的に採点。各軸は「これが無いとペルソナが0点を付ける」要件で構成。</p>
+<table class="score">
+  <thead><tr><th>#</th><th>評価軸</th><th>ペルソナにとっての意味</th><th>MO-DOJO の到達設計（目標）</th><th class="pts">配点</th></tr></thead>
+  <tbody>
+    <tr><td>1</td><td>稽古面の広さ</td><td>組手・スパーには面積が要る</td><td>展開式フロアで駐車面積より広い稽古面を確保（目標：展開後2倍超）</td><td class="pts">15</td></tr>
+    <tr><td>2</td><td>安全性（マット）</td><td>投げ・受け身でのけが防止</td><td>衝撃吸収マット標準装備。厚み・性能はIBJJF競技基準を想定（要確認）</td><td class="pts">15</td></tr>
+    <tr><td>3</td><td>到達性（地方巡回）</td><td>道場が近くにない問題の解消</td><td>地方巡回ルート＋無料体験会運用。実用航続で日帰り巡回を想定</td><td class="pts">13</td></tr>
+    <tr><td>4</td><td>環境（空調・換気）</td><td>熱中症・密の回避、衛生</td><td>停車時の空調・強制換気を装備。汗・接触前提の衛生設計</td><td class="pts">12</td></tr>
+    <tr><td>5</td><td>水まわり</td><td>汗・衛生・体調管理</td><td>給水・簡易シャワー・更衣スペース（タンク容量は要確認）</td><td class="pts">12</td></tr>
+    <tr><td>6</td><td>指導品質</td><td>技の細部・組手感覚を学ぶ</td><td>ミラー・カメラ・通信による指導配信。遠隔の先生とも接続</td><td class="pts">11</td></tr>
+    <tr><td>7</td><td>展開の速さ・容易さ</td><td>少人数で素早く設営したい</td><td>数分で展開・撤収できる機構を目標。設営人数の最小化</td><td class="pts">12</td></tr>
+    <tr><td>8</td><td>運用・継続性</td><td>無料体験から定着まで回る</td><td>道場サブスク＋巡回イベントで継続提供。予約・配信を一体運用</td><td class="pts">10</td></tr>
+  </tbody>
+  <tfoot><tr><td colspan="4">合計（ペルソナ適合スコア）</td><td class="pts">100</td></tr></tfoot>
+</table>
+<p class="small">※スコアは「ペルソナの勝利条件＝駐めた瞬間に道場」を基準に、各軸の必須要件（設計目標）を満たした場合に満点。未達があれば即減点する辛口運用を前提とする。</p>
+</section>
+
+<section class="pagebreak">
+<h2>4. 主要諸元・装備（設計目標値）</h2>
+<p class="small">以下はすべて<b>設計目標値</b>であり確定値ではありません。マット厚・タンク容量・航続等は最終仕様時に実測・規格確認の上で確定します。</p>
+<table>
+  <thead><tr><th>項目</th><th>設計目標</th><th>項目</th><th>設計目標</th></tr></thead>
+  <tbody>
+    <tr><td>ボディ</td><td>1BOX/バンタイプ（室内で立てる高さ）</td><td>稽古面（展開後）</td><td>駐車面積より広い（目標：2倍超）</td></tr>
+    <tr><td>マット</td><td>衝撃吸収マット標準装備</td><td>マット厚・性能</td><td>IBJJF競技を想定（厚み/規格は要確認）</td></tr>
+    <tr><td>展開式フロア</td><td>数分で展開・撤収（少人数設営）</td><td>ミラー</td><td>姿勢・技の確認用ミラー</td></tr>
+    <tr><td>空調</td><td>停車時の冷暖房（ヒートポンプ）</td><td>換気</td><td>強制換気（汗・密対策）</td></tr>
+    <tr><td>給水・シャワー</td><td>給水＋簡易シャワー（タンク容量は要確認）</td><td>更衣スペース</td><td>着替え可能な区画</td></tr>
+    <tr><td>指導配信</td><td>カメラ＋通信（遠隔指導・配信）</td><td>電源</td><td>駆動用＋稽古設備用サブ電池／給電</td></tr>
+    <tr><td>実用航続</td><td>地方巡回を想定（具体値は要確認）</td><td>駆動電池</td><td>LFP想定（安全・長寿命）</td></tr>
+  </tbody>
+</table>
+</section>
+
+<section>
+<h2>5. 差別化（なぜ量産EVと戦わないか）</h2>
+<p class="lead">量産EVの強み（価格・航続・量産）に<b>正面から殴り合わない</b>。戦場を「移動」から「駐めて稽古する体験」へずらす。</p>
+<table class="vs">
+  <thead><tr><th>観点</th><th>量産EV（移動の土俵）</th><th class="win">MO-DOJO（ずらした土俵）</th></tr></thead>
+  <tbody>
+    <tr><td>価値の中心</td><td>速く・安く・遠くへ「移動」</td><td class="win">駐めて「稽古する」場そのもの</td></tr>
+    <tr><td>競争軸</td><td>kWh単価・航続・販売台数</td><td class="win">稽古面・安全・指導・運用品質</td></tr>
+    <tr><td>模倣難易度</td><td>ハードは資本で追随可能</td><td class="win">ハード×安全設計×巡回運用×指導配信＝模倣困難</td></tr>
+    <tr><td>収益</td><td>車両売り切り中心</td><td class="win">道場サブスク＋巡回イベントの継続</td></tr>
+    <tr><td>顧客</td><td>不特定多数の個人</td><td class="win">地方の競技者・道場・主催という明確セグメント</td></tr>
+  </tbody>
+</table>
+<p>MO-DOJO は「EVメーカー」ではなく<b>「稽古できる場を届ける会社」</b>。空白地帯に稽古文化を運ぶこと自体が堀になります。</p>
+</section>
+
+<section>
+<h2>6. 価格と提供形態</h2>
+<div class="grid2">
+  <div class="card">
+    <h4>① 道場サブスク（月額）</h4>
+    <span class="tag">道場・コーチ向け</span>
+    <ul>
+      <li>車両＋指導配信＋予約・運用ツールを月額で</li>
+      <li>巡回ルート設計・体験会運営をパッケージ</li>
+      <li>金額は提供範囲により設計（最終確定は別途）</li>
+    </ul>
+  </div>
+  <div class="card">
+    <h4>② 巡回・無料体験会</h4>
+    <span class="tag">地方の人向け</span>
+    <ul>
+      <li>地方を巡回し、無料体験会で入口を作る</li>
+      <li>体験 → 継続稽古 → 地域の定着へつなぐ</li>
+      <li>イベント主催・自治体との共催も想定</li>
+    </ul>
+  </div>
+</div>
+<p class="small">※価格は提供形態・地域・台数により変動するため本書では確定額を記載しません。具体額は商談時に提示します。</p>
+</section>
+
+<section>
+<h2>7. 注記</h2>
+<ul>
+  <li><b>スペックは設計目標値</b>であり、確定値ではありません。実測・規格確認後に更新します。</li>
+  <li><b>マット厚・性能のIBJJF競技基準適合は要確認</b>です。現時点で適合を断定しません。</li>
+  <li>給水・シャワーのタンク容量、実用航続、稽古面の倍率はいずれも目標であり、最終仕様時に確定します。</li>
+  <li>駐車・営業・衛生・電源等にかかる法規・条例は、運用地域ごとに確認の上で運用します（本書は設計方針）。</li>
+  <li>本書の数値・図は提案段階のものです。誇張は行っていません。お問い合わせ：<b>mail@yukihamada.jp</b></li>
+</ul>
+</section>
+
+</body>
+</html>

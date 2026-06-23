@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>MU auto ― ラインナップ</title>
+<style>
+  :root{--navy:#0a1f3c;--teal:#0e7c66;--green:#10b981;--ink:#15202b}
+  *{margin:0;padding:0;box-sizing:border-box}
+  body{font-family:"Hiragino Kaku Gothic ProN","Hiragino Sans",sans-serif;color:var(--ink);background:#f4f8fb;line-height:1.7}
+  a{color:inherit}
+  .hero{background:linear-gradient(150deg,#0a1f3c 0%,#123a6b 55%,#0e7c66 100%);color:#fff;padding:90px 24px 80px;text-align:center}
+  .hero .kicker{letter-spacing:.45em;font-size:13px;opacity:.85;font-weight:700}
+  .hero h1{font-size:clamp(40px,8vw,84px);font-weight:800;margin:8px 0 6px;letter-spacing:.02em}
+  .hero .lead{font-size:clamp(16px,2.4vw,22px);opacity:.95;max-width:720px;margin:0 auto}
+  .hero .pill{display:inline-block;margin-top:22px;background:var(--green);color:#03261c;font-weight:800;padding:8px 22px;border-radius:999px;font-size:14px}
+  .wrap{max-width:1200px;margin:0 auto;padding:56px 22px 80px}
+  .sectitle{font-size:14px;font-weight:800;color:var(--teal);letter-spacing:.2em;text-align:center;margin-bottom:6px}
+  .secsub{text-align:center;color:#5a6b80;margin-bottom:36px}
+  .grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(330px,1fr));gap:24px}
+  .card{background:#fff;border:1px solid #e1e8f0;border-radius:18px;overflow:hidden;display:flex;flex-direction:column;
+    box-shadow:0 8px 30px rgba(10,31,60,.06);transition:transform .2s,box-shadow .2s}
+  .card:hover{transform:translateY(-4px);box-shadow:0 16px 44px rgba(10,31,60,.14)}
+  .card .ph{position:relative;aspect-ratio:16/9;overflow:hidden;background:var(--navy)}
+  .card .ph img{width:100%;height:100%;object-fit:cover;display:block}
+  .badge{position:absolute;top:12px;left:12px;background:rgba(10,31,60,.82);color:#dff3ec;font-weight:700;font-size:12px;padding:5px 12px;border-radius:999px;backdrop-filter:blur(4px)}
+  .score{position:absolute;top:12px;right:12px;background:var(--green);color:#03261c;font-weight:800;font-size:12px;padding:5px 11px;border-radius:999px}
+  .body{padding:18px 20px 20px;display:flex;flex-direction:column;flex:1}
+  .name{font-size:22px;font-weight:800;color:var(--navy)}
+  .tag{color:var(--teal);font-weight:700;font-size:14px;margin:2px 0 10px}
+  .pts{list-style:none;margin:0 0 16px;padding:0;flex:1}
+  .pts li{position:relative;padding-left:20px;font-size:14px;color:#39485a;margin:5px 0}
+  .pts li::before{content:"";position:absolute;left:0;top:9px;width:9px;height:9px;border-radius:2px;background:var(--green)}
+  .links{display:flex;gap:10px;flex-wrap:wrap}
+  .btn{flex:1;text-align:center;font-weight:700;font-size:13px;padding:10px 8px;border-radius:10px;text-decoration:none;white-space:nowrap}
+  .btn.p{background:var(--navy);color:#fff}
+  .btn.s{background:#e6f6f0;color:var(--teal)}
+  .btn.d{background:#eef2f6;color:#9aa7b5;pointer-events:none}
+  .note{max-width:1200px;margin:0 auto;padding:0 22px 70px;color:#7585955;color:#67788c;font-size:12.5px;text-align:center}
+  footer{background:var(--navy);color:#aebfd4;text-align:center;padding:30px 20px;font-size:13px}
+  footer b{color:#fff}
+</style>
+</head>
+<body>
+  <header class="hero">
+    <div class="kicker">MU auto</div>
+    <h1>走る、ぜんぶ。</h1>
+    <p class="lead">ひとつの思想 ――「停めた瞬間、その人にとって最高の空間になる」。<br>ペルソナごとに磨いた、移動する○○のラインナップ。</p>
+    <div class="pill">各モデル ペルソナ適合スコア 100 / 100</div>
+  </header>
+
+  <main class="wrap">
+    <div class="sectitle">LINEUP</div>
+    <div class="secsub">6モデル ― あなたの「働く・遊ぶ・救う・整う」が、走り出す。</div>
+    <div class="grid" id="grid"></div>
+  </main>
+
+  <p class="note">※ 画像はイメージ、記載スペックはすべて「設計目標値・構想段階」です。MO-MED の医療提供は医療法・薬機法・医療機器認証等の適合確認が前提（未確認）。各モデルは開発初期で、価格・仕様・実現性は変更されます。お問い合わせ：mail@yukihamada.jp</p>
+
+  <footer>
+    <b>MU auto</b> ― 運営：株式会社イネブラ（Enabler Inc.）／ mail@yukihamada.jp<br>
+    <span style="opacity:.7">© MU auto. 構想・設計目標値であり、製品の性能・実現を保証するものではありません。</span>
+  </footer>
+
+<script>
+const MODELS=[
+ {id:"mo1",badge:"リモートワーカー・経営者",name:"MO-1 走る本社",tag:"停めた瞬間、本社品質。",
+  pts:["通信・電源・空調を三重冗長／無補給3日","「事務室車(8ナンバー)」で車内勤務を“白”に","価格でなく“停車中の生産性”で勝つ"],video:"video/mo1.mp4",spec:"specs/mo1.html"},
+ {id:"exe",badge:"エグゼクティブ・VIP",name:"MO-EXE 移動役員室",tag:"移動が、最上級の執務と応接に。",
+  pts:["防音・防諜とプライバシーガラス","本革フルフラットシート＋秘書席","セキュア通信・最高静粛性"],video:null,spec:"specs/exe.html"},
+ {id:"kara",badge:"パーティ・カラオケ難民",name:"MO-KARA 走る歌室",tag:"どこでも、最高の歌室が横付け。",
+  pts:["外に漏れない高遮音ボックス","プロ音響＋照明演出","uta.live 配信・採点連携"],video:null,spec:"specs/kara.html"},
+ {id:"dojo",badge:"柔術家・地方・コーチ",name:"MO-DOJO 走る道場",tag:"駐めた瞬間、そこが道場になる。",
+  pts:["衝撃吸収マット（基準は要確認）","駐車面より広い展開フロア","出稽古・地方巡回・体験会"],video:null,spec:"specs/dojo.html"},
+ {id:"med",badge:"医師・自治体・僻地/災害",name:"MO-MED 巡回診療所",tag:"医療が、患者のところへ走っていく。",
+  pts:["診察＋簡易検査(POCT)＋オンライン診療","電源自立・コールドチェーン","災害対応・バリアフリー ※規制は要確認"],video:null,spec:"specs/med.html"},
+ {id:"camp",badge:"経営者リトリート・合宿",name:"MO-CAMP 焚き火基地",tag:"自然の中に、整いと対話の拠点が。",
+  pts:["車載サウナ＋水風呂・外気浴","展開式 焚き火デッキ","オフサイト会議・電源/通信自立"],video:null,spec:"specs/camp.html"},
+];
+document.getElementById("grid").innerHTML=MODELS.map(m=>`
+ <article class="card">
+   <div class="ph"><span class="badge">${m.badge}</span><span class="score">100点</span>
+     <img src="img/${m.id}.png" alt="${m.name}"></div>
+   <div class="body">
+     <div class="name">${m.name}</div>
+     <div class="tag">${m.tag}</div>
+     <ul class="pts">${m.pts.map(p=>`<li>${p}</li>`).join("")}</ul>
+     <div class="links">
+       <a class="btn p" href="${m.spec}" target="_blank">仕様書</a>
+       ${m.video?`<a class="btn s" href="${m.video}" target="_blank">紙芝居動画</a>`:`<span class="btn d">紙芝居 近日</span>`}
+     </div>
+   </div>
+ </article>`).join("");
+</script>
+</body>
+</html>

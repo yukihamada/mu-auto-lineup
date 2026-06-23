@@ -1,0 +1,192 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<title>MO-EXE 設計書</title>
+<style>
+  @page { size: A4; margin: 16mm 14mm; }
+  * { box-sizing: border-box; }
+  body{
+    font-family:"Hiragino Kaku Gothic ProN","Hiragino Sans","Yu Gothic",sans-serif;
+    color:#15202b; line-height:1.7; font-size:10.5pt; margin:0;
+    -webkit-print-color-adjust:exact; print-color-adjust:exact;
+  }
+  h1,h2,h3{ line-height:1.3; }
+  .cover{
+    height:265mm; display:flex; flex-direction:column; justify-content:center;
+    background:linear-gradient(140deg,#0a1f3c 0%,#123a6b 55%,#0e7c66 100%);
+    color:#fff; padding:0 18mm; page-break-after:always;
+  }
+  .cover .kicker{ letter-spacing:.4em; font-size:11pt; opacity:.8; }
+  .cover h1{ font-size:44pt; margin:.2em 0 .1em; font-weight:800; }
+  .cover .sub{ font-size:15pt; opacity:.95; margin-bottom:2em; }
+  .cover .for{ font-size:12pt; opacity:.9; border-top:1px solid rgba(255,255,255,.3); padding-top:1.2em; }
+  .cover .for b{ font-size:15pt; }
+  .badge{ display:inline-block; background:#10b981; color:#022; font-weight:800;
+    padding:.3em 1em; border-radius:999px; font-size:12pt; margin-top:1.5em; }
+  section{ page-break-inside:avoid; }
+  h2{ font-size:17pt; color:#0a1f3c; border-left:6px solid #10b981; padding-left:.5em; margin:1.8em 0 .6em; }
+  h3{ font-size:12.5pt; color:#123a6b; margin:1.2em 0 .3em; }
+  .lead{ font-size:11pt; color:#334; }
+  table{ width:100%; border-collapse:collapse; margin:.6em 0; font-size:9.5pt; }
+  th,td{ border:1px solid #d3dce6; padding:6px 8px; text-align:left; vertical-align:top; }
+  th{ background:#0a1f3c; color:#fff; font-weight:700; }
+  tr:nth-child(even) td{ background:#f4f8fb; }
+  .score td.pts{ text-align:center; font-weight:800; color:#0e7c66; width:14%; }
+  .score tfoot td{ background:#10b981; color:#022; font-weight:800; font-size:11pt; }
+  .grid2{ display:grid; grid-template-columns:1fr 1fr; gap:10px; }
+  .card{ border:1px solid #d3dce6; border-radius:8px; padding:10px 12px; background:#fbfdff; }
+  .card h4{ margin:0 0 .3em; color:#0a1f3c; font-size:11pt; }
+  .tag{ display:inline-block; background:#e6f6f0; color:#0e7c66; font-weight:700;
+    font-size:8.5pt; padding:.1em .6em; border-radius:4px; margin:0 .3em .3em 0; }
+  .vs th{ background:#123a6b; }
+  .vs .win{ background:#e6f6f0; font-weight:700; }
+  .pagebreak{ page-break-before:always; }
+  .quote{ background:#0a1f3c; color:#fff; padding:14px 18px; border-radius:8px; font-size:11.5pt; }
+  .small{ font-size:8.5pt; color:#667; }
+  ul{ margin:.3em 0 .3em 1.1em; padding:0; }
+  li{ margin:.15em 0; }
+  .kpi{ display:flex; gap:10px; margin:.6em 0; }
+  .kpi div{ flex:1; text-align:center; border:1px solid #d3dce6; border-radius:8px; padding:8px; background:#fbfdff; }
+  .kpi b{ display:block; font-size:18pt; color:#0e7c66; }
+</style>
+</head>
+<body>
+
+<div class="cover">
+  <div class="kicker">EXECUTIVE MOBILITY / DESIGN DOCUMENT</div>
+  <h1>MO-EXE</h1>
+  <div class="sub">移動役員室 ―― The Executive<br>移動時間が、最上級の執務と応接になるショーファードリブンEV</div>
+  <div class="badge">ペルソナ適合スコア 100 / 100</div>
+  <div class="for">
+    FOR: <b>上場企業役員・VIP</b><br>
+    <span class="small">MU auto ／ Concept Design Document v1.0 ／ お問い合わせ: mail@yukihamada.jp</span>
+  </div>
+</div>
+
+<section>
+<h2>0. エグゼクティブサマリー</h2>
+<p class="lead">MO-EXE は「移動手段」ではなく、<b>「移動する役員室（Mobile Executive Suite）」</b>です。多忙な経営層・VIP にとって最も希少な資源は時間です。本車は、後席で過ごす移動時間を <b>最上級の執務・応接・休息</b>へと転換することだけに全リソースを集中したショーファードリブンEVです。</p>
+<div class="kpi">
+  <div><b>役員室</b>後席が、そのまま執務・応接空間に</div>
+  <div><b>防諜</b>防音・盗聴対策を前提に設計</div>
+  <div><b>冗長</b>衛星＋5Gのセキュア通信</div>
+  <div><b>100点</b>ペルソナ適合</div>
+</div>
+<p>航続や価格の量産競争に挑むのではなく、<b>「移動中の執務品質」「機密を守る防諜・セキュア通信」「応接にも休息にも変わる空間設計」</b>という、内装と運用に宿る価値で差を生みます。すべて<b>設計目標値</b>であり、最終仕様は架装・認証段階で確定します。</p>
+</section>
+
+<section>
+<h2>1. コンセプト「移動役員室」</h2>
+<p class="lead">勝利条件はただ一つ ―― <b>「移動時間が、最上級の執務と応接になる」</b>。停車も移動中も、後席が役員室であり続けることに設計を集中します。</p>
+<div class="grid2">
+  <div class="card"><h4>① 執務する</h4>静粛・防音の後席で、書類・会議・即断。大型ディスプレイと安定通信で、移動中も意思決定を止めない。</div>
+  <div class="card"><h4>② 応接する</h4>対面席と上質な内装で、移動そのものを会談の場に。秘書席を備え、来賓の応対も成立する。</div>
+  <div class="card"><h4>③ 休息する</h4>フルフラット仮眠に対応する本革シート。次の予定に向け、移動時間で静かに体を整える。</div>
+  <div class="card"><h4>④ 守る</h4>防音・盗聴対策とセキュア通信を前提に設計。機密を扱う移動空間としての安心を土台に置く。</div>
+</div>
+</section>
+
+<section>
+<h2>2. ペルソナ定義</h2>
+<p class="lead">本設計書は「誰の何を100点にするか」を最初に固定します。最適化対象＝<b>多忙な経営層／VIP</b>。</p>
+<div class="grid2">
+  <div class="card">
+    <h4>P：上場企業役員・VIP</h4>
+    <span class="tag">意思決定者</span><span class="tag">時間が最希少</span><span class="tag">機密を扱う</span>
+    <ul>
+      <li>分刻みの予定で移動が多く、移動時間を無駄にできない</li>
+      <li>移動中も書類確認・会議・即断を止められない</li>
+      <li>来賓との会談や秘書同行の場面が日常的にある</li>
+      <li>機密情報を扱い、盗聴・覗き見への警戒が常にある</li>
+      <li>予定の合間に、確実に休息・回復したい</li>
+    </ul>
+  </div>
+  <div class="card">
+    <h4>勝利条件</h4>
+    <p class="quote" style="font-size:10.5pt; margin:.2em 0;">「移動時間が、最上級の執務と応接になる」。</p>
+    <p style="margin:.6em 0 0;">この一点を満たせているか否かでのみ採点する。豪華さや速さは、この勝利条件に寄与する限りで評価し、寄与しない装飾は加点しない。</p>
+  </div>
+</div>
+</section>
+
+<section class="pagebreak">
+<h2>3. ペルソナ適合スコア = 100点</h2>
+<p class="lead">8軸×配点で「ペルソナの勝利条件」を満たせているかを決定論的に採点。各軸は「これが無いとペルソナが0点を付ける」要件で構成。すべて<b>設計目標値</b>です。</p>
+<table class="score">
+  <thead><tr><th>#</th><th>評価軸</th><th>ペルソナにとっての意味</th><th>MO-EXE の到達設計（目標）</th><th class="pts">配点</th></tr></thead>
+  <tbody>
+    <tr><td>1</td><td>執務環境</td><td>移動中も意思決定を止めない</td><td>本革エグゼクティブシート、サイドテーブル、会議用大型ディスプレイ、書類・端末操作に最適な後席レイアウト</td><td class="pts">16</td></tr>
+    <tr><td>2</td><td>防諜・機密保持</td><td>盗聴・覗き見は致命傷</td><td>防音・盗聴対策を前提とした遮音設計、プライバシーガラス、視線を遮るキャビン分離</td><td class="pts">15</td></tr>
+    <tr><td>3</td><td>セキュア通信</td><td>会議・連絡が落ちたら仕事が止まる</td><td>衛星＋5G の冗長構成、暗号化通信、自動フェイルオーバーを目標とした車内ネットワーク</td><td class="pts">14</td></tr>
+    <tr><td>4</td><td>静粛性</td><td>集中とクリアな会話音声</td><td>最高静粛性を目標とした吸音内装＋EV静粛、会議に耐える車内音響</td><td class="pts">13</td></tr>
+    <tr><td>5</td><td>応接性</td><td>移動を会談・応対の場にする</td><td>対面席、秘書席、来賓に恥じない内装品質と乗降動線</td><td class="pts">12</td></tr>
+    <tr><td>6</td><td>休息・回復</td><td>予定の合間に確実に整える</td><td>フルフラット仮眠対応シート、空気質管理、調光・遮光で短時間の質の高い休息</td><td class="pts">12</td></tr>
+    <tr><td>7</td><td>安全性</td><td>VIPを安全に運ぶ責任</td><td>L2+運転支援を目標とした移動の疲労・リスク低減、堅牢なボディ設計</td><td class="pts">10</td></tr>
+    <tr><td>8</td><td>もてなし</td><td>移動そのものを上質にする</td><td>ミニバー／エスプレッソ、空気質管理、最適な照度・温度の細やかな制御</td><td class="pts">8</td></tr>
+  </tbody>
+  <tfoot><tr><td colspan="4">合計（ペルソナ適合スコア）</td><td class="pts">100</td></tr></tfoot>
+</table>
+<p class="small">※配点は「ペルソナの勝利条件＝移動時間が最上級の執務と応接になる」を基準に、各軸の必須要件を満たした場合に満点。未達があれば減点する辛口運用を前提とする。スコアは本ペルソナに最適化した相対評価であり、他用途への適合を示すものではない。</p>
+</section>
+
+<section class="pagebreak">
+<h2>4. 主要諸元・装備（設計目標値）</h2>
+<p class="small">以下はすべて<b>設計目標値</b>であり、確定仕様ではありません。最終値は架装・認証段階で確定します。</p>
+<table>
+  <thead><tr><th>項目</th><th>設計目標</th><th>項目</th><th>設計目標</th></tr></thead>
+  <tbody>
+    <tr><td>ボディ</td><td>ショーファードリブン（後席優先設計）</td><td>後席シート</td><td>本革エグゼクティブシート（フルフラット仮眠対応）</td></tr>
+    <tr><td>キャビン</td><td>前後分離・防音設計（防諜前提）</td><td>ディスプレイ</td><td>会議用大型ディスプレイ</td></tr>
+    <tr><td>通信</td><td>衛星＋5G 冗長／暗号化</td><td>セキュリティ</td><td>盗聴対策・プライバシーガラス・物理施錠</td></tr>
+    <tr><td>静粛性</td><td>最高静粛性を目標とした吸音内装</td><td>空気質</td><td>空気質管理・換気・調温</td></tr>
+    <tr><td>応接</td><td>対面席・秘書席</td><td>もてなし</td><td>ミニバー／エスプレッソ</td></tr>
+    <tr><td>運転支援</td><td>L2+（運転支援）を目標</td><td>遮光</td><td>調光・遮光・プライバシーガラス</td></tr>
+  </tbody>
+</table>
+</section>
+
+<section>
+<h2>5. 差別化 ―― どこで差を生むか</h2>
+<p class="lead">エンジン出力や航続の量産競争には挑まない。価値の中心を「移動」から「移動中の執務・応接・休息」へ置く。</p>
+<table class="vs">
+  <thead><tr><th>観点</th><th>一般的な高級EV／ショーファー車</th><th class="win">MO-EXE（移動役員室）</th></tr></thead>
+  <tbody>
+    <tr><td>価値の中心</td><td>速く・快適に「移動」する</td><td class="win">移動時間を「執務・応接・休息」に変える</td></tr>
+    <tr><td>競争軸</td><td>出力・航続・ブランド</td><td class="win">執務品質・防諜・セキュア通信・静粛性</td></tr>
+    <tr><td>後席の役割</td><td>くつろぐ座席</td><td class="win">役員室そのもの（会議・応接・仮眠）</td></tr>
+    <tr><td>機密への姿勢</td><td>付帯的</td><td class="win">防音・盗聴対策・暗号化通信を前提に設計</td></tr>
+    <tr><td>顧客</td><td>富裕層一般</td><td class="win">機密と時間を扱う経営層・VIPに限定</td></tr>
+  </tbody>
+</table>
+<p>MO-EXE は「速い車」ではなく<b>「移動時間を取り戻す車」</b>。差別化はカタログ性能ではなく、内装・防諜・通信・運用という模倣の難しい統合に宿ります。</p>
+</section>
+
+<section>
+<h2>6. 想定価格と提供形態</h2>
+<p class="lead">少量・受注設計を前提とし、車両だけでなく運用までを一体で提供します。価格は<b>想定レンジ（未確定）</b>です。</p>
+<table>
+  <thead><tr><th>提供形態</th><th>想定レンジ（未確定）</th><th>内容</th></tr></thead>
+  <tbody>
+    <tr><td>車両購入（受注設計）</td><td>応相談（ハイエンドのショーファー車相当を想定）</td><td>仕様を個別設計し架装。防諜・通信・内装を要件に合わせて構成</td></tr>
+    <tr><td>法人リース／サブスク</td><td>月額（応相談）</td><td>車両＋運用（メンテ・通信・運行）を月額化。経費計上・社用運用を設計</td></tr>
+    <tr><td>運行付き提供</td><td>都度／月額（応相談）</td><td>車両と運行体制をあわせて提供する形態を検討</td></tr>
+  </tbody>
+</table>
+<p class="small">※価格は需要・仕様・認証コストにより変動する想定レンジであり、確定価格ではありません。詳細はお問い合わせください: mail@yukihamada.jp</p>
+</section>
+
+<section>
+<h2>7. 注記</h2>
+<ul>
+  <li>本書記載のスペック・装備・性能はすべて<b>設計目標値</b>であり、確定仕様・保証値ではありません。誇張表現を避け、最終仕様は架装・認証段階で確定します。</li>
+  <li>防音・盗聴対策は「機密を扱う移動空間としての設計思想」を示すものであり、特定の防御性能を保証するものではありません。</li>
+  <li>衛星＋5G の冗長通信、L2+運転支援は<b>目標</b>であり、提供エリア・認可・搭載機器により実現範囲が変わります。</li>
+  <li>ペルソナ適合スコアは本ペルソナ（上場企業役員・VIP）に最適化した内部評価であり、他用途への適合を示すものではありません。</li>
+  <li>価格・提供形態はすべて想定であり、確定したものではありません。</li>
+</ul>
+<p class="small" style="text-align:right; margin-top:2em;">MO-EXE Concept Design Document v1.0 ／ MU auto ／ お問い合わせ: mail@yukihamada.jp</p>
+</section>
+
+</body>
+</html>
