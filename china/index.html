@@ -1,0 +1,497 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>MU auto MO-1 ― 技术可行性评估 + 预算性询价 RFQ (Feasibility + Budgetary)</title>
+<style>
+  @page { size: A4; margin: 16mm 14mm 16mm; }
+  @page :first { margin: 0; }
+  * { box-sizing: border-box; }
+  html { -webkit-print-color-adjust: exact; print-color-adjust: exact; }
+  body{
+    font-family:"PingFang SC","Hiragino Sans GB","Microsoft YaHei","Noto Sans CJK SC",sans-serif;
+    color:#15202b; line-height:1.58; font-size:9.6pt; margin:0;
+  }
+  h1,h2,h3,h4{ line-height:1.25; }
+  .en{ color:#5a6878; font-size:8.2pt; font-weight:400; display:block; margin-top:1px; }
+  p .en{ display:block; margin:1px 0 0; }
+
+  /* ---- Cover ---- */
+  .cover{
+    height:297mm; display:flex; flex-direction:column; justify-content:center;
+    background:linear-gradient(140deg,#0a1f3c 0%,#123a6b 55%,#0e7c66 100%);
+    color:#fff; padding:0 22mm; page-break-after:always;
+  }
+  .cover .brand{ letter-spacing:.45em; font-size:13pt; font-weight:800; opacity:.95; }
+  .cover .kicker{ letter-spacing:.30em; font-size:9.5pt; opacity:.78; margin-top:.5em; }
+  .cover h1{ font-size:48pt; margin:.18em 0 .05em; font-weight:800; letter-spacing:.02em; }
+  .cover h1 .en{ color:rgba(255,255,255,.82); font-size:17pt; letter-spacing:.05em; margin-top:.15em; }
+  .cover .sub{ font-size:14pt; opacity:.96; margin-bottom:.5em; line-height:1.5; }
+  .cover .sub .en{ color:rgba(255,255,255,.8); font-size:10.5pt; }
+  .cover .badge{ display:inline-block; background:#10b981; color:#022; font-weight:800;
+    padding:.35em 1.0em; border-radius:999px; font-size:10pt; margin:1.1em 0; align-self:flex-start; }
+  .cover .stage{ display:inline-block; background:rgba(255,255,255,.14); border:1px solid rgba(255,255,255,.5);
+    color:#fff; font-weight:700; padding:.5em 1em; border-radius:8px; font-size:10pt; align-self:flex-start;
+    margin:.2em 0 1.1em; line-height:1.5; }
+  .cover .meta{ font-size:9.6pt; opacity:.92; border-top:1px solid rgba(255,255,255,.3); padding-top:1.2em; line-height:1.9; }
+  .cover .meta b{ font-size:10.5pt; }
+  .ph{ background:rgba(255,255,255,.16); border:1px dashed rgba(255,255,255,.55); border-radius:4px; padding:0 .4em; }
+
+  /* ---- Sections ---- */
+  section{ page-break-inside:auto; }
+  h2{ font-size:13.5pt; color:#0a1f3c; border-left:6px solid #10b981; padding-left:.5em; margin:1.3em 0 .45em; page-break-after:avoid; }
+  h2 .en{ font-size:8.8pt; color:#0e7c66; margin-top:2px; }
+  h3{ font-size:10.6pt; color:#123a6b; margin:.95em 0 .25em; page-break-after:avoid; }
+  h3 .en{ font-size:8.2pt; }
+  .lead{ font-size:9.4pt; color:#334; margin:.3em 0 .55em; }
+  p{ margin:.42em 0; }
+
+  /* ---- Tables ---- */
+  table{ width:100%; border-collapse:collapse; margin:.5em 0; font-size:8.4pt; page-break-inside:auto; }
+  th,td{ border:1px solid #d3dce6; padding:4px 6px; text-align:left; vertical-align:top; }
+  th{ background:#0a1f3c; color:#fff; font-weight:700; }
+  th .en{ color:rgba(255,255,255,.75); font-size:7.4pt; }
+  tr{ page-break-inside:avoid; }
+  tr:nth-child(even) td{ background:#f4f8fb; }
+  td.num{ text-align:right; font-variant-numeric:tabular-nums; white-space:nowrap; }
+  td.c{ text-align:center; }
+  td .en{ font-size:7.6pt; }
+
+  /* ---- Status pills ---- */
+  .st{ display:inline-block; font-size:7.4pt; font-weight:800; padding:.08em .5em; border-radius:4px; white-space:nowrap; }
+  .st-ok{ background:#e6f6f0; color:#0e7c66; }
+  .st-chk{ background:#fff3d6; color:#9a6a00; }
+  .st-sup{ background:#eef0ff; color:#3a3f9a; }
+  .st-req{ background:#fde8e8; color:#a01818; }   /* 发包方要求/必须 */
+
+  /* ---- Cards & misc ---- */
+  .box{ border:1px solid #d3dce6; border-radius:8px; padding:9px 13px; background:#fbfdff; margin:7px 0; font-size:8.8pt; page-break-inside:avoid; }
+  .box.warn{ border-color:#f0c36d; background:#fffaf0; }
+  .box.crit{ border-color:#e0a0a0; background:#fdf3f3; }
+  .tag{ display:inline-block; background:#e6f6f0; color:#0e7c66; font-weight:700; font-size:8.0pt; padding:1px 8px; border-radius:4px; }
+  .tag.req{ background:#fde8e8; color:#a01818; }
+  .muted{ color:#667; font-size:8.4pt; }
+  ul{ margin:5px 0 6px 18px; padding:0; }
+  ol{ margin:5px 0 6px 20px; padding:0; }
+  li{ margin:3px 0; }
+  li .en{ font-size:8.0pt; }
+  .tbd{ color:#9a6a00; font-weight:700; }
+  .req{ color:#a01818; font-weight:700; }
+  .foot{ border-top:1px solid #d3dce6; margin-top:16px; padding-top:8px; color:#667; font-size:8.0pt; }
+  .pb{ page-break-before:always; }
+</style>
+</head>
+<body>
+
+<!-- ============ COVER ============ -->
+<div class="cover">
+  <div class="brand">MU&nbsp;auto</div>
+  <div class="kicker">特种用途纯电动汽车 · 移动办公室 / SPECIAL-PURPOSE EV MOBILE OFFICE</div>
+  <h1>MO-1<span class="en">Mobile Office EV</span></h1>
+  <div class="sub">技术可行性评估 + 预算性询价（RFQ）<span class="en">Feasibility Assessment &amp; Budgetary Request for Quotation</span></div>
+  <div class="stage">本询价为<b>可行性 + 预算阶段</b>，最终报价以 Phase&nbsp;0 图纸 / 条件确定后为准。<br>
+    <span class="en">This is a feasibility + budgetary stage RFQ; final quotation follows once Phase&nbsp;0 drawings &amp; conditions are fixed.</span></div>
+  <div class="badge">目标登记类别：日本 8 号牌（事务用途车）/ Target: Japan "8-plate" special-purpose vehicle</div>
+  <div class="meta">
+    文件编号 Doc No.：<span class="ph">待确认 / TBD</span>　　版本 Rev.：<span class="ph">待确认 / TBD</span><br>
+    发行日期 Issue Date：<span class="ph">待确认 / TBD</span>　　批准人 Approved by：<span class="ph">待确认 / TBD</span><br>
+    密级 Classification：<b>保密 Confidential</b>　·　<b>正式发送前需内部确认 / Confirm before official dispatch</b><br>
+    发行方 Issued by：<b>株式会社イネブラ（Enabler Inc. / MU auto）</b><br>
+    联系方式 Contact：mail@yukihamada.jp
+  </div>
+</div>
+
+<!-- ============ 1 ============ -->
+<section>
+<h2>1. 项目背景与本询价的定位<span class="en">Background &amp; Scope of This RFQ</span></h2>
+<p>MO-1 是一款以纯电动平台为基础的<b>移动办公室（"会移动的总部"）</b>。其核心价值不在于价格，而在于<b>停车状态下的办公生产力</b>：以接近固定办公室的环境进行办公作业。</p>
+<p class="en">MO-1 is a mobile office ("a head office on wheels") built on a battery-electric platform. Its differentiation is not price but <b>productivity while parked</b>.</p>
+<p>关键特征：通信采用<b>卫星 + 5G/4G + Wi-Fi 三重冗余</b>；供电采用<b>驱动电池 + 办公副电池 + 太阳能</b>，设计目标为<b>无补给 3 天（72 小时）</b>；停车专用<b>超低功耗 HVAC</b>。目标在日本以特种用途"<b>8 号牌（事务用途车）</b>"完成型式与登记（待确认）。<b class="req">全车为右舵（RHD）。</b></p>
+<div class="box warn"><span class="tag">本询价定位 / Positioning</span> 本函为<b>技术可行性评估 + 预算性报价（feasibility + budgetary）</b>。所列数值均为<b>设计目标值（design target / requirement）·非保证值</b>。我方理解多项条件（续航、电力收支、认证适用性、8 号牌要件、图纸）尚未冻结，<b>不要求贵司在未确定信息上给出确定价格</b>；请以"可行性判断 + 概算（budgetary）+ 前提 / 除外"形式回复。<b>确定报价在 Phase 0 图纸与条件冻结后另行进行。</b>
+<span class="en">This is a feasibility + budgetary RFQ. All figures are design targets, not guaranteed. We do not expect firm prices on unfrozen items; please reply with feasibility + budgetary estimates + assumptions/exclusions. Firm quotation follows Phase 0.</span></div>
+</section>
+
+<!-- ============ 2 ============ -->
+<section>
+<h2>2. 整车规格（设计目标值）<span class="en">Vehicle Specification (Design Targets)</span></h2>
+
+<h3>2.1 尺寸 / 公差 / 质量 / 核定载客人数 / 舵向<span class="en">Dimensions · Tolerance · Mass · Occupancy · Steering side</span></h3>
+<table>
+  <tr><th style="width:30%">项目 Item</th><th>设计目标值 Design Target</th><th style="width:14%">状态 Status</th></tr>
+  <tr><td><b>舵向 Steering side</b></td><td><b class="req">全车右舵（RHD）必须。</b>左舵不在本项目范围内。请就 RHD 量产实绩、NRE、追加交期、前照灯配光（左侧通行 LHT 用）、雨刮反向、充电口 / 车门动线的 RHD 整合一并报价。<span class="en">RHD mandatory; LHD out of scope. Quote RHD volume experience, NRE, extra LT, LHT headlamp beam, wiper reversal, RHD charge-port/door ergonomics.</span></td><td class="c"><span class="st st-req">发包方要求</span></td></tr>
+  <tr><td>车长 Length</td><td>5000 mm（公差 ±50 mm）</td><td class="c"><span class="st st-sup">供应商确定</span></td></tr>
+  <tr><td>车宽 Width</td><td>1900 mm（公差 ±30 mm）</td><td class="c"><span class="st st-sup">供应商确定</span></td></tr>
+  <tr><td>车高 Height</td><td>2300 mm（公差 ±40 mm）</td><td class="c"><span class="st st-sup">供应商确定</span></td></tr>
+  <tr><td>轴距 Wheelbase</td><td>3200 mm（公差 ±20 mm）</td><td class="c"><span class="st st-sup">供应商确定</span></td></tr>
+  <tr><td>内部空间 Interior（L×W×H）</td><td>2200 × 1650 × 1500 mm</td><td class="c"><span class="st st-sup">供应商确定</span></td></tr>
+  <tr><td>最小离地间隙 Min. ground clearance</td><td>≥ 150 mm</td><td class="c"><span class="st st-sup">供应商确定</span></td></tr>
+  <tr><td>整备质量 Curb weight</td><td>2600 kg（<b>公差 ±2%</b>）</td><td class="c"><span class="st st-sup">供应商确定</span></td></tr>
+  <tr><td>最大总质量 GVW (max)</td><td><b>3100 kg</b>（设计上限，须 ≤ 3.5 t）</td><td class="c"><span class="st st-req">发包方要求</span></td></tr>
+  <tr><td>轴荷 / 前后配分 Axle load / distribution</td><td>由加装重量收支表得出（见 §10）</td><td class="c"><span class="st st-sup">供应商确定</span></td></tr>
+  <tr><td>最大载荷 Max. payload</td><td>由 GVW − 整备质量得出</td><td class="c"><span class="st st-chk">待确认</span></td></tr>
+  <tr><td>核定载客人数 Occupancy</td><td>2–3 人</td><td class="c"><span class="st st-ok">适合方针</span></td></tr>
+  <tr><td>最小转弯半径 Min. turning radius</td><td>6.0 m</td><td class="c"><span class="st st-sup">供应商确定</span></td></tr>
+  <tr><td>最高车速 Max. speed</td><td>120 km/h</td><td class="c"><span class="st st-sup">供应商确定</span></td></tr>
+  <tr><td>一般公差 General tolerance</td><td>JIS B 0405 中级 (m) 相当（重要尺寸另设个别公差，见 §11）</td><td class="c"><span class="st st-req">发包方要求</span></td></tr>
+</table>
+
+<h3>2.2 三电系统<span class="en">Powertrain · Battery · Charging</span></h3>
+<table>
+  <tr><th style="width:30%">项目 Item</th><th>设计目标值 Design Target</th><th style="width:14%">状态 Status</th></tr>
+  <tr><td>驱动形式 Drive</td><td>单电机 FWD/RWD</td><td class="c"><span class="st st-sup">供应商确定</span></td></tr>
+  <tr><td>电机功率 Motor power</td><td>150 kW</td><td class="c"><span class="st st-sup">供应商确定</span></td></tr>
+  <tr><td>电机扭矩 Motor torque</td><td>310 N·m</td><td class="c"><span class="st st-sup">供应商确定</span></td></tr>
+  <tr><td>驱动电池 Drive battery</td><td>LFP（磷酸铁锂）<b>80 kWh</b> / 系统电压 400 V / 液冷 + BMS</td><td class="c"><span class="st st-sup">供应商确定</span></td></tr>
+  <tr><td><b>续航 Range</b></td><td><b>450 km（WLTC 相当）为 design target · 非保证值。</b><br>
+    <span class="muted">说明：80 kWh 电池 + 2.6 t 厢式车，WLTC 450 km 不现实；实力值预估约 <b>280–360 km</b>（视电耗与试验条件）。请贵司：①给出电耗前提（kWh/100km）与试验条件（WLTC / CLTC、常温、空调 ON/OFF）；②按实测提案。两条路线之一：<b>(a) 扩大电池容量以担保 450 km</b>，或 <b>(b) 将公示续航降至实力值</b>——由贵司提案、<b>发包方承认</b>后冻结。</span>
+    <span class="en">450 km WLTC is a non-guaranteed design target. Realistic range ~280–360 km for 80 kWh / 2.6 t van. Supplier to state assumed Wh/km &amp; test conditions, then propose either (a) larger capacity to meet 450 km or (b) lower published range to realistic value — subject to buyer approval.</span></td>
+    <td class="c"><span class="st st-chk">待确认</span></td></tr>
+  <tr><td>交流充电 AC charging</td><td>6 kW，接口 SAE J1772 / 日本普通充电（RHD 充电口动线确认）</td><td class="c"><span class="st st-chk">待确认</span></td></tr>
+  <tr><td>直流快充 DC fast charging</td><td>90 kW，标准 <b>CHAdeMO</b></td><td class="c"><span class="st st-sup">供应商确定</span></td></tr>
+  <tr><td>对外放电 V2L</td><td>支持 Yes</td><td class="c"><span class="st st-sup">供应商确定</span></td></tr>
+  <tr><td>热管理 Thermal mgmt.</td><td>液冷 + BMS</td><td class="c"><span class="st st-sup">供应商确定</span></td></tr>
+</table>
+</section>
+
+<!-- ============ 3 ============ -->
+<section>
+<h2>3. 办公改装与系统<span class="en">Office Conversion &amp; Systems</span></h2>
+
+<h3>3.1 办公家具与环境<span class="en">Office furniture &amp; environment</span></h3>
+<table>
+  <tr><th style="width:26%">项目 Item</th><th>设计目标值 Design Target</th><th style="width:14%">状态 Status</th></tr>
+  <tr><td>电动升降桌 Sit-stand desk</td><td>升降 650–1250 mm，台面 600×800 mm，承重 40 kg，行驶时锁止</td><td class="c"><span class="st st-sup">供应商确定</span></td></tr>
+  <tr><td>人体工学座椅 Ergonomic chair</td><td>腰托 / 可调扶手，固定方式 <span class="st st-chk">待确认</span>（按核定载客人数配安全带）</td><td class="c"><span class="st st-chk">待确认</span></td></tr>
+  <tr><td>显示器 Monitor</td><td>27 吋 ≥ 2560×1440，VESA 支架，行驶时锁止</td><td class="c"><span class="st st-sup">供应商确定</span></td></tr>
+  <tr><td><b>隔音 Acoustic（按输入 / 输出定义）</b></td><td>目标：办公位室内噪声 ≤ 45 dB(A)，外部"60 dB 级"隔音。<br>
+    <span class="muted">须以可测量方式定义：测量点＝<b>执务耳位置</b>；本底噪声（暗噪声）；输入声源频谱与声压级；<b>A 计权</b>；HVAC ON / OFF 两种工况；并给出 <b>500 Hz 透过损失 (TL)</b> 等关键频带指标。请贵司提出测试方法与目标值供承认。</span>
+    <span class="en">Define by input/output: mic at occupant ear; background/ambient; input spectrum &amp; SPL; A-weighting; HVAC ON/OFF; report 500 Hz transmission loss. Supplier proposes method &amp; targets for approval.</span></td>
+    <td class="c"><span class="st st-chk">待确认</span></td></tr>
+  <tr><td>照度 Illuminance</td><td>500–750 lx 可调（符合日本事务所卫生基准）</td><td class="c"><span class="st st-ok">适合方针</span></td></tr>
+  <tr><td>通风换气 Ventilation</td><td>强制送排风 + HEPA，CO₂ ≤ 1000 ppm 目标</td><td class="c"><span class="st st-chk">待确认</span></td></tr>
+  <tr><td>内饰材料阻燃性 Interior flammability</td><td>阻燃内饰（日本《道路运送车辆法》安全标准（保安基准）/ UN R118）· 低 VOC</td><td class="c"><span class="st st-chk">待确认</span></td></tr>
+  <tr><td>碰撞安全 Crash safety</td><td>改装物固定 / 行驶时锁止 / 突出物规制适合（固定强度数值化见 §11）</td><td class="c"><span class="st st-sup">供应商确定</span></td></tr>
+</table>
+
+<h3>3.2 办公供电系统 与 72h 电力收支<span class="en">Office power system &amp; 72 h energy budget</span></h3>
+<table>
+  <tr><th style="width:26%">项目 Item</th><th>设计目标值 Design Target</th><th style="width:14%">状态 Status</th></tr>
+  <tr><td>办公副电池 Sub-battery</td><td>LFP <b>≥ 10 kWh</b> / 48 V / BMS（最终容量由电力收支与 U 值反推，<b>由供应商提案</b>）</td><td class="c"><span class="st st-chk">待确认</span></td></tr>
+  <tr><td>母线电压 Bus voltage</td><td>48 V（辅助 12 V）</td><td class="c"><span class="st st-sup">供应商确定</span></td></tr>
+  <tr><td>太阳能 Solar</td><td>单晶 600 Wp + 车顶支架</td><td class="c"><span class="st st-sup">供应商确定</span></td></tr>
+  <tr><td>MPPT</td><td>600 W</td><td class="c"><span class="st st-sup">供应商确定</span></td></tr>
+  <tr><td>DC-DC</td><td>400V↔48V 双向 2 kW + 48V→12V</td><td class="c"><span class="st st-sup">供应商确定</span></td></tr>
+  <tr><td>逆变器 Inverter</td><td>纯正弦波 连续 1500 W / 峰值 3000 W；<b>PSE 适合（日本认证，见 §6）</b></td><td class="c"><span class="st st-chk">待确认</span></td></tr>
+  <tr><td>交流插座 AC outlets</td><td>2 路</td><td class="c"><span class="st st-sup">供应商确定</span></td></tr>
+  <tr><td>保护 Protection</td><td>过充放 / 过流 / 短路 / 反接 / 温度 / 绝缘监测 / 浪涌防雷</td><td class="c"><span class="st st-sup">供应商确定</span></td></tr>
+</table>
+<div class="box warn"><span class="tag">72h 电力收支（含 HVAC 重算）/ 72 h budget incl. HVAC</span>
+原"日耗约 6000 Wh"<b>未含夏季空调与卫星常时功耗，需重算。</b>请贵司按以下负载明细 + U 值给出 72h 收支并反推副电池容量（最坏工况下成立）：
+<ul style="margin-top:4px">
+  <li>HVAC（夏 35 ℃ 直射制冷）：预估 <b>日 7–15 kWh</b>；冬季制热另计。</li>
+  <li>卫星终端常时（50–150 W）+ 路由 / 网关 / 网络设备：合计预估 <b>日 10–18 kWh</b>。</li>
+  <li>办公负载（升降桌 / 显示器 / 笔电充电 / 照明 / 换气）：单列。</li>
+  <li>太阳能日补给：按日本气象与车顶可铺面积，分晴 / 阴给出。</li>
+</ul>
+<b class="req">发包方要求：</b>给出车厢 <b>热贯流率 U 值目标</b>（断热 + 气密 + 隔热）作为达成手段，并按 <b>最坏工况（夏 / 冬 / 阴天）</b> 验证 72h；副电池容量与太阳能由 U 值 + 负载明细 <b>由供应商提案</b>，Phase 0 实测验证。
+<span class="en">Recompute 72 h budget incl. summer HVAC (7–15 kWh/day) and always-on satellite (50–150 W) + network (total 10–18 kWh/day). Buyer sets target cabin U-value; supplier sizes sub-battery/solar from U-value + load breakdown; validate worst case (summer/winter/overcast); verify in Phase 0.</span></div>
+
+<h3>3.3 通信（三重冗余）<span class="en">Communications (triple redundancy)</span></h3>
+<table>
+  <tr><th style="width:22%">类型 Type</th><th>规格 Spec</th><th style="width:18%">状态 Status</th></tr>
+  <tr><td>卫星 Satellite</td><td>移动场景 LEO 宽带。基本方案：<b>由日本侧装配在日提供服务运营商的认证终端</b>；中国侧仅提供<b>天线空间 / 电源 / 安装 I/F（裸机）</b>。行驶中运用可否 = <span class="st st-chk">待确认</span>。<span class="en">Japan-side fits a Japan-service-provider certified terminal; China side provides antenna space/power/mount I/F only (bare). In-motion operation TBD.</span></td><td class="c"><span class="st st-chk">待确认</span></td></tr>
+  <tr><td>蜂窝 Cellular</td><td>5G/4G 多运营商，双 SIM / eSIM，日本技适认证品</td><td class="c"><span class="st st-ok">适合方针</span></td></tr>
+  <tr><td>Wi-Fi</td><td>Wi-Fi 6E AP + 外部上行；<b>6 GHz 频段须按日本电波法规制设定</b>（功率 / 室内外 / VLP 等）</td><td class="c"><span class="st st-chk">待确认</span></td></tr>
+  <tr><td>故障切换 Failover</td><td>SD-WAN / 多 WAN 自动切换 &lt; 5 s</td><td class="c"><span class="st st-sup">供应商确定</span></td></tr>
+</table>
+
+<h3>3.4 空调 / 安防 / 电气架构<span class="en">HVAC / Security / Electrical architecture</span></h3>
+<table>
+  <tr><th style="width:26%">项目 Item</th><th>设计目标值 Design Target</th><th style="width:14%">状态 Status</th></tr>
+  <tr><td>停车 HVAC Parking HVAC</td><td>48V/DC 热泵，平均 300 W / 峰值 1200 W（前提工况下），目标温度 20–26 ℃，断热 + 气密 + 隔热（U 值见 §3.2，由发包方提目标）</td><td class="c"><span class="st st-chk">待确认</span></td></tr>
+  <tr><td>物理安防 Physical security</td><td>双重智能锁 / 防盗玻璃 / 入侵检测 / 摄像头 / GNSS</td><td class="c"><span class="st st-sup">供应商确定</span></td></tr>
+  <tr><td>防窥 Anti-peek</td><td>电子调光 / 遮光玻璃 · 视角控制 · 不可视布局</td><td class="c"><span class="st st-sup">供应商确定</span></td></tr>
+  <tr><td>数据安全 Data security</td><td>存储加密 · VPN / 零信任 · MDM 远程锁定 / 擦除</td><td class="c"><span class="st st-sup">供应商确定</span></td></tr>
+  <tr><td>电气架构 Electrical architecture</td><td>三电压系统（400V 驱动 / 48V 办公 / 12V 辅助）；改装网关 ECU 统合监测电源·通信·空调·门锁（<b>不介入车辆控制</b>）；车顶集成天线（卫星/蜂窝/GNSS/Wi-Fi）；分系统线束 难燃·防水端子 ISO 6722 系</td><td class="c"><span class="st st-chk">待确认</span></td></tr>
+</table>
+</section>
+
+<!-- ============ 4 BOM ============ -->
+<section class="pb">
+<h2>4. 物料清单 BOM（分层）<span class="en">Bill of Materials (hierarchical)</span></h2>
+<p class="muted">列说明：<b>供给/采购</b>＝由发包方支给 or 供应商采购；<b>指定型号/同等可</b>＝是否锁定型号；<b>额定</b>＝W/A/V/容量；<b>需承认</b>＝选型须经发包方书面承认。<span class="en">Columns: supply/source · fixed model or equivalent · rating · buyer approval required.</span></p>
+<table>
+  <tr>
+    <th style="width:4%">No.</th><th style="width:20%">项目 Item</th><th>规格 / 额定 Spec / Rating</th>
+    <th style="width:11%">供给/采购</th><th style="width:11%">型号</th><th style="width:8%">需承认</th>
+  </tr>
+  <tr><td class="c" colspan="6" style="background:#eef2f7;color:#0a1f3c;font-weight:700">A. 基车 Base vehicle</td></tr>
+  <tr><td class="c">1</td><td>基础 EV 平台（<b>RHD</b>）<span class="en">Base EV platform (RHD)</span></td><td>商用 EV 厢式车 / 1BOX，80 kWh 级，CHAdeMO，<b>右舵必须</b></td><td>采购/支给 待定</td><td>同等可</td><td class="c">是</td></tr>
+  <tr><td class="c">2</td><td>玻璃 / 窗框 / 密封<span class="en">Glass / frame / seal</span></td><td>含防盗 / 调光区段，密封等级</td><td>采购</td><td>同等可</td><td class="c">是</td></tr>
+  <tr><td class="c">3</td><td>涂装 / 外饰<span class="en">Paint / exterior</span></td><td>色板 ΔE / 缝隙段差（见 §11）</td><td>采购</td><td>—</td><td class="c">是</td></tr>
+  <tr><td class="c">4</td><td>座椅 / 安全带<span class="en">Seats / belts</span></td><td>按核定载客人数配置</td><td>采购</td><td>同等可</td><td class="c">是</td></tr>
+  <tr><td class="c">5</td><td>地板 / 加强框<span class="en">Floor / reinforcement frame</span></td><td>承载改装载荷，惯性力规定</td><td>采购</td><td>—</td><td class="c">是</td></tr>
+
+  <tr><td class="c" colspan="6" style="background:#eef2f7;color:#0a1f3c;font-weight:700">B. 驱动电源 Drive power</td></tr>
+  <tr><td class="c">6</td><td>驱动电池包<span class="en">Drive battery pack</span></td><td>LFP 80 kWh / 400 V / 液冷 / BMS（UN R100 Part II / 热失控）</td><td>采购</td><td>同等可</td><td class="c">是</td></tr>
+  <tr><td class="c">7</td><td>OBC 车载充电器<span class="en">On-board charger</span></td><td>AC 6 kW，J1772</td><td>采购</td><td>同等可</td><td class="c">是</td></tr>
+  <tr><td class="c">8</td><td>DC 快充车端控制<span class="en">DC charge control</span></td><td>CHAdeMO 90 kW</td><td>采购</td><td>同等可</td><td class="c">是</td></tr>
+  <tr><td class="c">9</td><td>12V 系（辅电瓶 / 配电）<span class="en">12V aux &amp; distribution</span></td><td>辅助电瓶 + 配电盒</td><td>采购</td><td>同等可</td><td class="c">—</td></tr>
+
+  <tr><td class="c" colspan="6" style="background:#eef2f7;color:#0a1f3c;font-weight:700">C. 48V 办公电源 Office power</td></tr>
+  <tr><td class="c">10</td><td>办公副电池<span class="en">Office sub-battery</span></td><td>LFP ≥10 kWh / 48 V / BMS（容量待定）</td><td>采购</td><td>同等可</td><td class="c">是</td></tr>
+  <tr><td class="c">11</td><td>MPPT / DCDC / 逆变器<span class="en">MPPT/DCDC/Inverter</span></td><td>双向 DCDC 2 kW，正弦波 1.5 kW（<b>PSE</b>）</td><td>采购</td><td>同等可</td><td class="c">是</td></tr>
+  <tr><td class="c">12</td><td>太阳能组件总成<span class="en">Solar assembly</span></td><td>单晶 600 Wp + 车顶支架</td><td>采购</td><td>同等可</td><td class="c">—</td></tr>
+  <tr><td class="c">13</td><td>绝缘监测 / 浪涌防雷<span class="en">Insulation monitor / surge</span></td><td>IMD + SPD</td><td>采购</td><td>同等可</td><td class="c">是</td></tr>
+
+  <tr><td class="c" colspan="6" style="background:#eef2f7;color:#0a1f3c;font-weight:700">D. 通信 Communications</td></tr>
+  <tr><td class="c">14</td><td>卫星通信终端（<b>裸机 I/F</b>）<span class="en">Satellite terminal (bare I/F)</span></td><td>天线空间 / 电源 / 安装 I/F；终端由日本侧装配</td><td>I/F 由供应商</td><td>—</td><td class="c">是</td></tr>
+  <tr><td class="c">15</td><td>5G/4G 路由器<span class="en">5G/4G router</span></td><td>多运营商 SD-WAN，日本技适认证品</td><td>采购</td><td>同等可</td><td class="c">是</td></tr>
+  <tr><td class="c">16</td><td>Wi-Fi 6E AP<span class="en">Wi-Fi 6E AP</span></td><td>6 GHz 按日本规制设定</td><td>采购</td><td>同等可</td><td class="c">是</td></tr>
+  <tr><td class="c">17</td><td>天线集成单元<span class="en">Integrated antenna unit</span></td><td>卫星 / 蜂窝 / GNSS / Wi-Fi 一体，车顶开口防水</td><td>采购</td><td>同等可</td><td class="c">是</td></tr>
+  <tr><td class="c">18</td><td>改装网关 ECU<span class="en">Conversion gateway ECU</span></td><td>电源/通信/空调/门锁 统合监测（不控车）</td><td>采购</td><td>指定</td><td class="c">是</td></tr>
+
+  <tr><td class="c" colspan="6" style="background:#eef2f7;color:#0a1f3c;font-weight:700">E. 内饰 / 环境 Interior</td></tr>
+  <tr><td class="c">19</td><td>电动升降桌<span class="en">Sit-stand desk</span></td><td>650–1250 mm，承重 40 kg，行驶时锁止</td><td>采购</td><td>同等可</td><td class="c">是</td></tr>
+  <tr><td class="c">20</td><td>人体工学座椅<span class="en">Ergonomic chair</span></td><td>腰托 / 可调扶手 / 固定金具</td><td>采购</td><td>同等可</td><td class="c">—</td></tr>
+  <tr><td class="c">21</td><td>27 吋显示器 + 支架<span class="en">27" monitor + arm</span></td><td>2560×1440，VESA，行驶时锁止</td><td>采购</td><td>同等可</td><td class="c">—</td></tr>
+  <tr><td class="c">22</td><td>停车用 HVAC<span class="en">Parking HVAC</span></td><td>48V 热泵；冷凝器 / 风道 / 格栅 / 送排风 / HEPA</td><td>采购</td><td>同等可</td><td class="c">是</td></tr>
+  <tr><td class="c">23</td><td>隔热 / 吸音材 + 隔热贯通处理<span class="en">Insulation / acoustic + thermal-bridge</span></td><td>阻燃隔热 + 吸音 + 减振 + 贯通处密封</td><td>采购</td><td>—</td><td class="c">是</td></tr>
+  <tr><td class="c">24</td><td>调光玻璃 / 遮阳<span class="en">Dimming glass / shade</span></td><td>电子调光 / 遮光 · 隔热</td><td>采购</td><td>同等可</td><td class="c">—</td></tr>
+  <tr><td class="c">25</td><td>线槽 / 护线套<span class="en">Cable trough / grommet</span></td><td>分区走线，防磨</td><td>采购</td><td>—</td><td class="c">—</td></tr>
+
+  <tr><td class="c" colspan="6" style="background:#eef2f7;color:#0a1f3c;font-weight:700">F. 安全 / 法规 Safety / regulatory</td></tr>
+  <tr><td class="c">26</td><td>电池热失控 / 灭火<span class="en">Battery TR / fire suppression</span></td><td>热失控隔离 + 灭火（如适用）</td><td>采购</td><td>同等可</td><td class="c">是</td></tr>
+  <tr><td class="c">27</td><td>智能锁 / 安防<span class="en">Smart lock / security</span></td><td>双重锁 / 入侵检测 / 摄像头 / GNSS</td><td>采购</td><td>同等可</td><td class="c">—</td></tr>
+  <tr><td class="c">28</td><td>线束 / 配电盘<span class="en">Harness / distribution</span></td><td>三系统分离 难燃 保护器件 ISO 6722 系</td><td>采购</td><td>—</td><td class="c">是</td></tr>
+
+  <tr><td class="c" colspan="6" style="background:#eef2f7;color:#0a1f3c;font-weight:700">G. 软件 / 服务 Software / service（CapEx / OpEx 分离）</td></tr>
+  <tr><td class="c">29</td><td>SD-WAN / MDM 软件许可<span class="en">SD-WAN / MDM license</span></td><td>初装（CapEx）+ 订阅（OpEx）分列</td><td>采购</td><td>—</td><td class="c">—</td></tr>
+  <tr><td class="c">30</td><td>通信线路 / 运维<span class="en">Connectivity line / O&amp;M</span></td><td>按 OpEx（月/年）单列，不并入整车单价</td><td>—</td><td>—</td><td class="c">—</td></tr>
+</table>
+</section>
+
+<!-- ============ 5 责任分界 ============ -->
+<section>
+<h2>5. 责任分界 / 知识产权 / 产品责任（PL）<span class="en">Responsibility Split · IP · Product Liability</span></h2>
+<h3>5.1 责任分界矩阵<span class="en">Responsibility matrix</span></h3>
+<table>
+  <tr><th style="width:24%">范畴 Scope</th><th style="width:23%">中国侧（供应商）</th><th style="width:23%">日本侧（发包方）</th><th>备注 Note</th></tr>
+  <tr><td>驱动系 Drivetrain</td><td>设计 / 制造 / 质保</td><td>不介入</td><td>与"网关不控车"一致</td></tr>
+  <tr><td>电池（驱动 / 办公）</td><td>设计 / 制造 / UN R100 / 热失控证据</td><td>认可 / 验证</td><td>见 §11 认证矩阵</td></tr>
+  <tr><td>48V 办公加装</td><td>设计 / 集成</td><td>规格 / 承认</td><td>PSE 件方案见 §6</td></tr>
+  <tr><td>通信 Comm.</td><td>裸机 I/F（卫星）/ 路由集成</td><td>卫星终端装配 / 技适</td><td>走行中运用待确认</td></tr>
+  <tr><td>门锁 / 安防</td><td>设计 / 集成</td><td>承认</td><td>—</td></tr>
+  <tr><td>型式申请 / 登记</td><td>提供技术资料</td><td>主导（8 号牌）</td><td>资料责任见 §9</td></tr>
+  <tr><td>PL（产品责任）</td><td>制造缺陷责任 / 投保产品责任险</td><td>整车上市责任</td><td>求偿条款见 §5.3</td></tr>
+  <tr><td>保修年数 Warranty</td><td>整车 / 改装 ≥ 12 月；电池见 §8</td><td>对终端用户</td><td>—</td></tr>
+  <tr><td>召回 Recall</td><td>分担召回费用（按缺陷归属）</td><td>对当局 / 用户主导</td><td>协力义务</td></tr>
+</table>
+
+<h3>5.2 知识产权 / 保密 / 模具<span class="en">IP · NDA · Tooling</span></h3>
+<ul>
+  <li><b>NDA 优先：</b>在 RFQ 回答、样品授受<b>之前</b>须先签署 NDA（最初步骤）。<span class="en">NDA must be signed before any RFQ reply or sample exchange.</span></li>
+  <li><b>设计归属：</b>MO-1 整体设计归 MU auto / 株式会社イネブラ（Enabler Inc.）所有。</li>
+  <li><b>模具 / 治具：</b>归 MU auto 所有；<b>专用使用、禁止向第三方提供、项目结束后删除数据、禁止制造竞品</b>。<span class="en">Tooling/jigs owned by MU auto; exclusive use, no third-party supply, data deletion, no competing products.</span></li>
+</ul>
+
+<h3>5.3 准据法 / 仲裁 / PL / 召回<span class="en">Governing law · Arbitration · PL · Recall</span></h3>
+<ul>
+  <li><b>准据法 / 仲裁地：</b>日本，或中立地（新加坡 / 香港等），具体 <span class="st st-chk">待协商</span>。</li>
+  <li><b>PL 求偿 / 召回协力：</b>因制造缺陷导致的 PL 求偿与召回，供应商负协力义务并按归属分担费用。</li>
+  <li><b>产品责任险：</b><b>由中国侧投保</b>产品责任险（保额 <span class="st st-chk">待确认</span>）。</li>
+  <li><b>电池安全证据：</b><b>必须</b>提供 UN R100 Part II / 热失控（thermal runaway）试验证据。</li>
+</ul>
+</section>
+
+<!-- ============ 6 认证 ============ -->
+<section class="pb">
+<h2>6. 日本认证置换 与 分界矩阵<span class="en">Japan Certification Replacement &amp; Split</span></h2>
+<p>PSE（电气用品安全法）/ 技适（电波法）对象件须替换为日本认证品。请<b>就以下二案分别报价</b>：</p>
+<div class="box crit"><b>报价二案 / Two quotation options：</b>
+<b>(a) 含日本认证件方案</b>——由供应商对接 / 采购日本认证品并集成；
+<b>(b) OEM 裸机 + 日本侧加装方案</b>——供应商交付裸机，日本侧加装认证件。
+两案均需给出概算与交期差异。<span class="en">Quote both: (a) with Japan-certified parts integrated by supplier; (b) OEM bare unit for Japan-side fitment.</span></div>
+<table>
+  <tr><th style="width:18%">对象 Item</th><th style="width:14%">认证 Cert.</th><th style="width:14%">采购责任</th><th style="width:12%">费用负担</th><th>再设计 / 再 EMC（UN R10）责任</th></tr>
+  <tr><td>逆变器 Inverter</td><td>PSE</td><td>方案(a)供应商 / (b)日本侧</td><td>各自方案</td><td>替换致再设计 / 再 EMC：方案(a)供应商，(b)日本侧</td></tr>
+  <tr><td>MPPT</td><td>PSE</td><td>同上</td><td>同上</td><td>同上</td></tr>
+  <tr><td>48V 电源设备</td><td>PSE</td><td>同上</td><td>同上</td><td>同上</td></tr>
+  <tr><td>卫星终端 Satellite</td><td>技适</td><td><b>日本侧装配在日服务运营商认证终端</b>；中国侧仅裸机 I/F</td><td>日本侧</td><td>走行中运用可否 <span class="st st-chk">待确认</span></td></tr>
+  <tr><td>5G/4G</td><td>技适</td><td>方案(a)供应商 / (b)日本侧</td><td>各自方案</td><td>—</td></tr>
+  <tr><td>Wi-Fi 6E</td><td>技适</td><td>同上</td><td>同上</td><td>6 GHz 频段按日本规制设定</td></tr>
+</table>
+<p class="muted">注：因认证置换引起的再设计 / 再 EMC（UN R10）须明确责任主体，避免重复测试与责任空白。<span class="en">Re-design / re-EMC (UN R10) due to cert replacement must have a clear responsible party.</span></p>
+</section>
+
+<!-- ============ 7 商务条款 ============ -->
+<section>
+<h2>7. 商务条款<span class="en">Commercial Terms</span></h2>
+<table>
+  <tr><th style="width:26%">项目 Item</th><th>要求 / 提案 Requirement / Proposal</th></tr>
+  <tr><td>报价有效期 Validity</td><td>要求 <b>≥ 60 天</b></td></tr>
+  <tr><td>报价截止日 Quote due date</td><td><span class="tbd">待确认 / TBD（发送时填入）</span></td></tr>
+  <tr><td>贸易条款 Incoterms® 2020</td><td>注明并指定港名：<b>FOB 上海港</b> / <b>CIF 东京港</b> / <b>DAP 日本（地点待定）</b> 之一或多个</td></tr>
+  <tr><td>结算货币 Currency</td><td><b>USD 优先</b>；如报 CNY，请同列参考 USD 与<b>汇率基准日</b></td></tr>
+  <tr><td>付款方式 Payment</td><td><b>30% 定金 / 60% 凭 B/L 副本 / 10% 到货验收合格</b>；大额可用 <b>L/C</b>。（原"70% 发货前"已删除）</td></tr>
+  <tr><td>违约金 LD</td><td>每延迟一周扣 <b>X%</b>，上限 <b>Y%</b>（数值待协商）</td></tr>
+  <tr><td>质保 Warranty</td><td>整车 / 改装 <b>≥ 12 月</b>；动力 / 办公电池按 <b>年数或 km</b> 且 <b>容量保持率 ≥ 70% @ N 年</b>（N 待定）</td></tr>
+  <tr><td>第三方验货 PSI</td><td>SGS / BV 等第三方验货合格后支付尾款</td></tr>
+  <tr><td>售后备件 Spares</td><td>供应年限 <b>≥ 7 年</b>，关键件库存，SLA（响应 / 到货时限）待定</td></tr>
+  <tr><td>模具 / NRE 抵扣 Amortization</td><td>量产抵扣（摊销）条件：按量产台数分摊 / 抵扣，方式待协商</td></tr>
+  <tr><td>样品确认 Sample</td><td>封样（sealed sample）后量产，以封样为质量基准</td></tr>
+  <tr><td>木质包装 Packing</td><td>符合 <b>ISPM 15</b> 熏蒸（IPPC 标识）；整车海运</td></tr>
+  <tr><td>税务 Tax</td><td>报价清单注明<b>增值税</b>与<b>出口退税</b>的处理（含税/未税口径）</td></tr>
+</table>
+<div class="box"><b>报价清单格式（务必采用）/ Required quote format：</b>
+<table style="margin-top:5px">
+  <tr><th>项目 Item</th><th>规格 Spec</th><th class="c">数量 Qty</th><th class="c">MOQ</th><th class="c">单价 USD 未税 FOB</th><th class="c">小计 Subtotal</th><th>备注 Remark</th></tr>
+  <tr><td>示例 e.g. 基础 EV 平台</td><td>RHD / 80kWh</td><td class="c">…</td><td class="c">…</td><td class="c">…</td><td class="c">…</td><td>小批量加价说明</td></tr>
+</table>
+<span class="muted">数量表须含 <b>MOQ 列</b> 与 <b>小批量加价</b> 说明。<span class="en">Include MOQ column and small-batch surcharge.</span></span></div>
+</section>
+
+<!-- ============ 8 数量与阶段 ============ -->
+<section>
+<h2>8. 数量与阶段<span class="en">Quantity &amp; Phases</span></h2>
+<table>
+  <tr><th style="width:22%">阶段 Phase</th><th style="width:18%">数量 Qty</th><th style="width:12%">MOQ</th><th>目的 Purpose</th></tr>
+  <tr><td>Phase 0 试制 Prototype</td><td>1 台</td><td>1</td><td>概念验证 · 图纸 / 条件冻结 · 实测（续航 / 电力 / 隔音 / 通信切换 / U 值）</td></tr>
+  <tr><td>Phase 1 小批量 Small batch</td><td>5–10 台（预计）</td><td><span class="st st-chk">待确认</span></td><td>预订交付 · PoC 提供</td></tr>
+  <tr><td>Phase 2 量产 Mass production</td><td>数十台〜（预计）</td><td><span class="st st-chk">待确认</span></td><td>平台采购 + 改装的量产外售</td></tr>
+</table>
+<p class="muted">请就各阶段给出 MOQ 与小批量加价，并说明模具 / NRE 在量产中的摊销 / 抵扣。<span class="en">Provide MOQ and small-batch surcharge per phase; explain tooling/NRE amortization.</span></p>
+</section>
+
+<!-- ============ 9 越境 ============ -->
+<section class="pb">
+<h2>9. 越境（出入口 / 物流 / 关税）<span class="en">Cross-border (Export/Import · Logistics · Customs)</span></h2>
+<h3>9.1 中国侧<span class="en">China side</span></h3>
+<ul>
+  <li><b>BEV / 动力电池出口许可 · 两用物项管制该非：</b>由<b>供应商责任</b>事前确认并取得；<b>取得不可 / 延迟时的解除 / 再交涉条款</b>及所需期间须明示。<span class="en">Supplier confirms/obtains BEV &amp; battery export license and dual-use control classification; termination/renegotiation clause &amp; lead time if unobtainable/delayed.</span></li>
+  <li><b>锂电池危险品（DG）：</b>明确运输形态 <b>UN3171（车载）/ UN3480（单体）</b>；提供 <b>UN38.3 成绩书 / SDS</b>；运输 <b>SOC 上限</b>；对应船社；危险品保险负担者。</li>
+  <li><b>CCC 适用性：</b>整车 / 关键部件依出口形态确认。</li>
+  <li><b>HS 编码：</b>整车 8703.80 / 部件 双方确定；附原产地证。</li>
+</ul>
+<h3>9.2 关税 / 原产地<span class="en">Tariff / Origin</span></h3>
+<ul>
+  <li><b>日中无 EPA 前提：</b>按一般税率试算<b>关税 + 消费税</b>。</li>
+  <li><b>原产地判定：</b>日本部品置换（PSE / 技适件）对原产地与税率的影响须评估。</li>
+</ul>
+<h3>9.3 日本侧（两段登记）<span class="en">Japan side (two-step)</span></h3>
+<ol>
+  <li><b>并行进口预备检查（新规登记）：</b>噪音（R51 相当）/ 灯火 / 制动 / 速度计 / 后面碰撞等 安全标准（日本「保安基准」）符合性。</li>
+  <li><b>8 号牌（事务用途车）构造变更：</b>登记为日本特种用途车辆 8 号牌。</li>
+</ol>
+<div class="box warn"><b class="req">发包方提供（不交由供应商自行判断）：</b>8 号牌"事务用途车"具体要件由日本侧规格化提示——含 <b>立席高度、桌台尺寸、地板面积占有率、固定的惯性力</b> 等。供应商据此设计。
+<span class="en">Buyer specifies 8-plate "office vehicle" requirements (standing height, desk size, floor-area occupancy, inertial fixing loads). Supplier designs accordingly — not left to supplier's discretion.</span></div>
+</section>
+
+<!-- ============ 10 重量 / 图纸 ============ -->
+<section>
+<h2>10. 重量收支 / 图纸 / 接口 / 基车<span class="en">Mass Budget · Drawings · Interface · Base Vehicle</span></h2>
+<h3>10.1 重量收支（Phase 0 成果物）<span class="en">Mass budget (Phase 0 deliverable)</span></h3>
+<ul>
+  <li><b>加装含重量收支表</b>（部位别质量 + 取付位置）为 Phase 0 成果物要求。</li>
+  <li><b>GVW 3100 / 轴荷 / 前后配分 / 最大载荷</b>确定；<b>3.5 t 以内设计责任</b>归供应商；超过时区分变更。</li>
+  <li>整备质量公差 <b>±2%</b>。</li>
+</ul>
+<h3>10.2 图纸 / 接口（责任分界）<span class="en">Drawings / Interface (split)</span></h3>
+<table>
+  <tr><th style="width:40%">交付物 Deliverable</th><th>责任 Responsibility</th></tr>
+  <tr><td>图纸 / 3D / 布局图 / 加装区域 / 车顶承载</td><td>发包方支给 <b>or</b> 由供应商制作（<b>NRE 另计</b>）— 待定</td></tr>
+  <tr><td>接口定义：驱动电池取出可否 / 电压 / 电流</td><td>由平台 OEM 开示，供应商整合</td></tr>
+  <tr><td>CAN 信号开示</td><td>OEM 开示范围待确认（网关只读、不控车）</td></tr>
+  <tr><td>车顶开口尺寸 / 防水</td><td>供应商设计，发包方承认</td></tr>
+</table>
+<h3>10.3 基车<span class="en">Base vehicle</span></h3>
+<p>基车方式：发包方指定候选 <b>2–3 车种</b> <b>or</b> 由供应商提案；并区分 <b>支给 / 采购 / 新规开发</b>。若为既存车改造，须确定车种；与"<b>驱动系不介入</b>"原则一致。<span class="en">Buyer names 2–3 candidate base vehicles or supplier proposes; distinguish supplied/sourced/new-dev; if converting existing vehicle, fix the model; consistent with non-intervention in drivetrain.</span></p>
+</section>
+
+<!-- ============ 11 检查 / 公差 / 材质 / 环境 ============ -->
+<section class="pb">
+<h2>11. 检查 / 公差 / 材质 / 环境试验<span class="en">Inspection · Tolerance · Material · Environmental</span></h2>
+<h3>11.1 检查计划表<span class="en">Inspection plan</span></h3>
+<table>
+  <tr><th>项目 Item</th><th>规格值 Spec</th><th>试验法 Method</th><th class="c">AQL/抽样</th><th class="c">计量器</th><th class="c">全/抽检</th><th class="c">见证/FAI</th></tr>
+  <tr><td>电源 / AC(PSE)</td><td>额定 / 保护动作</td><td>通电 / 保护试验</td><td class="c">全数</td><td class="c">功率计</td><td class="c">全检</td><td class="c">见证</td></tr>
+  <tr><td>门锁 / 行驶时锁止</td><td>动作 / 锁止</td><td>功能试验</td><td class="c">全数</td><td class="c">—</td><td class="c">全检</td><td class="c">—</td></tr>
+  <tr><td>通信故障切换</td><td>&lt; 5 s</td><td>断网切换计时</td><td class="c">全数</td><td class="c">计时</td><td class="c">全检</td><td class="c">见证</td></tr>
+  <tr><td>室内噪声</td><td>≤ 45 dB(A) @ 耳位</td><td>见 §3.1 输入/输出定义</td><td class="c">抽样</td><td class="c">声级计</td><td class="c">抽检</td><td class="c">FAI</td></tr>
+  <tr><td>照度</td><td>500–750 lx</td><td>照度计</td><td class="c">抽样</td><td class="c">照度计</td><td class="c">抽检</td><td class="c">—</td></tr>
+  <tr><td>隔热 / U 值</td><td>目标 U 值</td><td>温差 / 热流</td><td class="c">抽样</td><td class="c">热流计</td><td class="c">抽检</td><td class="c">FAI</td></tr>
+  <tr><td>重要尺寸 / FAI 初件</td><td>个别公差</td><td>三坐标 / 量具</td><td class="c">初件全尺寸</td><td class="c">CMM</td><td class="c">FAI</td><td class="c">见证</td></tr>
+</table>
+<h3>11.2 公差 / 外观 / 材质<span class="en">Tolerance / Appearance / Material</span></h3>
+<ul>
+  <li>一般公差 <b>JIS B 0405 中级 (m)</b>；重要尺寸设<b>个别公差</b>。</li>
+  <li>外观：缝隙 / 段差、涂装 <b>ΔE</b> + 色板、按色板验收。</li>
+  <li>材质 / 板厚 / 表面处理 / 耐蚀（<b>盐雾 h</b>）；阻燃 <b>UL94 V-0</b>；接着 / 密封规格。</li>
+</ul>
+<h3>11.3 环境 / 防护 / 固定强度<span class="en">Environment / IP / Fixing</span></h3>
+<ul>
+  <li>IP 等级（如 <b>IP67</b>）；振动 <b>ISO 16750-3</b>；温度循环；防水 / 防振。</li>
+  <li><b>固定强度数值化：</b>前方 <b>20G</b> / 侧方 <b>10G</b> 等（或准据日本相关告示），附<b>荷重计算书</b>与<b>紧固扭矩</b>。</li>
+</ul>
+<h3>11.4 认证矩阵<span class="en">Certification matrix</span></h3>
+<table>
+  <tr><th>规格 Standard</th><th>主体 Owner</th><th>费用 Cost</th><th class="c">样品台数</th><th>不合格再试 Re-test</th><th>进度 Schedule</th></tr>
+  <tr><td>UN R100 Part II（电池/热失控）</td><td>供应商</td><td>供应商</td><td class="c">待定</td><td>由供应商承担</td><td>待定</td></tr>
+  <tr><td>UN R10（EMC）</td><td>按 §6 责任主体</td><td>同左</td><td class="c">待定</td><td>同左</td><td>待定</td></tr>
+  <tr><td>UN R118（阻燃）</td><td>供应商</td><td>供应商</td><td class="c">待定</td><td>由供应商承担</td><td>待定</td></tr>
+  <tr><td>R51（噪音）/ 灯火 / 制动</td><td>日本侧主导</td><td>日本侧</td><td class="c">—</td><td>—</td><td>待定</td></tr>
+  <tr><td>PSE / 技适</td><td>按 §6 二案</td><td>各自方案</td><td class="c">待定</td><td>同左</td><td>待定</td></tr>
+</table>
+</section>
+
+<!-- ============ 12 报价要求 ============ -->
+<section>
+<h2>12. 报价要求（可行性 + 预算）<span class="en">Quotation Requirements (Feasibility + Budgetary)</span></h2>
+<ul>
+  <li><b>制造可行性判断</b>（可行性 / 替代建议）。</li>
+  <li><b>各阶段概算单价及明细（费用构成）</b>：试制 / 小批量 / 量产（按 平台·改装·电装·电源·通信·内饰·安全法规 分项），采用 §7 报价清单格式。</li>
+  <li><b>认证置换二案</b>（含日本认证件 / OEM 裸机）各自概算与交期。</li>
+  <li><b>模具费 / NRE</b> 明细 + 量产摊销 / 抵扣条件。</li>
+  <li><b>交期 Lead time</b>（各阶段；含 RHD 追加 LT、认证 LT、出口许可 LT）。</li>
+  <li><b>续航 / 72h 电力收支 / U 值</b> 的前提与提案（见 §2.2 / §3.2）。</li>
+  <li>确定所需的<b>追加信息 · 前提 · 除外事项</b>。</li>
+</ul>
+<p class="muted">质量交付物（参考）：检查成绩书、适合证明、技适 / PSE 凭证、UN R100/R10/R118 证据、登记准备文件、封样、荷重计算书。<span class="en">QA deliverables: inspection reports, compliance certs, Giteki/PSE evidence, UN R100/R10/R118 evidence, registration docs, sealed sample, load calc.</span></p>
+</section>
+
+<!-- ============ 13 开放问题 ============ -->
+<section>
+<h2>13. 需供应商确认的开放问题<span class="en">Open Issues for Supplier</span></h2>
+<ul>
+  <li><b>RHD：</b>量产实绩 / NRE / 追加 LT / 前照灯配光 / 雨刮反向 / 充电口·车门动线（RHD 不可＝不在范围内）。</li>
+  <li>续航前提（电耗 kWh/100km、WLTC/CLTC、空调）与 450 km 的"扩容 or 降公示"提案。</li>
+  <li>72h 电力收支（含夏季 HVAC、卫星常时）、U 值目标、副电池 / 太阳能容量提案。</li>
+  <li>隔音输入 / 输出定义、500 Hz TL、HVAC ON/OFF 工况与验证方法。</li>
+  <li>基础平台（指定 2–3 车种 or 供应商提案；支给 / 采购 / 新规开发）。</li>
+  <li>8 号牌要件（由发包方规格化提示）的运输支局确认。</li>
+  <li>各规格编号（UN R100/R10/R118、PSE 区分、技适、JIS 公差）确定。</li>
+  <li>卫星裸机 I/F 与走行中运用可否；Wi-Fi 6E 6GHz 设定。</li>
+  <li>重量收支 / 轴荷 / 核定载客人数 / GVW / 最大载荷。</li>
+  <li>固定强度（惯性力 / 荷重计算 / 紧固扭矩）。</li>
+  <li>中国侧出口许可 / 两用物项 / CCC / DG 运输 与 日本侧 PSE·技适置换。</li>
+  <li>商务条款（有效期 / 截止日 / Incoterms / 货币 / 付款 / LD / 质保 / PSI / 备件 / 摊销）。</li>
+  <li>文件元信息（文件编号 / 版本 / 发行日 / 批准人）确定。</li>
+</ul>
+</section>
+
+<!-- ============ 14 联系方式 ============ -->
+<section>
+<h2>14. 联系方式<span class="en">Contact</span></h2>
+<div class="box">
+  发行方 Issued by：<b>株式会社イネブラ（Enabler Inc. / MU auto）</b><br>
+  邮箱 Email：<b>mail@yukihamada.jp</b><br>
+  <span class="muted">落款（负责人姓名 / 电话）<b>在发送时由人工补充</b>。请将报价与确认事项以邮件回复。本函为草稿，最终发送以人工确认为准；准据法 / 仲裁见 §5.3。<span class="en">Signatory name/phone to be added by hand at dispatch. Reply by email; this is a draft, final dispatch subject to human confirmation.</span></span>
+</div>
+<div class="foot">
+  MU auto MO-1 · 技术可行性评估 + 预算性询价 RFQ · 文件编号 / 版本 / 日期 / 批准人：<span class="tbd">待确认 / TBD</span> · 密级：保密 Confidential · 数值均为设计目标值 Design targets（非保证） · 准据法 / 仲裁：日本或中立地（待协商） · 报价截止：<span class="tbd">待确认</span> · 发行：株式会社イネブラ（Enabler Inc.）
+</div>
+</section>
+
+</body>
+</html>
